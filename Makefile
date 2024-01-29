@@ -6,27 +6,30 @@
 #    By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/01/29 16:33:10 by nazouz           ###   ########.fr        #
+#    Updated: 2024/01/29 20:44:33 by nazouz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC= cc
+CC				= 		cc
 
-FLAGS= -Wall -Werror -Wextra
+CFLAGS			= 		-Wall -Werror -Wextra
 
-SRCS= main.c
+INCLUDE			=		./minishell.h
 
-OBJS= $(SRCS:.c=.o)
+SRCS			= 		\
+						main.c
 
-NAME= minishell
+OBJS			= 		$(SRCS:.c=.o)
+
+NAME			= 		minishell
 
 all : $(NAME)
 
-$(NAME) : $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) -lreadline -o $(NAME)
-
 %.o : %.c
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@ -I$(shell brew --prefix readline)/include
+
+$(NAME) : $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(shell brew --prefix readline)/lib -lreadline
 
 clean :
 	rm -rf $(OBJS)
