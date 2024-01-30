@@ -6,32 +6,23 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/01/29 20:57:43 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/01/30 12:33:10 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <string.h> 
-# include <fcntl.h>
-# include <signal.h>
+#include "minishell.h"
 
-void	read_loop()
+void	read_cmd_line(t_minishell *minishell)
 {
-	char	*input;
-	
-	input = readline("minishell-4.81$ ");
-	while (input)
+	minishell->input = readline("minishell-4.81$ ");
+	if (minishell->input)
 	{
-		add_history(input);
-		if (!strcmp(input, "exit"))
+		add_history(minishell->input);
+		if (!strcmp(minishell->input, "exit"))
 			exit(EXIT_SUCCESS);
-		free(input);
-		input = readline("minishell-4.81$ ");
 	}
+	else
+		exit(EXIT_SUCCESS);
 }
 
 void	interrupt()
@@ -44,6 +35,13 @@ void	interrupt()
 
 int main(void)
 {
+	t_minishell		minishell;
+
 	signal(SIGINT, interrupt);
-	read_loop();
+	while (1)
+	{
+		read_cmd_line(&minishell);
+		tokenize_input(&minishell);
+		ft_print_matrix(minishell.cmd_line);
+	}
 }
