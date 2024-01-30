@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/01/30 12:50:49 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/01/30 13:56:56 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,23 @@
 # include <fcntl.h>
 # include <signal.h>
 
+typedef struct s_lexer
+{
+	char	*str;
+	int		text;
+	int		token;
+}	t_lexer;
+
 typedef struct s_minishell
 {
-	char	*input;
-	char	**cmd_line;
-	char	***tok_line;
-	char	**parser;
-	int		input_red;
-	int		output_red;
+	char				*input;
+	char				**cmd_line;
+	char				***tok_line;
+	char				**parser;
+	int					input_red;
+	int					output_red;
+	struct s_lexer		*lexer;
+	int					lexer_size;
 }	t_minishell;
 
 
@@ -38,6 +47,7 @@ void	tokenize_input(t_minishell *minishell);
 
 //	LIBFT
 char	**ft_split(char const *s, char c);
+char	*ft_strchr(const char *s, int c);
 
 //	HELPERS
 void	ft_print_matrix(char **matrix);
