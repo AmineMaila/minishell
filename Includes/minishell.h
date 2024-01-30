@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/01/30 13:56:56 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/01/30 15:52:39 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,16 @@
 # include <string.h> 
 # include <fcntl.h>
 # include <signal.h>
-
-typedef struct s_lexer
-{
-	char	*str;
-	int		text;
-	int		token;
-}	t_lexer;
+# include <errno.h>
 
 typedef struct s_minishell
 {
-	char				*input;
-	char				**cmd_line;
-	char				***tok_line;
-	char				**parser;
-	int					input_red;
-	int					output_red;
-	struct s_lexer		*lexer;
-	int					lexer_size;
+	char	*input;
+	char	**cmd_line;
+	char	***tok_line;
+	char	**parser;
+	int		input_red;
+	int		output_red;
 }	t_minishell;
 
 
@@ -46,10 +38,10 @@ typedef struct s_minishell
 void	tokenize_input(t_minishell *minishell);
 
 //	LIBFT
-char	**ft_split(char const *s, char c);
-char	*ft_strchr(const char *s, int c);
+char	**ft_split(char const *s, char *charset);
 
 //	HELPERS
 void	ft_print_matrix(char **matrix);
+void	ft_exit(char *cmd, char *str, int ext);
 
 #endif
