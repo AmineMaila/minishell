@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/01/30 12:33:10 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/01/30 17:24:34 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ int main(void)
 	{
 		read_cmd_line(&minishell);
 		tokenize_input(&minishell);
-		ft_print_matrix(minishell.cmd_line);
+		// ft_print_matrix(minishell.cmd_line);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/01/30 14:13:52 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/01/30 17:25:56 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ void	lexer_search(t_minishell *minishell)
 		if (ft_strchr(minishell->lexer[i].str, '>')
 			|| ft_strchr(minishell->lexer[i].str, '<')
 			|| ft_strchr(minishell->lexer[i].str, '|'))
-			minishell->lexer->token = 1;
-		if (ft_strchr)
-		
+			minishell->lexer[i].token = 1;
+		i++;
 	}
 }
 
@@ -57,23 +56,35 @@ void	create_lexer(t_minishell *minishell)
 	}
 }
 
-void	input_lexer(t_minishell *minishell)
-{
-	int		i;
+// void	input_lexer(t_minishell *minishell)
+// {
+// 	int		i;
 
-	i = 0;
-	while (i < minishell->lexer_size)
-	{
-		if (ft_strchr(minishell->lexer[i].str, '>')
-			|| ft_strchr(minishell->lexer[i].str, '<')
-			|| ft_strchr(minishell->lexer[i].str, '|'))
-			minishell->lexer->token = 1;
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < minishell->lexer_size)
+// 	{
+// 		if (ft_strchr(minishell->lexer[i].str, '>')
+// 			|| ft_strchr(minishell->lexer[i].str, '<')
+// 			|| ft_strchr(minishell->lexer[i].str, '|'))
+// 			minishell->lexer->token = 1;
+// 		i++;
+// 	}
+// }
 
 void	tokenize_input(t_minishell *minishell)
 {
-	
-	
+	int			i;
+
+	i = 0;
+	create_lexer(minishell);
+	lexer_search(minishell);
+	while (i < minishell->lexer_size)
+	{
+		if (minishell->lexer[i].token == 1)
+			printf("[TOKEN]");
+		else
+			printf("[TEXT]");
+		i++;
+	}
+	printf("\n");
 }
