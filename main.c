@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/01/31 23:27:11 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/01/31 23:39:33 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int main(int argc, char **argv, char **env)
 	{
 		read_cmd_line(&minishell);
 		input_lexer(&minishell);
-		parse(minishell.cmd_line, env);
+		lst = parse(minishell.cmd_line, env);
 		print_parse(lst);
+		printf("\n");
 	}
 }
