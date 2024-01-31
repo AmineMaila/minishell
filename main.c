@@ -6,11 +6,11 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/01/31 16:24:38 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/01/31 23:09:26 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./Includes/minishell.h"
 
 void	read_cmd_line(t_minishell *minishell)
 {
