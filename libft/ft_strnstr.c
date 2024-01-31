@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 17:46:42 by nazouz            #+#    #+#             */
-/*   Updated: 2023/11/12 22:17:31 by nazouz           ###   ########.fr       */
+/*   Created: 2023/10/31 19:06:32 by nazouz            #+#    #+#             */
+/*   Updated: 2023/11/03 19:19:15 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	t_list		*last;
+	size_t		n_len;
 
-	if (!lst || !new)
-		return ;
-	if (*lst == NULL)
+	if (!*needle)
+		return ((char *)haystack);
+	n_len = ft_strlen(needle);
+	while (*haystack && len >= n_len)
 	{
-		*lst = new;
-		return ;
+		if (*haystack == *needle && ft_strncmp(haystack, needle, n_len) == 0)
+			return ((char *)haystack);
+		haystack++;
+		len--;
 	}
-	last = ft_lstlast(*lst);
-	last->next = new;
-	return ;
+	return (NULL);
 }

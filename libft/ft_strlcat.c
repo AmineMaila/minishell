@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 17:46:42 by nazouz            #+#    #+#             */
-/*   Updated: 2023/11/12 22:17:31 by nazouz           ###   ########.fr       */
+/*   Created: 2023/11/03 20:52:45 by nazouz            #+#    #+#             */
+/*   Updated: 2023/11/14 12:18:41 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	t_list		*last;
+	size_t		dst_len;
+	size_t		src_len;
+	size_t		index;
 
-	if (!lst || !new)
-		return ;
-	if (*lst == NULL)
-	{
-		*lst = new;
-		return ;
-	}
-	last = ft_lstlast(*lst);
-	last->next = new;
-	return ;
+	index = 0;
+	dst_len = ft_strlen(dst);
+	src_len = ft_strlen(src);
+	if (dstsize <= dst_len)
+		return (dstsize + src_len);
+	while (*dst)
+		dst++;
+	while (*src && index++ < dstsize - dst_len - 1)
+		*dst++ = *src++;
+	*dst = '\0';
+	return (dst_len + src_len);
 }

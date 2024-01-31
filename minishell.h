@@ -6,20 +6,12 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/01/31 17:46:40 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/01/31 16:22:00 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHEL_H
 # define MINISHEL_H
-
-# define COMMAND 1
-# define PIPE 2
-# define ARG 3
-# define REDIN 4
-# define REDOUT 5
-# define FILEE 6
-
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -29,23 +21,25 @@
 # include <string.h> 
 # include <fcntl.h>
 # include <signal.h>
-# include <errno.h>
 
-typedef struct	s_list_parse
+typedef struct s_lexer
 {
-	char				*str;
-	int					flag;
-	struct s_list_parse	*next;
-}				t_list_parse;
+	char	*str;
+	int		text;
+	int		token;
+}	t_lexer;
 
-typedef struct	s_minishell
+typedef struct s_minishell
 {
-	char	*input;
-	char	**cmd_line;
-	char	***tok_line;
-	char	**parser;
-	int		input_red;
-	int		output_red;
+	char				*input;
+	char				**cmd_line;
+	char				**cmd_line_x;
+	char				***tok_line;
+	char				**parser;
+	int					input_red;
+	int					output_red;
+	struct s_lexer		*lexer;
+	int					lexer_size;
 }	t_minishell;
 
 
@@ -53,11 +47,10 @@ typedef struct	s_minishell
 void	input_lexer(t_minishell *minishell);
 
 //	LIBFT
-char	**ft_split(char const *s, char *charset);
+char	**ft_split(char const *s, char c);
+char	*ft_strchr(const char *s, int c);
 
 //	HELPERS
 void	ft_print_matrix(char **matrix);
-void	ft_exit(char *cmd, char *str, int ext);
-void	flag(t_list_parse *lst, char **env);
 
 #endif

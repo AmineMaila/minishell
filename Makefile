@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
+#    By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/01/30 15:37:42 by mmaila           ###   ########.fr        #
+#    Updated: 2024/01/30 12:34:14 by nazouz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ OBJS			= 		$(SRCS:.c=.o)
 
 all : $(NAME)
 
-%.o : %.c Includes/minishell.h libft/libft.h
+%.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@ -I$(shell brew --prefix readline)/include
 
 $(NAME) : $(OBJS)

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 14:06:40 by nazouz            #+#    #+#             */
-/*   Updated: 2024/01/30 15:40:27 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/01/30 12:31:28 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Includes/minishell.h"
+#include "minishell.h"
 
 void	aa(void)
 {

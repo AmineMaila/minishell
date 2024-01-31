@@ -6,11 +6,11 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/01/31 17:51:28 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/01/31 16:21:50 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Includes/minishell.h"
+#include "../minishell.h"
 
 int	is_operator(char c)
 {
@@ -66,5 +66,5 @@ void	input_lexer(t_minishell *minishell)
 		i++;
 	}
 	minishell->input = insert_spaces(minishell->input, (op_count * 2) + ch_count);
-	minishell->cmd_line = ft_split(minishell->input, " ");
+	minishell->cmd_line = ft_split(minishell->input, ' ');
 }
