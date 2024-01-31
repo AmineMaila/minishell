@@ -3,97 +3,99 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/04 14:32:02 by nazouz            #+#    #+#             */
-/*   Updated: 2023/11/09 17:44:31 by nazouz           ###   ########.fr       */
+/*   Created: 2023/11/02 22:17:46 by mmaila            #+#    #+#             */
+/*   Updated: 2024/01/30 13:19:40 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static	size_t	ft_count_words(const char *str, char c)
+int	is_charset(char c, char *charset)
 {
-	size_t		count;
+	int	i;
 
+	i = 0;
+	while (charset[i])
+		if (c == charset[i++])
+			return (1);
+	return (0);
+}
+
+static size_t	word_count(char const *s, char *charset)
+{
+	size_t	i;
+	size_t	count;
+
+	i = 0;
 	count = 0;
-	while (*str)
+	while (s[i])
 	{
-		while (*str && *str == c)
-			str++;
-		if (*str && *str != c)
-		{
+		while (is_charset(s[i], charset) && s[i])
+			i++;
+		if (s[i] != '\0')
 			count++;
-			while (*str && *str != c)
-				str++;
-		}
+		while (!is_charset(s[i], charset) && s[i])
+			i++;
 	}
 	return (count);
 }
 
-static	size_t	ft_word_len(const char *str, char c)
+static void	freemem(char **str, size_t j)
 {
-	int		len;
+	size_t	k;
 
-	len = 0;
-	while (*str && *str != c)
-	{
-		len++;
-		str++;
-	}
-	return (len);
+	k = 0;
+	while (k < j)
+		free(str[k++]);
 }
 
-static char	*ft_strncpy(char *dest, char *src, unsigned int n)
-{
-	unsigned int	i;
 
-	i = 0;
-	while (src[i] != '\0' && i < n)
+static int	alloc(char **str, char const *s, char *charset, size_t start)
+{
+	size_t	j;
+	size_t	pivot;
+
+	pivot = 0;
+	j = 0;
+	while (s[pivot])
 	{
-		dest[i] = src[i];
-		i++;
+		while (is_charset(s[pivot], charset) && s[pivot])
+			pivot++;
+		start = pivot;
+		while (!is_charset(s[pivot], charset) && s[pivot])
+			pivot++;
+		if (s[start] != '\0')
+		{
+			str[j] = (char *) malloc(pivot - start + 1);
+			if (str[j] == NULL)
+			{
+				freemem(str, j);
+				return (0);
+			}
+			ft_strlcpy(str[j++], s + start, pivot - start + 1);
+		}
 	}
-	while (i < n)
-	{
-		dest[i] = '\0';
-		i++;
-	}
-	return (dest);
+	return (1);
 }
 
-static	void	*ft_free_array(char **array, int n)
+char	**ft_split(char const *s, char *charset)
 {
-	while (n--)
-		free(array[n]);
-	free(array);
-	return (0);
-}
+	char	**str;
+	size_t	start;
 
-char	**ft_split(char const *s, char c)
-{
-	char		**result;
-	size_t		words_count;
-	size_t		i;
-
-	i = 0;
-	if (!s)
+	start = 0;
+	if (s == NULL)
 		return (NULL);
-	words_count = ft_count_words(s, c);
-	result = (char **)malloc((words_count + 1) * sizeof(char *));
-	if (!result)
+	str = (char **) malloc((word_count(s, charset) + 1) * sizeof(char *));
+	if (str == NULL)
 		return (NULL);
-	while (i < words_count)
+	if (alloc(str, s, charset, start) == 0)
 	{
-		while (*s && *s == c)
-			s++;
-		result[i] = (char *)malloc(ft_word_len(s, c) + 1);
-		if (!result[i])
-			return (ft_free_array(result, i));
-		ft_strncpy(result[i], (char *)s, ft_word_len(s, c));
-		result[i++][ft_word_len(s, c)] = '\0';
-		s = s + ft_word_len(s, c);
+		free(str);
+		return (NULL);
 	}
-	result[i] = 0;
-	return (result);
+	str[word_count(s, charset)] = 0;
+	return (str);
 }
