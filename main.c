@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/01/31 23:16:56 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/01/31 23:20:44 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,13 @@ int main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+	lst = NULL;
 	signal(SIGINT, interrupt);
 	while (1)
 	{
 		read_cmd_line(&minishell);
 		input_lexer(&minishell);
-		parse(lst, env);
+		parse(minishell.cmd_line, env);
 		print_parse(lst);
 	}
 }
