@@ -6,13 +6,13 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 14:06:40 by nazouz            #+#    #+#             */
-/*   Updated: 2024/01/31 23:46:54 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/01/31 23:49:30 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Includes/minishell.h"
 
-void	aa(void)
+void	leaks(void)
 {
 	system ("leaks minishell");
 }
