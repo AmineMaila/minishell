@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/01/30 15:40:34 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/01/31 17:49:59 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,17 @@ void	interrupt()
 	rl_redisplay();
 }
 
-int main(void)
+int main(int argc, char **argv, char **env)
 {
 	t_minishell		minishell;
+	t_list_parse	*lst;
 
 	signal(SIGINT, interrupt);
 	while (1)
 	{
 		read_cmd_line(&minishell);
-		tokenize_input(&minishell);
-		ft_print_matrix(minishell.cmd_line);
+		input_lexer(&minishell);
+		parse(lst, env);
+		print_parse(lst);
 	}
 }

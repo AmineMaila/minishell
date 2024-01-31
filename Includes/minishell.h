@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/01/31 16:03:27 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/01/31 17:46:40 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct	s_minishell
 
 
 //	MINISHELL
-void	tokenize_input(t_minishell *minishell);
+void	input_lexer(t_minishell *minishell);
 
 //	LIBFT
 char	**ft_split(char const *s, char *charset);
