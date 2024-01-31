@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 17:46:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/01/30 19:10:00 by mmaila           ###   ########.fr       */
+/*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
+/*   Updated: 2024/01/30 15:52:09 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../Includes/minishell.h"
+#include "../libft/libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_exit(char *cmd, char *str, int ext)
 {
-	t_list		*last;
-
-	if (!lst || !new)
-		return ;
-	if (*lst == NULL)
+	if (str)
 	{
-		*lst = new;
-		return ;
+		ft_putstr_fd("pipex: ", 2);
+		if (cmd)
+			ft_putstr_fd(cmd, 2);
+		ft_putendl_fd(str, 2);
 	}
-	last = ft_lstlast(*lst);
-	last->next = new;
-	return ;
+	else
+		perror("pipex");
+	if (ext)
+		exit(ext);
 }
