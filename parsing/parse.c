@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/01/31 13:21:19 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/01/31 13:37:22 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	t_list_parse	*lst;
-	char *arr[] = {"cat", "infile", "|", "ls", "-a", "|", "wc", "-l", NULL};
+	char *arr[] = {"cat", "infile", "|", "ls", "sdadaw", "-a", "|", "wc", "-l", NULL};
 	
 	lst = parse(arr);
 	flag(lst, env);
