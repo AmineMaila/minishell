@@ -1,44 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers.c                                          :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/05 14:06:40 by nazouz            #+#    #+#             */
-/*   Updated: 2024/01/30 15:40:27 by mmaila           ###   ########.fr       */
+/*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
+/*   Updated: 2024/01/30 15:52:09 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Includes/minishell.h"
+#include "../Includes/minishell.h"
+#include "../libft/libft.h"
 
-void	aa(void)
+void	ft_exit(char *cmd, char *str, int ext)
 {
-	system ("leaks push_swap");
-}
-
-void	ft_print_matrix(char **matrix)
-{
-	int		i;
-
-	i = 0;
-	while (matrix[i])
+	if (str)
 	{
-		printf("matrix[%d] = %s\n", i, matrix[i]);
-		i++;
+		ft_putstr_fd("pipex: ", 2);
+		if (cmd)
+			ft_putstr_fd(cmd, 2);
+		ft_putendl_fd(str, 2);
 	}
+	else
+		perror("pipex");
+	if (ext)
+		exit(ext);
 }
-
-void	ft_print_int(int *array, int i, int length)
-{
-	// int		i;
-
-	// i = 0;
-	while (i < length)
-	{
-		printf("[%d]", array[i]);
-		i++;
-	}
-	printf("\n");
-}
-

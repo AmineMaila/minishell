@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/01/31 16:24:38 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/01/30 15:40:34 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "Includes/minishell.h"
 
 void	read_cmd_line(t_minishell *minishell)
 {
@@ -33,17 +33,15 @@ void	interrupt()
 	rl_redisplay();
 }
 
-int main(int argc, char **argv, char **env)
+int main(void)
 {
 	t_minishell		minishell;
-	t_list_parse	*lst;
 
 	signal(SIGINT, interrupt);
 	while (1)
 	{
 		read_cmd_line(&minishell);
-		input_lexer(&minishell);
-		parse(lst, env);
-		print_parse(lst);
+		tokenize_input(&minishell);
+		ft_print_matrix(minishell.cmd_line);
 	}
 }
