@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/01/31 16:03:27 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/01/31 23:15:35 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ typedef struct	s_minishell
 
 
 //	MINISHELL
-void	tokenize_input(t_minishell *minishell);
+void			input_lexer(t_minishell *minishell);
+t_list_parse	*parse(char **str, char **env);
 
 //	LIBFT
 char	**ft_split(char const *s, char *charset);
@@ -59,5 +60,7 @@ char	**ft_split(char const *s, char *charset);
 void	ft_print_matrix(char **matrix);
 void	ft_exit(char *cmd, char *str, int ext);
 void	flag(t_list_parse *lst, char **env);
+
+void	print_parse(t_list_parse *lst);
 
 #endif
