@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/01/30 22:22:10 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/01/31 16:03:27 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 # define COMMAND 1
 # define PIPE 2
-# define FLAG 3
-# define FILEE 4
-# define REDIN 5
-# define REDOUT 6
+# define ARG 3
+# define REDIN 4
+# define REDOUT 5
+# define FILEE 6
 
 
 # include <stdio.h>

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/01/31 13:37:22 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/01/31 16:19:27 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,21 @@ void	ft_lstadd_back(t_list_parse **lst, char *str)
 	temp->next = new;
 }
 
-t_list_parse	*parse(char **str)
+t_list_parse	*parse(char **str, char **env)
 {
 	int				i;
 	t_list_parse	*result;
-	
+
 	result = NULL;
 	i = 0;
 	while (str[i])
 		ft_lstadd_back(&result, str[i++]);
+	flag(result, env);
 	return (result);
 }
 
-int main(int argc, char **argv, char **env)
+void	print_parse(t_list_parse *lst)
 {
-	(void)argc;
-	(void)argv;
-	t_list_parse	*lst;
-	char *arr[] = {"cat", "infile", "|", "ls", "sdadaw", "-a", "|", "wc", "-l", NULL};
-	
-	lst = parse(arr);
-	flag(lst, env);
 	while (lst)
 	{
 		printf("[");
@@ -78,16 +72,16 @@ int main(int argc, char **argv, char **env)
 			printf("PIPE");
 			printf("\033[0m");
 		}
-		else if (lst->flag == FLAG)
-		{
-			printf("\033[0;35m");
-			printf("FLAG");
-			printf("\033[0m");
-		}
 		else if (lst->flag == FILEE)
 		{
-			printf("\033[0;32m");
+			printf("\033[1;30m");
 			printf("FILE");
+			printf("\033[0m");
+		}
+		else if (lst->flag == ARG)
+		{
+			printf("\033[0;32m");
+			printf("ARG");
 			printf("\033[0m");
 		}
 		else if (lst->flag == REDIN)
