@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/01/31 23:06:56 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/01/31 23:09:08 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ void	input_lexer(t_minishell *minishell)
 		i++;
 	}
 	minishell->input = insert_spaces(minishell->input, (op_count * 2) + ch_count);
-	minishell->cmd_line = ft_split(minishell->input, ' ');
+	minishell->cmd_line = ft_split(minishell->input, " ");
 }
