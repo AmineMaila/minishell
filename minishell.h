@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/01/30 13:56:56 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/01/31 16:22:00 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_minishell
 {
 	char				*input;
 	char				**cmd_line;
+	char				**cmd_line_x;
 	char				***tok_line;
 	char				**parser;
 	int					input_red;
@@ -43,7 +44,7 @@ typedef struct s_minishell
 
 
 //	MINISHELL
-void	tokenize_input(t_minishell *minishell);
+void	input_lexer(t_minishell *minishell);
 
 //	LIBFT
 char	**ft_split(char const *s, char c);
