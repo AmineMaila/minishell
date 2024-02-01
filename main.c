@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/01/31 23:39:33 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/01 14:09:26 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./Includes/minishell.h"
+
+void	minishell_init(t_minishell *minishell, t_list_parse	**lst)
+{
+	minishell->input = NULL;
+	minishell->cmd_line = NULL;
+	*lst = NULL;
+}
 
 void	read_cmd_line(t_minishell *minishell)
 {
@@ -40,8 +47,8 @@ int main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	lst = NULL;
 	signal(SIGINT, interrupt);
+	minishell_init(&minishell, &lst);
 	while (1)
 	{
 		read_cmd_line(&minishell);
