@@ -2,7 +2,7 @@
 
 int main()
 {
-	char *arr[] = {""};
+	char *arr[] = {"echo", "$path", NULL};
 
-	exceve();
+	execve(arr[0], arr, NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/01 23:09:18 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/02 00:24:15 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,45 @@ int	env_len(char *str)
 	return (-1);
 }
 
+char	*to_upper(char *str)
+{
+	char	*upper;
+	int		i;
+
+	upper = malloc((ft_strlen(str) + 1) * sizeof(char));
+	if (!upper)
+		return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isalpha(str[i]))
+			upper[i] = str[i] - 32;
+		else
+			upper[i] = str[i];
+		i++;
+	}
+	upper[i] = '\0';
+	return (upper);
+}
+
 void	expand_var(t_list_parse **lst, t_list_parse *node, char **env)
 {
-	int				i;
-	int				var_len;
+	char	*upper;
+	int		i;
+	int		var_len;
 
 	i = 0;
-	while (env[i] && ft_strncmp(node->str + 1, env[i], env_len(env[i])))
+	upper = to_upper(node->str);
+	// if (!upper)
+	// 	exit
+	while (env[i])
+	{
+		if (!ft_strncmp(node->str + 1, env[i], env_len(env[i])) 
+			|| !ft_strncmp(upper + 1, env[i], env_len(env[i])))
+			break;
 		i++;
+	}
+	free(upper);
 	if (!env[i])
 	{
 		delete_node(lst, node);
