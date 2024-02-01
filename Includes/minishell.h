@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/01 14:07:51 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/01 16:26:26 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@
 # define FILEE 6
 # define DQUOTE 7
 # define TEXT 8
+# define VAR 9
 
 
+# include "../libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -54,12 +56,15 @@ void			input_lexer(t_minishell *minishell);
 t_list_parse	*parse(char **str, char **env);
 
 //	LIBFT
-char	**ft_split(char const *s, char *charset);
+char			**ft_split(char const *s, char *charset);
+t_list_parse	*ft_lstnew(char *str);
+void			ft_lstadd_back(t_list_parse **lst, char *str);
 
 //	HELPERS
 void	ft_print_matrix(char **matrix);
 void	ft_exit(char *cmd, char *str, int ext);
 void	flag(t_list_parse *lst, char **env);
+void	expand_var(t_list_parse *node, char **env);
 
 void	print_parse(t_list_parse *lst);
 

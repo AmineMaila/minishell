@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/01 16:06:22 by mmaila           ###   ########.fr       */
+/*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
+/*   Updated: 2024/02/01 16:14:56 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-void	ft_exit(char *cmd, char *str, int ext)
+void	expand_var(t_list_parse *node, char **env)
 {
-	if (str)
-	{
-		ft_putstr_fd("pipex: ", 2);
-		if (cmd)
-			ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(str, 2);
-	}
-	else
-		perror("pipex");
-	if (ext)
-		exit(ext);
+	int		i;
+	int		var_len;
+
+	i = 0;
+	var_len = ft_strlen(node->str);
+	while (ft_strncmp(node->str + 1, env[i], var_len - 1))
+		i++;
+	free(node->str);
+	node->str = ft_substr(env[i], var_len, ft_strlen(env[i]) - var_len);
 }
