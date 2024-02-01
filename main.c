@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/01 19:45:56 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/01 19:53:06 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ void	read_cmd_line(t_minishell *minishell)
 		exit(EXIT_SUCCESS);
 }
 
-void	interrupt(void)
+void	interrupt(int signum)
 {
+	(void)signum;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 1);
@@ -53,7 +54,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		read_cmd_line(&minishell);
 		input_lexer(&minishell);
-		ft_print_matrix(minishell.cmd_line);
+		// ft_print_matrix(minishell.cmd_line);
 		lst = parse(minishell.cmd_line, env);
 		print_parse(lst);
 		printf("\n");
