@@ -6,12 +6,11 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/01 12:53:44 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/01 16:06:26 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
-
 
 t_list_parse	*ft_lstnew(char *str)
 {
@@ -106,6 +105,12 @@ void	print_parse(t_list_parse *lst)
 		{
 			printf("\033[0;35m");
 			printf("TEXT");
+			printf("\033[0m");
+		}
+		else if (lst->flag == VAR)
+		{
+			printf("\033[3;35m");
+			printf("%s", lst->str);
 			printf("\033[0m");
 		}
 		printf("]-");

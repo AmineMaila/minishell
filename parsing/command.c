@@ -6,12 +6,11 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/01 12:55:57 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/01 16:06:19 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
-#include "../libft/libft.h"
 
 void	free_2d(char ***arr)
 {
@@ -101,13 +100,16 @@ void	flag(t_list_parse *lst, char **env)
 			(tmp->flag = PIPE, is_arg = 0);
 		else if (!ft_strcmp(tmp->str, "\""))
 		{
+			(tmp->flag = DQUOTE, is_arg = 0);
 			if (!is_text)
-				(tmp->flag = DQUOTE, is_arg = 0, is_text = 1);
+				is_text = 1;
 			else
-				(tmp->flag = DQUOTE, is_arg = 0, is_text = 0);
+				is_text = 0;
 		}
 		else if (!ft_strcmp(tmp->str, "<"))
 			(tmp->flag = REDIN, is_arg = 0);
+		else if (tmp->str[0] == '$')
+			(tmp->flag = VAR, is_arg = 0, expand_var(tmp, env));
 		else if (!ft_strcmp(tmp->str, ">"))
 			(tmp->flag = REDOUT, is_arg = 0);
 		else if (is_arg)
