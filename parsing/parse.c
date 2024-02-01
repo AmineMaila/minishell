@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/01 19:30:32 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/01 19:45:45 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
-
-t_list_parse	*ft_lstnew(char *str)
-{
-	t_list_parse	*lst;
-
-	lst = (t_list_parse *) malloc(sizeof(t_list_parse));
-	if (lst == NULL)
-		return (NULL);
-	lst->str = str;
-	lst->next = NULL;
-	return (lst);
-}
-
-void	ft_lstadd_back(t_list_parse **lst, char *str)
-{
-	t_list_parse	*temp;
-	t_list_parse	*new;
-
-	new = ft_lstnew(str);
-	temp = *lst;
-	if (*lst == NULL)
-	{
-		*lst = new;
-		return ;
-	}
-	while (temp->next)
-		temp = temp->next;
-	temp->next = new;
-}
 
 t_list_parse	*parse(char **str, char **env)
 {

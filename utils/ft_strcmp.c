@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 17:27:53 by nazouz            #+#    #+#             */
-/*   Updated: 2023/11/09 17:11:16 by nazouz           ###   ########.fr       */
+/*   Created: 2024/02/01 18:49:53 by mmaila            #+#    #+#             */
+/*   Updated: 2024/02/01 18:50:07 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../Includes/minishell.h"
 
-int	ft_lstsize(t_list *lst)
+int	ft_strcmp(char *s1, char *s2)
 {
-	size_t		i;
+	int	i;
 
 	i = 0;
-	while (lst != NULL)
+	while (s1[i] || s2[i])
 	{
-		lst = lst->next;
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
 		i++;
 	}
-	return (i);
+	return (0);
 }

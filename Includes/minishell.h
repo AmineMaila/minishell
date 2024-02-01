@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/01 16:26:26 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/01 19:07:03 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,14 @@ t_list_parse	*parse(char **str, char **env);
 char			**ft_split(char const *s, char *charset);
 t_list_parse	*ft_lstnew(char *str);
 void			ft_lstadd_back(t_list_parse **lst, char *str);
+void			ft_lstdelone(t_list_parse *lst);
+int				ft_strcmp(char *s1, char *s2);
 
 //	HELPERS
 void	ft_print_matrix(char **matrix);
 void	ft_exit(char *cmd, char *str, int ext);
 void	flag(t_list_parse *lst, char **env);
-void	expand_var(t_list_parse *node, char **env);
+void	expand_var(t_list_parse **lst, char *str, char **env);
 
 void	print_parse(t_list_parse *lst);
 

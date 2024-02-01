@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 17:07:31 by nazouz            #+#    #+#             */
-/*   Updated: 2023/11/15 12:59:52 by nazouz           ###   ########.fr       */
+/*   Created: 2023/11/07 16:36:38 by nazouz            #+#    #+#             */
+/*   Updated: 2024/02/01 18:16:01 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../Includes/minishell.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+t_list_parse	*ft_lstnew(char *str)
 {
-	if (!lst || !new)
-		return ;
-	new->next = *lst;
-	*lst = new;
+	t_list_parse	*lst;
+
+	lst = (t_list_parse *) malloc(sizeof(t_list_parse));
+	if (lst == NULL)
+		return (NULL);
+	lst->str = str;
+	lst->next = NULL;
+	return (lst);
 }
