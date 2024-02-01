@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/01/31 23:27:54 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/01 12:53:44 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,18 @@ void	print_parse(t_list_parse *lst)
 		{
 			printf("\033[1;34m");
 			printf("RED-OUT");
+			printf("\033[0m");
+		}
+		else if (lst->flag == DQUOTE)
+		{
+			printf("\033[0;34m");
+			printf("DQUOTE");
+			printf("\033[0m");
+		}
+		else if (lst->flag == TEXT)
+		{
+			printf("\033[0;35m");
+			printf("TEXT");
 			printf("\033[0m");
 		}
 		printf("]-");

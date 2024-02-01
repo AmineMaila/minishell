@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/01 12:04:17 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/01 12:55:57 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ char	*get_path(char *cmd, char **env)
 		free(tmp);
 	}
 	free_2d(&path);
-	//ft_exit(cmd + 1, ": command not found", 1);
 	return (NULL);
 }
 
@@ -89,8 +88,10 @@ void	flag(t_list_parse *lst, char **env)
 {
 	t_list_parse	*tmp;
 	int				is_arg;
+	int				is_text;
 
 	is_arg = 0;
+	is_text = 0;
 	tmp = lst;
 	while(tmp)
 	{
@@ -98,12 +99,21 @@ void	flag(t_list_parse *lst, char **env)
 			(tmp->flag = COMMAND, is_arg = 1);
 		else if (!ft_strcmp(tmp->str, "|"))
 			(tmp->flag = PIPE, is_arg = 0);
+		else if (!ft_strcmp(tmp->str, "\""))
+		{
+			if (!is_text)
+				(tmp->flag = DQUOTE, is_arg = 0, is_text = 1);
+			else
+				(tmp->flag = DQUOTE, is_arg = 0, is_text = 0);
+		}
 		else if (!ft_strcmp(tmp->str, "<"))
 			(tmp->flag = REDIN, is_arg = 0);
 		else if (!ft_strcmp(tmp->str, ">"))
 			(tmp->flag = REDOUT, is_arg = 0);
 		else if (is_arg)
 			(tmp->flag = ARG);
+		else if (is_text)
+			(tmp->flag = TEXT);
 		else
 			tmp->flag = FILEE;
 		tmp = tmp->next;
