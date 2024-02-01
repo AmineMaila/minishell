@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/01 16:06:19 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/01 19:30:57 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	flag(t_list_parse *lst, char **env)
 	is_arg = 0;
 	is_text = 0;
 	tmp = lst;
-	while(tmp)
+	while (tmp)
 	{
 		if (is_cmd(&tmp->str, env))
 			(tmp->flag = COMMAND, is_arg = 1);

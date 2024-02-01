@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/01 14:09:26 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/01 19:32:28 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	read_cmd_line(t_minishell *minishell)
 		exit(EXIT_SUCCESS);
 }
 
-void	interrupt()
+void	interrupt(void)
 {
 	write(1, "\n", 1);
 	rl_on_new_line();
@@ -40,7 +40,7 @@ void	interrupt()
 	rl_redisplay();
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	t_minishell		minishell;
 	t_list_parse	*lst;
@@ -53,6 +53,7 @@ int main(int argc, char **argv, char **env)
 	{
 		read_cmd_line(&minishell);
 		input_lexer(&minishell);
+		ft_print_matrix(minishell.cmd_line);
 		lst = parse(minishell.cmd_line, env);
 		print_parse(lst);
 		printf("\n");
