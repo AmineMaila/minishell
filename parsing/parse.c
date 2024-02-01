@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/01 19:45:45 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/01 23:00:30 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_list_parse	*parse(char **str, char **env)
 	i = 0;
 	while (str[i])
 		ft_lstadd_back(&result, str[i++]);
-	flag(result, env);
+	flag(&result, env);
 	return (result);
 }
 

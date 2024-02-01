@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/01 19:43:46 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/01 23:09:41 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,15 @@ int	is_cmd(char **token, char **env)
 	return (1);
 }
 
-void	flag(t_list_parse *lst, char **env)
+void	flag(t_list_parse **lst, char **env)
 {
 	t_list_parse	*curr;
-	t_list_parse	*prev;
 	int				is_arg;
 	int				is_text;
 
 	is_arg = 0;
 	is_text = 0;
-	curr = lst;
-	prev = lst;
+	curr = *lst;
 	while(curr)
 	{
 		if (is_cmd(&curr->str, env))
@@ -97,7 +95,7 @@ void	flag(t_list_parse *lst, char **env)
 		else if (!ft_strcmp(curr->str, "<"))
 			(curr->flag = REDIN, is_arg = 0);
 		else if (curr->str[0] == '$')
-			(curr->flag = VAR, is_arg = 0, expand_var(&lst, curr->str, env));
+			(curr->flag = VAR, expand_var(lst, curr, env));
 		else if (!ft_strcmp(curr->str, ">"))
 			(curr->flag = REDOUT, is_arg = 0);
 		else if (is_arg)
@@ -106,7 +104,6 @@ void	flag(t_list_parse *lst, char **env)
 			(curr->flag = TEXT);
 		else
 			curr->flag = FILEE;
-		prev = curr;
 		curr = curr->next;
 	}
 }
