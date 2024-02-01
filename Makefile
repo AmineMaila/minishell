@@ -6,7 +6,7 @@
 #    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/01 16:05:47 by mmaila           ###   ########.fr        #
+#    Updated: 2024/02/01 18:50:44 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,10 @@ SRCS			= 		\
 						./parsing/parse.c \
 						./parsing/expand.c \
 						./helpers.c \
+						./utils/ft_lstadd_back.c \
+						./utils/ft_lstnew.c \
+						./utils/ft_lstdelone.c \
+						./utils/ft_strcmp.c \
 						main.c
 
 OBJS			= 		$(SRCS:.c=.o)

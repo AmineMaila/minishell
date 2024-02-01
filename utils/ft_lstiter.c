@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 18:40:51 by nazouz            #+#    #+#             */
-/*   Updated: 2023/11/09 17:10:01 by nazouz           ###   ########.fr       */
+/*   Created: 2023/11/07 18:53:09 by nazouz            #+#    #+#             */
+/*   Updated: 2024/02/01 18:16:20 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../Includes/minishell.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
 	t_list		*current;
-	t_list		*next;
 
-	if (!lst || !(*lst) || !del)
+	if (!lst || !f)
 		return ;
-	current = *lst;
+	current = lst;
 	while (current != NULL)
 	{
-		next = current->next;
-		del(current->content);
-		free(current);
-		current = next;
+		f(current->content);
+		current = current->next;
 	}
-	*lst = NULL;
 }

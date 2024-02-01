@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/01 16:06:19 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/01 19:07:55 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,55 +69,44 @@ int	is_cmd(char **token, char **env)
 	return (1);
 }
 
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while (s1[i] || s2[i])
-	{
-		if (s1[i] != s2[i])
-			break ;
-		i++;
-	}
-	return (s1[i] - s2[i]);
-}
-
 void	flag(t_list_parse *lst, char **env)
 {
-	t_list_parse	*tmp;
+	t_list_parse	*curr;
+	t_list_parse	*prev;
 	int				is_arg;
 	int				is_text;
 
 	is_arg = 0;
 	is_text = 0;
-	tmp = lst;
-	while(tmp)
+	curr = lst;
+	prev = lst;
+	while(curr)
 	{
-		if (is_cmd(&tmp->str, env))
-			(tmp->flag = COMMAND, is_arg = 1);
-		else if (!ft_strcmp(tmp->str, "|"))
-			(tmp->flag = PIPE, is_arg = 0);
-		else if (!ft_strcmp(tmp->str, "\""))
+		if (is_cmd(&curr->str, env))
+			(curr->flag = COMMAND, is_arg = 1);
+		else if (!ft_strcmp(curr->str, "|"))
+			(curr->flag = PIPE, is_arg = 0);
+		else if (!ft_strcmp(curr->str, "\""))
 		{
-			(tmp->flag = DQUOTE, is_arg = 0);
+			(curr->flag = DQUOTE, is_arg = 0);
 			if (!is_text)
 				is_text = 1;
 			else
 				is_text = 0;
 		}
-		else if (!ft_strcmp(tmp->str, "<"))
-			(tmp->flag = REDIN, is_arg = 0);
-		else if (tmp->str[0] == '$')
-			(tmp->flag = VAR, is_arg = 0, expand_var(tmp, env));
-		else if (!ft_strcmp(tmp->str, ">"))
-			(tmp->flag = REDOUT, is_arg = 0);
+		else if (!ft_strcmp(curr->str, "<"))
+			(curr->flag = REDIN, is_arg = 0);
+		else if (curr->str[0] == '$')
+			(curr->flag = VAR, is_arg = 0, expand_var(&lst, curr->str, env));
+		else if (!ft_strcmp(curr->str, ">"))
+			(curr->flag = REDOUT, is_arg = 0);
 		else if (is_arg)
-			(tmp->flag = ARG);
+			(curr->flag = ARG);
 		else if (is_text)
-			(tmp->flag = TEXT);
+			(curr->flag = TEXT);
 		else
-			tmp->flag = FILEE;
-		tmp = tmp->next;
+			curr->flag = FILEE;
+		prev = curr;
+		curr = curr->next;
 	}
 }
