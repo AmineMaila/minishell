@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 14:06:40 by nazouz            #+#    #+#             */
-/*   Updated: 2024/01/31 23:49:30 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/01 11:53:39 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_print_matrix(char **matrix)
 	i = 0;
 	while (matrix[i])
 	{
-		printf("[%s]\n", i, matrix[i]);
+		printf("[%s]\n", matrix[i]);
 		i++;
 	}
 }

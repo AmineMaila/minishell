@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/01/31 16:04:27 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/01 12:04:17 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,24 +88,24 @@ int	ft_strcmp(char *s1, char *s2)
 void	flag(t_list_parse *lst, char **env)
 {
 	t_list_parse	*tmp;
-	int				is_file;
+	int				is_arg;
 
-	is_file = 0;
+	is_arg = 0;
 	tmp = lst;
 	while(tmp)
 	{
 		if (is_cmd(&tmp->str, env))
-			tmp->flag = COMMAND;
+			(tmp->flag = COMMAND, is_arg = 1);
 		else if (!ft_strcmp(tmp->str, "|"))
-			tmp->flag = PIPE;
+			(tmp->flag = PIPE, is_arg = 0);
 		else if (!ft_strcmp(tmp->str, "<"))
-			(tmp->flag = REDIN, is_file = 1);
+			(tmp->flag = REDIN, is_arg = 0);
 		else if (!ft_strcmp(tmp->str, ">"))
-			(tmp->flag = REDOUT, is_file = 1);
-		else if (is_file)
-			(tmp->flag = FILEE, is_file = 0);
+			(tmp->flag = REDOUT, is_arg = 0);
+		else if (is_arg)
+			(tmp->flag = ARG);
 		else
-			tmp->flag = ARG;
+			tmp->flag = FILEE;
 		tmp = tmp->next;
 	}
 }
