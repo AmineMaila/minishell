@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/01 20:28:22 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/02 14:54:41 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,5 @@ void	input_lexer(t_minishell *minishell)
 	}
 	minishell->input
 		= insert_spaces(minishell->input, (op_count * 2) + ch_count);
-	minishell->cmd_line = ft_split(minishell->input, " ");
+	minishell->cmd_line = ft_split(minishell->input, " \t");
 }
