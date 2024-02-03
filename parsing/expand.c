@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/03 16:22:56 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/03 16:40:55 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
+
+int	var_end(char *str, int start)
+{
+	int			i;
+
+	i = start;
+	while (ft_isalnum(str[i]))
+		i++;
+	return (i);
+}
 
 void	delete_node(t_list_parse **lst, t_list_parse *node)
 {
