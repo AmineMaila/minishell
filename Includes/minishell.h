@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/01 23:18:46 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/03 11:53:04 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ void	ft_print_matrix(char **matrix);
 void	ft_exit(char *cmd, char *str, int ext);
 void	flag(t_list_parse **lst, char **env);
 void	expand_var(t_list_parse **lst, t_list_parse *node, char **env);
+int		is_operator(char c);
+int		is_space(char c);
+char	*alloc_cpy(char *str, char **result, int n);
 
 void	print_parse(t_list_parse *lst);
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
+#    By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/01 18:50:44 by mmaila           ###   ########.fr        #
+#    Updated: 2024/02/03 11:53:27 by nazouz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ INCLUDE			=		./minishell.h
 
 SRCS			= 		\
 						./parsing/tokenize.c \
+						./parsing/tokenize_utils.c \
 						./parsing/command.c \
 						./parsing/exit.c \
 						./parsing/parse.c \

@@ -3,73 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/02 14:54:41 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/03 13:03:57 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-int	is_operator(char c)
+void	shift_insert(char *result, int src, int dst, int flag)
 {
-	if (c == '<'
-		|| c == '>'
-		|| c == '|'
-		|| c == 34
-		|| c == 39)
-		return (1);
-	return (0);
+	ft_memmove(&(result[dst]), &(result[src]), ft_strlen(&(result[src])) + 1);
+	if (flag == -1)
+		result[src] = ' ';
+	if (flag == 1)
+		result[dst] = ' ';
 }
 
 char	*insert_spaces(char *str, int n)
 {
 	char	*result;
 	int		i;
-	int		j;
+
+	result = alloc_cpy(str, &result, n);
+	i = 0;
+	while (result[i])
+	{
+		if (is_operator(result[i]))
+		{
+			if (i > 0 && !is_space(result[i - 1]))
+				(shift_insert(result, i, i + 1, -1), i++);
+			if (!is_space(result[i + 1]) && result[i + 1] != '\0')
+				(shift_insert(result, i, i + 1, 1), i++);
+		}
+		i++;
+	}
+	return (free(str), result);
+}
+
+int	count_needed_spaces(char *str)
+{
+	int		i;
+	int		count;
 
 	i = 0;
-	j = 0;
-	result = malloc(sizeof(char) * (n + 1));
+	count = 0;
 	while (str[i])
 	{
-		while (is_operator(str[i]))
+		if (is_operator(str[i]))
 		{
-			result[j++] = str[i];
-			result[j++] = ' ';
-			i++;
+			if (i > 0 && !is_space(str[i - 1]))
+				count++;
+			if (!is_space(str[i + 1]) && str[i + 1] != '\0')
+				count++;
 		}
-		while (!is_operator(str[i]) && str[i])
-		{
-			result[j++] = str[i];
-			i++;
-		}
-		result[j++] = ' ';
+		i++;
 	}
-	result[j] = '\0';
-	free(str);
-	return (result);
+	return (count);
 }
 
 void	input_lexer(t_minishell *minishell)
 {
 	int		i;
-	int		op_count;
-	int		ch_count;
+	int		spaces_count;
 
 	i = 0;
-	op_count = 0;
-	ch_count = 0;
-	while (minishell->input[i])
+	spaces_count = count_needed_spaces(minishell->input);
+	if (spaces_count == 0)
 	{
-		if (is_operator(minishell->input[i]))
-			op_count++;
-		else
-			ch_count++;
-		i++;
+		minishell->cmd_line = ft_split(minishell->input, " \t");
+		return ;
 	}
 	minishell->input
-		= insert_spaces(minishell->input, (op_count * 2) + ch_count);
+		= insert_spaces(minishell->input, spaces_count);
 	minishell->cmd_line = ft_split(minishell->input, " \t");
 }
