@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/03 16:22:30 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/03 18:50:10 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	var_start(char *str)
 	{
 		if (str[i] == '$' && str[i + 1])
 			return (i + 1);
-		i = 0;
+		i++;
 	}
 	return (-1);
 }
@@ -111,7 +111,7 @@ void	flag(t_list_parse **lst, char **env)
 		else if (!ft_strcmp(curr->str, "<"))
 			(curr->flag = REDIN, is_arg = 0);
 		else if (start != -1)
-			(curr->flag = VAR, expand_var(lst, curr, env, start));
+			(curr->flag = VAR, expand_var(lst, curr, start));
 		else if (!ft_strcmp(curr->str, ">"))
 			(curr->flag = REDOUT, is_arg = 0);
 		else if (is_arg)
