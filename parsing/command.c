@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/01 23:18:48 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/03 16:22:30 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,33 @@ int	is_cmd(char **token, char **env)
 	return (1);
 }
 
+int	var_start(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$' && str[i + 1])
+			return (i + 1);
+		i = 0;
+	}
+	return (-1);
+}
+
 void	flag(t_list_parse **lst, char **env)
 {
 	t_list_parse	*curr;
 	int				is_arg;
 	int				is_text;
+	int				start;
 
 	is_arg = 0;
 	is_text = 0;
 	curr = *lst;
 	while(curr)
 	{
+		start = var_start(curr->str);
 		if (is_cmd(&curr->str, env))
 			(curr->flag = COMMAND, is_arg = 1);
 		else if (!ft_strcmp(curr->str, "|"))
@@ -94,8 +110,8 @@ void	flag(t_list_parse **lst, char **env)
 		}
 		else if (!ft_strcmp(curr->str, "<"))
 			(curr->flag = REDIN, is_arg = 0);
-		else if (curr->str[0] == '$')
-			(curr->flag = VAR, expand_var(lst, curr, env));
+		else if (start != -1)
+			(curr->flag = VAR, expand_var(lst, curr, env, start));
 		else if (!ft_strcmp(curr->str, ">"))
 			(curr->flag = REDOUT, is_arg = 0);
 		else if (is_arg)
