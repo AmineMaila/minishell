@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/03 16:22:56 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/03 18:38:53 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,51 @@ int	env_len(char *str)
 	return (-1);
 }
 
+char	strrem(t_list_parse *node, char *envvar, int len)
+{
+	char	*result;
+	int		resultlen;
+	int		i;
+	int		j;
+
+	resultlen = (ft_strlen(node->str) - len) + ft_strlen(envvar);
+	result = malloc(resultlen + 1);
+	j = 0;
+	while (*node->str)
+	{
+		if (*node->str == '$')
+		{
+			node->str += len;
+			while (*envvar)
+			{
+				result[j] = *envvar;
+				j++;
+				envvar++;
+			}
+		}
+		result[j++] = *node->str;
+		node->str++;
+	}
+	result[j] = '\0';
+	return (free(node->str), result);
+}
+
 void	expand_var(t_list_parse **lst, t_list_parse *node, char **env, int start)
 {
-	int		var_len;
+	char	*var;
+	char	*envvar;
+	int		end;
 	int		i;
 
 	i = 0;
-	
-	while (env[i] && ft_strncmp(node->str + 1, env[i], env_len(env[i])))
-		i++;
-	if (!env[i])
+	end = var_end(node->str, start);
+	var = ft_substr(node->str, start, end - start);
+	envvar = getenv(var);
+	free(var);
+	if (!envvar)
 	{
 		delete_node(lst, node);
 		return ;
 	}
-	free(node->str);
-	var_len = env_len(env[i]);
-	node->str = ft_substr(env[i], var_len + 1, ft_strlen(env[i]) - var_len);
+	node->str = strrem(node, envvar, end - start);
 }
