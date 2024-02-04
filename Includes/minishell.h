@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/03 19:23:54 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/04 19:14:37 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	flag(t_list_parse **lst, char **env);
 void	expand_var(t_list_parse **lst, t_list_parse *node, int start);
 int		is_operator(char c);
 int		is_space(char c);
+void	free_2d(char ***arr);
 char	*alloc_cpy(char *str, char **result, int n);
 
 void	print_parse(t_list_parse *lst);

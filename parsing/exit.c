@@ -6,11 +6,21 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/01 16:06:22 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/04 19:11:39 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
+
+void	free_2d(char ***arr)
+{
+	int	i;
+
+	i = 0;
+	while ((*arr)[i])
+		free((*arr)[i++]);
+	free(*arr);
+}
 
 void	ft_exit(char *cmd, char *str, int ext)
 {

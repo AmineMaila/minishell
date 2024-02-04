@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/03 19:24:07 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/04 19:11:36 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
-
-void	free_2d(char ***arr)
-{
-	int	i;
-
-	i = 0;
-	while ((*arr)[i])
-		free((*arr)[i++]);
-	free(*arr);
-}
 
 char	*get_path(char *cmd, char **env)
 {
