@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/03 20:21:09 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/04 15:03:52 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ char	*strrem(t_list_parse *node, char *envvar, int len)
 				envvar++;
 			}
 		}
-		result[j++] = node->str[i];
-		i++;
+		result[j++] = node->str[i++];
 	}
 	result[j] = '\0';
 	return (free(node->str), result);
