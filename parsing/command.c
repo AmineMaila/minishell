@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/03 18:50:10 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/03 19:24:07 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void	flag(t_list_parse **lst, char **env)
 			else
 				is_text = 0;
 		}
+		else if (!ft_strcmp(curr->str, "'"))
+			(curr->flag = SQUOTE, is_arg = 0);
 		else if (!ft_strcmp(curr->str, "<"))
 			(curr->flag = REDIN, is_arg = 0);
 		else if (start != -1)

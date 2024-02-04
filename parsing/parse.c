@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/01 23:00:30 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/03 19:25:19 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,12 @@ void	print_parse(t_list_parse *lst)
 		{
 			printf("\033[0;34m");
 			printf("DQUOTE");
+			printf("\033[0m");
+		}
+		else if (lst->flag == SQUOTE)
+		{
+			printf("\033[0;34m");
+			printf("SQUOTE");
 			printf("\033[0m");
 		}
 		else if (lst->flag == TEXT)
