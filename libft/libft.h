@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:45:02 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/01 18:19:33 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/05 16:21:22 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void		*ft_calloc(size_t count, size_t size);
 char		*ft_itoa(int n);
 char		**ft_split(char const *s, char *charset);
 char		*ft_strjoin(char const *s1, char const *s2);
-char		*ft_strtrim(char const *s1, char const *set);
+char		*ft_strtrim(char **s1, char const *set);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 void		ft_putchar_fd(char c, int fd);
 void		ft_putstr_fd(char *s, int fd);

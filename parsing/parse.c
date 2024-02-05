@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/05 15:44:01 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/05 16:31:37 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,22 @@ void	print_parse(t_list_parse *lst)
 			printf("DQUOTE");
 			printf("\033[0m");
 		}
+		else if (lst->flag == ODQUOTE)
+		{
+			printf("\033[0;34m");
+			printf("ODQUOTE");
+			printf("\033[0m");
+		}
 		else if (lst->flag == SQUOTE)
 		{
 			printf("\033[0;34m");
 			printf("SQUOTE");
+			printf("\033[0m");
+		}
+		else if (lst->flag == OSQUOTE)
+		{
+			printf("\033[0;34m");
+			printf("OSQUOTE");
 			printf("\033[0m");
 		}
 		else if (lst->flag == TEXT)

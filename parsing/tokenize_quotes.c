@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:35:15 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/05 11:13:13 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/05 16:47:37 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ static size_t	word_count(char const *s, char *charset)
 			quote = s[i++];
 			while (s[i] && s[i] != quote)
 				i++;
-			i++;
+			if (s[i] == quote)
+				i++;
 			continue ;
 		}
 		while (!is_charset(s[i], charset) && s[i] != 34 && s[i] != 39 && s[i])

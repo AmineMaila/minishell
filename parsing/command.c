@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/05 10:36:16 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/05 16:30:56 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,33 @@ int	var_start(char *str)
 	return (-1);
 }
 
+void	flag_quote(t_list_parse	*node)
+{
+	int		last;
+
+	last = ft_strlen(node->str) - 1;
+	if (node->str[0] == '\"')
+	{
+		if (node->str[last] == '\"')
+			node->flag = DQUOTE;
+		else
+			node->flag = ODQUOTE;
+		node->str = ft_strtrim(&node->str, "\"");
+		// if (!node->str)
+		// 	exit ;
+	}
+	else if (node->str[0] == '\'')
+	{
+		if (node->str[last] == '\'')
+			node->flag = SQUOTE;
+		else
+			node->flag = OSQUOTE;
+		node->str = ft_strtrim(&node->str, "\'");
+		// if (!node->str)
+		// 	exit ;
+	}
+}
+
 void	flag(t_list_parse **lst, char **env)
 {
 	t_list_parse	*curr;
@@ -86,14 +113,16 @@ void	flag(t_list_parse **lst, char **env)
 		start = var_start(curr->str);
 		if (is_cmd(&curr->str, env))
 			(curr->flag = COMMAND, is_arg = 1);
-		else if (!ft_strcmp(curr->str, "|"))
+		else if (*curr->str ==  '|')
 			(curr->flag = PIPE, is_arg = 0);
 		else if (start != -1)
 			(curr->flag = ARG, expand_var(lst, curr, start));
-		else if (!ft_strcmp(curr->str, "<"))
+		else if (*curr->str ==  '<')
 			(curr->flag = REDIN, is_arg = 0);
-		else if (!ft_strcmp(curr->str, ">"))
+		else if (*curr->str ==  '>')
 			(curr->flag = REDOUT, is_arg = 0);
+		else if (*curr->str == '\"' || *curr->str == '\'')
+			flag_quote(curr);
 		else if (is_arg)
 			(curr->flag = ARG);
 		else
