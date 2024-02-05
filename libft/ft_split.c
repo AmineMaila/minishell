@@ -6,13 +6,13 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 22:17:46 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/04 12:41:38 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/04 20:42:00 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	is_charset(char c, char *charset)
+static int	is_charset(char c, char *charset)
 {
 	int	i;
 

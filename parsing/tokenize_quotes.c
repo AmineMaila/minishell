@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:35:15 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/04 19:14:50 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/05 11:13:13 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-int	is_charset(char c, char *charset)
+static int	is_charset(char c, char *charset)
 {
 	int	i;
 
@@ -70,7 +70,7 @@ static size_t	word_count(char const *s, char *charset)
 	return (count);
 }
 
-char	*ft_strncpy(char *dest, char *src, unsigned int n)
+static char	*ft_strncpy(char *dest, char *src, unsigned int n)
 {
 	unsigned int	i;
 
@@ -88,11 +88,10 @@ char	*ft_strncpy(char *dest, char *src, unsigned int n)
 	return (dest);
 }
 
-char	**ft_split(char const *s, char *charset)
+char	**split(char const *s, char *charset)
 {
 	char		**result;
 	size_t		words_count;
-	int			len;
 	size_t		i;
 
 	i = 0;
@@ -106,13 +105,13 @@ char	**ft_split(char const *s, char *charset)
 	{
 		while (*s && is_charset(*s, charset))
 			s++;
-		len = word_len(s, charset);
-		result[i] = (char *)malloc(len + 1);
+		result[i] = (char *)malloc(word_len(s, charset) + 1);
 		if (!result[i])
 			return (free_2d(&result), NULL);
-		ft_strncpy(result[i], (char *)s, len);
-		result[i++][len] = '\0';
-		s = s + len;
+		ft_strncpy(result[i], (char *)s, word_len(s, charset));
+		result[i++][word_len(s, charset)] = '\0';
+		s = s + word_len(s, charset);
 	}
+	result[i] = NULL;
 	return (result);
 }

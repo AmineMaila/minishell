@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/04 19:14:37 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/04 20:42:56 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_list_parse	*parse(char **str, char **env);
 
 //	LIBFT
 char			**ft_split(char const *s, char *charset);
+char			**split(char const *s, char *charset);
 t_list_parse	*ft_lstnew(char *str);
 void			ft_lstadd_back(t_list_parse **lst, char *str);
 void			ft_lstdelone(t_list_parse *lst);
