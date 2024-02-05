@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/05 16:47:46 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/05 18:28:02 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,15 @@ int	count_needed_spaces(char *str)
 	count = 0;
 	while (str[i])
 	{
-		if (is_operator(str[i]))
+		if (str[i] == 39 || str[i++] == 34)
 		{
-			if (i > 0 && !is_space(str[i - 1]))
+			while (str[i] != 39 && str[i] != 34)
+				i++;
+			i++;
+		}
+		if (is_operator(str[i]) && !is_operator(str[i + 1]))
+		{
+			if (i > 0 && !is_space(str[i - 1]) && !is_operator(str[i - 1]))
 				count++;
 			if (!is_space(str[i + 1]) && str[i + 1] != '\0')
 				count++;
