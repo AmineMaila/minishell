@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/04 19:07:21 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/04 20:27:11 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	main(int argc, char **argv, char **env)
 		ft_print_matrix(minishell.cmd_line);
 		lst = parse(minishell.cmd_line, env);
 		print_parse(lst);
+		ft_lstclear(&lst);
 		printf("\n");
 	}
 }

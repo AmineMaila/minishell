@@ -6,7 +6,7 @@
 #    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/04 19:14:09 by mmaila           ###   ########.fr        #
+#    Updated: 2024/02/04 20:22:07 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS			= 		\
 						./helpers.c \
 						./utils/ft_lstadd_back.c \
 						./utils/ft_lstnew.c \
+						./utils/ft_lstclear.c \
 						./utils/ft_lstdelone.c \
 						./utils/ft_strcmp.c \
 						main.c

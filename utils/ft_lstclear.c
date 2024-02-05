@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 18:40:51 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/01 18:16:25 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/04 20:23:01 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_list_parse **lst)
 {
-	t_list		*current;
-	t_list		*next;
+	t_list_parse	*current;
+	t_list_parse	*next;
 
-	if (!lst || !(*lst) || !del)
+	if (!lst || !(*lst))
 		return ;
 	current = *lst;
-	while (current != NULL)
+	while (current)
 	{
 		next = current->next;
-		del(current->content);
+		free(current->str);
 		free(current);
 		current = next;
 	}
