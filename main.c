@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/04 20:27:11 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/05 15:42:50 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,19 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+	(void)env;
 	signal(SIGINT, interrupt);
 	minishell_init(&minishell, &lst);
 	while (1)
 	{
 		read_cmd_line(&minishell);
 		input_lexer(&minishell);
+		// free(minishell.input);
 		ft_print_matrix(minishell.cmd_line);
+		// printf("hh\n");
+		// free_2d(&minishell.cmd_line);
 		lst = parse(minishell.cmd_line, env);
 		print_parse(lst);
 		ft_lstclear(&lst);
-		printf("\n");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/04 20:25:59 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/05 15:44:01 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,5 @@ void	print_parse(t_list_parse *lst)
 		printf("]-");
 		lst = lst->next;
 	}
+	printf("\n");
 }

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/04 20:21:52 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/05 15:39:40 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_list_parse	*parse(char **str, char **env);
 
 //	LIBFT
 char			**ft_split(char const *s, char *charset);
+char			**split(char const *s, char *charset);
 t_list_parse	*ft_lstnew(char *str);
 void			ft_lstadd_back(t_list_parse **lst, char *str);
 void			ft_lstdelone(t_list_parse *lst);
