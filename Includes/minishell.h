@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/05 16:19:38 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/06 17:17:46 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,6 @@
 # define REDIN 4
 # define REDOUT 5
 # define FILEE 6
-# define DQUOTE 7
-# define TEXT 8
-# define VAR 9
-# define SQUOTE 10
-# define ODQUOTE 11
-# define OSQUOTE 12
-
 
 # include "../libft/libft.h"
 # include <stdio.h>
@@ -37,6 +30,15 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <errno.h>
+
+typedef struct	s_cmd_line
+{
+	char	**cmd_args;
+	int		infd;
+	int		outfd;
+	char	*infile;
+	char	*outfile;
+}				t_cmd_line;
 
 typedef struct	s_list_parse
 {

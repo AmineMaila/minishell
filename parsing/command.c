@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/05 16:30:56 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/06 17:19:54 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,60 +73,36 @@ int	var_start(char *str)
 	return (-1);
 }
 
-void	flag_quote(t_list_parse	*node)
-{
-	int		last;
-
-	last = ft_strlen(node->str) - 1;
-	if (node->str[0] == '\"')
-	{
-		if (node->str[last] == '\"')
-			node->flag = DQUOTE;
-		else
-			node->flag = ODQUOTE;
-		node->str = ft_strtrim(&node->str, "\"");
-		// if (!node->str)
-		// 	exit ;
-	}
-	else if (node->str[0] == '\'')
-	{
-		if (node->str[last] == '\'')
-			node->flag = SQUOTE;
-		else
-			node->flag = OSQUOTE;
-		node->str = ft_strtrim(&node->str, "\'");
-		// if (!node->str)
-		// 	exit ;
-	}
-}
-
 void	flag(t_list_parse **lst, char **env)
 {
 	t_list_parse	*curr;
 	int				is_arg;
+	int				cmd[2];
 	int				start;
 
 	is_arg = 0;
+	cmd[0] = 0;
+	cmd[1] = 1;
 	curr = *lst;
 	while(curr)
 	{
 		start = var_start(curr->str);
-		if (is_cmd(&curr->str, env))
-			(curr->flag = COMMAND, is_arg = 1);
+		if (start != -1 && *curr->str != '\'')
+			expand_var(lst, curr, start);
+		if (*curr->str == '\"' || *curr->str == '\'')
+			curr->str = ft_strtrim(&curr->str, curr->str[0]);
+		if (cmd[0] == 0 && cmd[1] == 1 && is_cmd(&curr->str, env))
+			(curr->flag = COMMAND, is_arg = 1, cmd[0] = 1);
 		else if (*curr->str ==  '|')
-			(curr->flag = PIPE, is_arg = 0);
-		else if (start != -1)
-			(curr->flag = ARG, expand_var(lst, curr, start));
+			(curr->flag = PIPE, is_arg = 0, cmd[0] = 0);
 		else if (*curr->str ==  '<')
-			(curr->flag = REDIN, is_arg = 0);
+			(curr->flag = REDIN, is_arg = 0, cmd[1] = 0);
 		else if (*curr->str ==  '>')
-			(curr->flag = REDOUT, is_arg = 0);
-		else if (*curr->str == '\"' || *curr->str == '\'')
-			flag_quote(curr);
+			(curr->flag = REDOUT, is_arg = 0, cmd[1] = 0);
 		else if (is_arg)
-			(curr->flag = ARG);
+			(curr->flag = ARG, cmd[1] = 0);
 		else
-			curr->flag = FILEE;
+			(curr->flag = FILEE, is_arg = 1, cmd[1] = 1);
 		curr = curr->next;
 	}
 }

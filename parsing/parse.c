@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/05 18:41:57 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/06 17:17:56 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,42 +64,6 @@ void	print_parse(t_list_parse *lst)
 		{
 			printf("\033[1;34m");
 			printf("RED-OUT");
-			printf("\033[0m");
-		}
-		else if (lst->flag == DQUOTE)
-		{
-			printf("\033[0;34m");
-			printf("DQUOTE");
-			printf("\033[0m");
-		}
-		else if (lst->flag == ODQUOTE)
-		{
-			printf("\033[0;34m");
-			printf("ODQUOTE");
-			printf("\033[0m");
-		}
-		else if (lst->flag == SQUOTE)
-		{
-			printf("\033[0;34m");
-			printf("SQUOTE");
-			printf("\033[0m");
-		}
-		else if (lst->flag == OSQUOTE)
-		{
-			printf("\033[0;34m");
-			printf("OSQUOTE");
-			printf("\033[0m");
-		}
-		else if (lst->flag == TEXT)
-		{
-			printf("\033[0;35m");
-			printf("TEXT");
-			printf("\033[0m");
-		}
-		else if (lst->flag == VAR)
-		{
-			printf("\033[3;35m");
-			printf("%s", lst->str);
 			printf("\033[0m");
 		}
 		printf("]-");

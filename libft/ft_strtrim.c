@@ -6,31 +6,29 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:23:19 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/05 16:30:07 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/06 17:22:27 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strtrim(char **s1, char const *set)
+char	*ft_strtrim(char **s1, char c)
 {
-	char	*result;
-	size_t	end_index;
-	int		i;
+	size_t	start;
+	size_t	end;
+	char	*trimmed;
 
-	if (!s1 || !*s1 || !set)
+	if (!*s1 || !s1)
 		return (NULL);
-	i = 0;
-	while ((*s1)[i] && ft_strchr(set, (*s1)[0]))
-		i++;
-	end_index = ft_strlen(*s1);
-	while (end_index && ft_strchr(set, (*s1)[end_index - 1]))
-		end_index--;
-	result = (char *)malloc(((end_index + 1) * sizeof(char)));
-	if (!result)
-		return (NULL);
-	ft_memcpy(result, (*s1), end_index);
+	if (!(*s1)[0])
+		return (ft_strdup(""));
+	start = 0;
+	end = ft_strlen(*s1) - 1;
+	while ((*s1)[start] && (*s1)[start] == c)
+		start++;
+	while (end > 0 && (*s1)[end] == c)
+		end--;
+	trimmed = ft_substr(*s1, start, end - start + 1);
 	free(*s1);
-	result[end_index] = '\0';
-	return (result);
+	return (trimmed);
 }
