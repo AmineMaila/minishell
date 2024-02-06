@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/06 17:17:46 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/06 18:13:15 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,9 @@
 
 typedef struct	s_cmd_line
 {
-	char	**cmd_args;
+	char	**line;
 	int		infd;
 	int		outfd;
-	char	*infile;
-	char	*outfile;
 }				t_cmd_line;
 
 typedef struct	s_list_parse
@@ -57,8 +55,8 @@ typedef struct	s_minishell
 
 
 //	MINISHELL
-void			input_lexer(t_minishell *minishell);
-t_list_parse	*parse(char **str, char **env);
+void	input_lexer(t_minishell *minishell);
+void	*parse(char **str, char **env);
 
 //	LIBFT
 char			**ft_split(char const *s, char *charset);

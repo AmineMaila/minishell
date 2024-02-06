@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/06 17:19:54 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/06 18:29:44 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,20 @@ int	var_start(char *str)
 	return (-1);
 }
 
+int	flag_operator(t_list_parse *lst)
+{
+	t_list_parse	*curr;
+
+	curr = lst;
+	if (*curr->str ==  '|')
+		return (curr->flag = PIPE, 1);
+	else if (*curr->str ==  '<')
+		return (curr->flag = REDIN, 1);
+	else if (*curr->str ==  '>')
+		return (curr->flag = REDOUT, 1);
+	return (0);
+}
+
 void	flag(t_list_parse **lst, char **env)
 {
 	t_list_parse	*curr;
@@ -86,6 +100,8 @@ void	flag(t_list_parse **lst, char **env)
 	curr = *lst;
 	while(curr)
 	{
+		if (flag_operator(*lst))
+			(is_arg = 0, cmd[1] = 0);
 		start = var_start(curr->str);
 		if (start != -1 && *curr->str != '\'')
 			expand_var(lst, curr, start);
@@ -93,12 +109,6 @@ void	flag(t_list_parse **lst, char **env)
 			curr->str = ft_strtrim(&curr->str, curr->str[0]);
 		if (cmd[0] == 0 && cmd[1] == 1 && is_cmd(&curr->str, env))
 			(curr->flag = COMMAND, is_arg = 1, cmd[0] = 1);
-		else if (*curr->str ==  '|')
-			(curr->flag = PIPE, is_arg = 0, cmd[0] = 0);
-		else if (*curr->str ==  '<')
-			(curr->flag = REDIN, is_arg = 0, cmd[1] = 0);
-		else if (*curr->str ==  '>')
-			(curr->flag = REDOUT, is_arg = 0, cmd[1] = 0);
 		else if (is_arg)
 			(curr->flag = ARG, cmd[1] = 0);
 		else

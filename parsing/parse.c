@@ -6,23 +6,42 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/06 17:17:56 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/06 18:21:43 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-t_list_parse	*parse(char **str, char **env)
+// void	split_line(t_list_parse *lst)
+// {
+	
+// }
+
+// int	syntax(t_list_parse *lst)
+// {
+// 	ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
+// }
+
+void	*parse(char **str, char **env)
 {
 	int				i;
-	t_list_parse	*result;
+	t_list_parse	*lst;
 
-	result = NULL;
+	lst = NULL;
 	i = 0;
 	while (str[i])
-		ft_lstadd_back(&result, str[i++]);
-	flag(&result, env);
-	return (result);
+		ft_lstadd_back(&lst, str[i++]);
+	flag(&lst, env);
+	// if (syntax(lst) == -1)
+	// {
+	// 	ft_lstclear(&lst);
+	// 	//free all
+	// 	return ;
+	// }
+	//split_line(lst);
+	//execute();
+	print_parse(lst);
+	return (0);
 }
 
 void	print_parse(t_list_parse *lst)
