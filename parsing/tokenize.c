@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/05 18:28:02 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/07 14:11:26 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,6 @@ int	count_needed_spaces(char *str)
 	count = 0;
 	while (str[i])
 	{
-		if (str[i] == 39 || str[i++] == 34)
-		{
-			while (str[i] != 39 && str[i] != 34)
-				i++;
-			i++;
-		}
 		if (is_operator(str[i]) && !is_operator(str[i + 1]))
 		{
 			if (i > 0 && !is_space(str[i - 1]) && !is_operator(str[i - 1]))
