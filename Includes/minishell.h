@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/06 18:13:15 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/07 15:51:01 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct	s_minishell
 
 //	MINISHELL
 void	input_lexer(t_minishell *minishell);
-void	*parse(char **str, char **env);
+void	parse(char **str, char **env);
 
 //	LIBFT
 char			**ft_split(char const *s, char *charset);
