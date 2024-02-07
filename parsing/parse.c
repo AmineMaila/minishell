@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/06 18:21:43 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/07 16:27:01 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,18 @@
 	
 // }
 
-// int	syntax(t_list_parse *lst)
-// {
-// 	ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
-// }
+int	syntax(t_list_parse *lst)
+{
+	while (lst)
+	{
+		if ((lst->flag == REDIN || lst->flag == REDOUT) && lst->next == NULL)
+			return (ft_putstr_fd("minishell: syntax error near unexpected token 'newline'\n", 2), -1);
+		lst = lst->next;
+	}
+	return (0);
+}
 
-void	*parse(char **str, char **env)
+void	parse(char **str, char **env)
 {
 	int				i;
 	t_list_parse	*lst;
@@ -31,17 +37,17 @@ void	*parse(char **str, char **env)
 	i = 0;
 	while (str[i])
 		ft_lstadd_back(&lst, str[i++]);
+	free_2d(&str);
 	flag(&lst, env);
-	// if (syntax(lst) == -1)
-	// {
-	// 	ft_lstclear(&lst);
-	// 	//free all
-	// 	return ;
-	// }
+	if (syntax(lst) == -1)
+	{
+		ft_lstclear(&lst);
+		//free all
+		return ;
+	}
 	//split_line(lst);
 	//execute();
 	print_parse(lst);
-	return (0);
 }
 
 void	print_parse(t_list_parse *lst)
