@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/07 16:44:34 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/08 14:27:13 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,19 @@
 
 int	syntax(t_list_parse *lst)
 {
+	int		i;
+
+	i = 0;
+	if (lst->flag == PIPE)
+		return (ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", 2), -1);
 	while (lst)
 	{
 		if ((lst->flag == REDIN || lst->flag == REDOUT) && lst->next == NULL)
 			return (ft_putstr_fd("minishell: syntax error near unexpected token 'newline'\n", 2), -1);
+		if ((lst->flag == PIPE && lst->next == NULL) || (lst->flag == PIPE && lst->next->flag == PIPE))
+			return (ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", 2), -1);
+		if ((lst->flag == REDIN && lst->next->flag == PIPE) || (lst->flag == REDOUT && lst->next->flag == PIPE))
+			return (ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", 2), -1);
 		lst = lst->next;
 	}
 	return (0);

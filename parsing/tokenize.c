@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/07 16:46:30 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/08 14:10:16 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*insert_spaces(char *str, int n)
 	i = 0;
 	while (result[i])
 	{
+		if (is_quote(result[i]))
+			i = get_quote_index(result, ++i);
 		if (is_operator(result[i]))
 		{
 			if (i > 0 && !is_space(result[i - 1]))
@@ -51,11 +53,13 @@ int	count_needed_spaces(char *str)
 	int		was_space;
 	int		count;
 
-	i = 0;
+	i = -1;
 	count = 0;
 	was_space = 0;
-	while (str[i])
+	while (str[++i])
 	{
+		if (is_quote(str[i]))
+			i = get_quote_index(str, ++i);
 		if (is_operator(str[i]))
 		{
 			if (i > 0 && !is_space(str[i - 1]) && was_space == 0)
@@ -68,7 +72,6 @@ int	count_needed_spaces(char *str)
 		}
 		else
 			was_space = 0;
-		i++;
 	}
 	return (count);
 }

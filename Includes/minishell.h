@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/07 15:51:01 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/08 13:57:43 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # define REDIN 4
 # define REDOUT 5
 # define FILEE 6
+# define INVALID 7
+# define HERE_DOC 8
+# define APPEND 9
 
 # include "../libft/libft.h"
 # include <stdio.h>
@@ -74,6 +77,9 @@ void	flag(t_list_parse **lst, char **env);
 void	expand_var(t_list_parse **lst, t_list_parse *node, int start);
 int		is_operator(char c);
 int		is_space(char c);
+int		is_quote(char c);
+int		get_quote_index(char *str, int i);
+
 void	free_2d(char ***arr);
 char	*alloc_cpy(char *str, char **result, int n);
 
