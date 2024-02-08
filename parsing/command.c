@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/07 16:45:40 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/07 18:38:05 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,42 @@ int	is_cmd(char **token, char **env)
 	return (1);
 }
 
-int	var_start(char *str)
+void	var_start(t_list_parse **lst, t_list_parse *curr)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (curr->str[i])
 	{
-		if (str[i] == '$' && str[i + 1])
-			return (i + 1);
+		if (curr->str[i] == '$' && curr->str[i + 1])
+		{
+			expand_var(lst, curr, i + 1);
+			break ;
+		}
 		i++;
 	}
-	return (-1);
+}
+
+void	redirections(t_list_parse *lst, int flag)
+{
+	if (flag == REDIN)
+	{
+		if (!lst->str[1])
+			lst->flag = REDIN;
+		else if (lst->str[1] == '<' && !lst->str[2])
+			lst->flag = HEREDOC;
+		else
+			lst->flag = ERR;
+	}
+	else
+	{
+		if (!lst->str[1])
+			lst->flag = REDOUT;
+		else if (lst->str[1] == '>' && !lst->str[2])
+			lst->flag = APPEND;
+		else
+			lst->flag = ERR;
+	}
 }
 
 void	flag(t_list_parse **lst, char **env)
@@ -79,25 +103,23 @@ void	flag(t_list_parse **lst, char **env)
 	t_list_parse	*curr;
 	int				is_arg;
 	int				cmd[2];
-	int				start;
 
 	is_arg = 0;
-	cmd[0] = 0;
-	cmd[1] = 1;
+	cmd[0] = 0; // meaning current cmd line is avaible for a command
+	cmd[1] = 1; // meaning the current node can be a command
 	curr = *lst;
 	while(curr)
 	{
 		if (*curr->str ==  '|')
 			(curr->flag = PIPE, is_arg = 0, cmd[0] = 0, cmd[1] = 1);
 		else if (*curr->str ==  '<')
-			(curr->flag = REDIN, is_arg = 0, cmd[1] = 0);
+			(redirections(curr, REDIN), is_arg = 0, cmd[1] = 0);
 		else if (*curr->str ==  '>')
-			(curr->flag = REDOUT, is_arg = 0, cmd[1] = 0);
+			(redirections(curr, REDOUT), is_arg = 0, cmd[1] = 0);
 		else
 		{
-			start = var_start(curr->str);
-			if (start != -1 && *curr->str != '\'')
-				expand_var(lst, curr, start);
+			if (*curr->str != '\'')
+				var_start(lst, curr);
 			if (*curr->str == '\"' || *curr->str == '\'')
 				curr->str = ft_strtrim(&curr->str, curr->str[0]);
 			if (cmd[0] == 0 && cmd[1] == 1)

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/07 15:51:01 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/07 17:59:03 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # define REDIN 4
 # define REDOUT 5
 # define FILEE 6
+# define HEREDOC 7
+# define APPEND 8
+# define ERR 9
 
 # include "../libft/libft.h"
 # include <stdio.h>
