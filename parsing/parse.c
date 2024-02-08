@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/08 14:30:06 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/08 14:59:09 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,20 @@
 
 // void	split_line(t_list_parse *lst)
 // {
-	
+
 // }
+
+void	print_error(char *str)
+{
+	ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
+	ft_putstr_fd("`", 2);
+	if (!str)
+		ft_putstr_fd("newline", 2);
+	else
+		ft_putstr_fd(str, 2);
+	ft_putstr_fd("'", 2);
+	ft_putstr_fd("\n", 2);
+}
 
 int	syntax(t_list_parse *lst)
 {
@@ -23,17 +35,22 @@ int	syntax(t_list_parse *lst)
 
 	i = 0;
 	if (lst->flag == PIPE)
-		return (ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", 2), -1);
+		return (print_error(lst->str), -1);
 	while (lst)
 	{
 		if (lst->flag == ERR)
-			return (ft_putstr_fd("minishell: syntax error near unexpected token \n", 2), -1);
-		else if ((lst->flag == REDIN || lst->flag == REDOUT) && (lst->next == NULL || lst->next->flag == PIPE))
-			return (ft_putstr_fd("minishell: syntax error near unexpected token 'newline'\n", 2), -1);
-		if ((lst->flag == PIPE && lst->next == NULL) || (lst->flag == PIPE && lst->next->flag == PIPE))
-			return (ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", 2), -1);
-		if ((lst->flag == REDIN && lst->next->flag == PIPE) || (lst->flag == REDOUT && lst->next->flag == PIPE))
-			return (ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", 2), -1);
+			return (print_error(lst->str), -1);
+		if ((lst->flag == REDIN || lst->flag == REDOUT
+				|| lst->flag == HEREDOC || lst->flag == APPEND))
+		{
+			if (lst->next == NULL)
+				return (print_error(NULL), -1);
+			else if (lst->next->flag == PIPE)
+				return (print_error(lst->next->str), -1);
+		}
+		if ((lst->flag == PIPE && lst->next == NULL)
+			|| (lst->flag == PIPE && lst->next->flag == PIPE))
+			return (print_error(lst->str), -1);
 		lst = lst->next;
 	}
 	return (0);
