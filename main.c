@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/07 16:26:20 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/08 15:33:37 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./Includes/minishell.h"
 
-void	minishell_init(t_minishell *minishell, t_list_parse	**lst)
+void	minishell_init(t_minishell *minishell)
 {
 	minishell->input = NULL;
 	minishell->cmd_line = NULL;
-	*lst = NULL;
 }
 
 void	read_cmd_line(t_minishell *minishell)
@@ -44,12 +43,11 @@ void	interrupt(int signum)
 int	main(int argc, char **argv, char **env)
 {
 	t_minishell		minishell;
-	t_list_parse	*lst;
 
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, interrupt);
-	minishell_init(&minishell, &lst);
+	minishell_init(&minishell);
 	while (1)
 	{
 		read_cmd_line(&minishell);

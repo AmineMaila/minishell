@@ -6,16 +6,24 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/08 14:59:09 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/08 15:41:03 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-// void	split_line(t_list_parse *lst)
-// {
+void	split_line(t_list_parse *lst)
+{
+	int	nodes;
 
-// }
+	nodes = 0;
+	while (lst && lst->flag != PIPE)
+	{
+		if (lst->flag == COMMAND || lst->flag == ARG)
+			nodes++;
+		lst = lst->next;
+	}
+}
 
 void	print_error(char *str)
 {
@@ -56,27 +64,27 @@ int	syntax(t_list_parse *lst)
 	return (0);
 }
 
-void	parse(char **str, char **env)
+void	parse(t_minishell *minishell, char **env)
 {
 	int				i;
 	t_list_parse	*lst;
 
 	lst = NULL;
 	i = 0;
-	while (str[i])
-		ft_lstadd_back(&lst, str[i++]);
+	while (minishell->cmd_line[i])
+		ft_lstadd_back(&lst, minishell->cmd_line[i++]);
 	flag(&lst, env);
 	if (syntax(lst) == -1)
 	{
 		ft_lstclear(&lst);
-		free(str);
+		free(minishell->cmd_line);
 		return ;
 	}
-	//split_line(lst);
+	//split_line(lst, minishell);
 	//execute();
 	print_parse(lst);
 	ft_lstclear(&lst);
-	free(str);
+	free(minishell->cmd_line);
 }
 
 void	print_parse(t_list_parse *lst)
