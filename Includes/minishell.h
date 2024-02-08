@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/08 13:57:43 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/08 14:32:10 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # define REDIN 4
 # define REDOUT 5
 # define FILEE 6
-# define INVALID 7
-# define HERE_DOC 8
-# define APPEND 9
+# define HEREDOC 7
+# define APPEND 8
+# define ERR 9
 
 # include "../libft/libft.h"
 # include <stdio.h>
