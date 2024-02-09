@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:17:42 by mmaila            #+#    #+#             */
-/*   Updated: 2023/12/29 14:23:37 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/09 21:41:42 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Includes/pipex.h"
+#include "../Includes/minishell.h"
 
 void	is_lim(char **lim, int fd)
 {
@@ -21,7 +21,7 @@ void	is_lim(char **lim, int fd)
 		ft_putstr_fd("> ", 0);
 		tmp = get_next_line(0);
 		if (!tmp)
-			ft_exit(NULL, NULL, errno);
+			exit(0);
 		if (!ft_strcmp(*lim, tmp))
 		{
 			free(tmp);
@@ -34,16 +34,17 @@ void	is_lim(char **lim, int fd)
 	}
 }
 
-int	here_doc(char *lim, t_data *pipex)
+int	here_doc(char *lim)
 {
 	int		fd[2];
+	int		id;
 
 	if (pipe(fd) == -1)
 		ft_exit(NULL, NULL, errno);
-	pipex->pids[pipex->id_count] = fork();
-	if (pipex->pids[pipex->id_count] == -1)
+	id = fork();
+	if (id == -1)
 		ft_exit(NULL, NULL, errno);
-	if (!pipex->pids[pipex->id_count])
+	if (!id)
 	{
 		close(fd[0]);
 		lim = ft_strjoin(lim, "\n");
@@ -52,6 +53,6 @@ int	here_doc(char *lim, t_data *pipex)
 		is_lim(&lim, fd[1]);
 	}
 	close(fd[1]);
-	wait(0);
+	waitpid(id, 0, 0);
 	return (fd[0]);
 }

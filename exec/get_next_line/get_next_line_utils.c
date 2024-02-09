@@ -6,21 +6,11 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 00:10:30 by mmaila            #+#    #+#             */
-/*   Updated: 2023/12/24 17:30:56 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/09 21:42:19 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/pipex.h"
-
-int	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
+#include "../../Includes/minishell.h"
 
 char	*ft_strcpy(char *s1, char *s2)
 {

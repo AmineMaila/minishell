@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/09 21:07:36 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/09 21:59:17 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ void	spawn_children(t_data *pipex, t_cmd_table *table, int size)
 	i = 0;
 	while (i < size - 1)
 	{
-		birth(pipex, table[i], table[i + 1].infd);
+		if (!table[i].line[0])
+			birth(pipex, table[i], table[i + 1].infd);
+		else if (table[i + 1].infd > 2)
+			pipex->infd = table[i + 1].infd;
 		i++;
 	}
 	pipex->outfd = table[i].outfd;
@@ -88,11 +91,8 @@ void	spawn_children(t_data *pipex, t_cmd_table *table, int size)
 	close(pipex->outfd);
 	i = 0;
 	while (i < pipex->id_count)
-	{
 		if (waitpid(pipex->pids[i++], 0, 0) == -1)
 			ft_exit(NULL, NULL, errno);
-	}
-	// print_open_file_descriptors();
 	free(pipex->pids);
 }
 
@@ -103,17 +103,6 @@ void	execute(t_cmd_table *table, int size)
 	pipex.id_count = 0;
 	pipex.heredoc = 0;
 	pipex.pids = malloc(size * sizeof(int));
-	// if (!ft_strcmp(argv[1], "here_doc"))
-	// {
-	// 	if (argc < 6)
-	// 		ft_exit(NULL, "insufficient arguments", 1);
-	// 	pipex.heredoc = 1;
-	// 	pipex.infd = here_doc(argv[2], &pipex);
-	// 	pipex.index = 3;
-	// }
-	// else
-	// 	pipex.infd = open(argv[1], O_RDONLY);
 	pipex.infd = table[0].infd;
 	spawn_children(&pipex, table, size);
-	// exit(0);
 }

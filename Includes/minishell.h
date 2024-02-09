@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/09 16:26:39 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/09 21:23:53 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define HEREDOC 7
 # define APPEND 8
 # define ERR 9
+# define LIM 10
 
 # define BUFFER_SIZE 10
 
@@ -102,9 +103,11 @@ t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
 // get_next_line
 char	*get_next_line(int fd);
 int		newline(char *buf);
+char	*ft_strcpy(char *s1, char *s2);
+char	*ft_strncat(char *dest, const char *src, unsigned int nb);
 
 void	execute(t_cmd_table *table, int size);
-int		here_doc(char *lim, t_data *pipex);
+int		here_doc(char *lim);
 void	ft_exit(char *cmd, char *str, int ext);
 void	free_2d(char ***arr);
 

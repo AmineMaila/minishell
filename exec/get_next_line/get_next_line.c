@@ -6,11 +6,11 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 22:35:46 by mmaila            #+#    #+#             */
-/*   Updated: 2023/12/24 17:30:53 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/09 21:42:21 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/pipex.h"
+#include "../../Includes/minishell.h"
 
 char	*ft_realloc(char *buf, int xtrsize)
 {

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/09 18:10:54 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/09 21:29:02 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,11 @@ void	flag(t_list_parse **lst, char **env)
 		if (*curr->str ==  '|')
 			(curr->flag = PIPE, is_arg = 0, cmd[0] = 0, cmd[1] = 1);
 		else if (*curr->str ==  '<')
+		{
 			(redirections(curr, REDIN), is_arg = 0, cmd[1] = 0);
+			if (curr->flag == HEREDOC && curr->next)
+				(curr->next->flag = LIM, cmd[1] = 1);
+		}
 		else if (*curr->str ==  '>')
 			(redirections(curr, REDOUT), is_arg = 0, cmd[1] = 0);
 		else

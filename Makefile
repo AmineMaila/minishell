@@ -6,7 +6,7 @@
 #    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/09 15:59:12 by mmaila           ###   ########.fr        #
+#    Updated: 2024/02/09 21:42:32 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,9 @@ SRCS			= 		\
 						./utils/ft_lstdelone.c \
 						./utils/ft_strcmp.c \
 						./exec/execute.c \
+						./exec/here_doc.c \
+						./exec/get_next_line/get_next_line.c \
+						./exec/get_next_line/get_next_line_utils.c \
 						main.c
 
 OBJS			= 		$(SRCS:.c=.o)
