@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/08 18:49:09 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/09 14:53:52 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # define APPEND 8
 # define ERR 9
 
+# define BUFFER_SIZE 10
+
 # include "../libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
@@ -33,6 +35,18 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <errno.h>
+
+// pipex
+typedef struct s_data
+{
+	int		*pids;
+	int		infd;
+	int		outfd;
+	int		id_count;
+	int		outstatus;
+	int		index;
+	int		heredoc;
+}				t_data;
 
 typedef struct	s_cmd_table
 {
@@ -87,7 +101,14 @@ int				get_cmd_table_size(t_list_parse *lst);
 int				get_line_size(t_list_parse *lst, int pipe_line);
 t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
 
+// get_next_line
+char	*get_next_line(int fd);
+int		newline(char *buf);
+
+int		here_doc(char *lim, t_data *pipex);
+void	ft_exit(char *cmd, char *str, int ext);
 void	free_2d(char ***arr);
+
 char	*alloc_cpy(char *str, char **result, int n);
 
 void	print_parse(t_list_parse *lst);
