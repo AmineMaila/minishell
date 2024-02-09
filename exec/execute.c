@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/09 21:59:17 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/09 22:53:32 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	spawn_children(t_data *pipex, t_cmd_table *table, int size)
 	i = 0;
 	while (i < size - 1)
 	{
-		if (!table[i].line[0])
+		if (table[i].line[0])
 			birth(pipex, table[i], table[i + 1].infd);
 		else if (table[i + 1].infd > 2)
 			pipex->infd = table[i + 1].infd;
