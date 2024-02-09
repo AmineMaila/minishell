@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/09 17:59:41 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/09 21:07:36 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,6 @@ void	out_fd(t_data *pipex, int out, int fd)
 		pipex->outfd = fd;
 }
 
-void print_open_file_descriptors() {
-    int max_fd = getdtablesize(); // Get the maximum number of file descriptors
-    printf("Open file descriptors:\n");
-    for (int fd = 0; fd < max_fd; fd++) {
-        if (fcntl(fd, F_GETFD) != -1 || errno != EBADF) { // Check if the file descriptor is valid
-            printf("%d\n", fd);
-        }
-    }
-}
-
 void	exec_cmd(t_data *pipex, t_cmd_table table)
 {
 	if (pipex->infd == -1 || pipex->outfd == -1)
@@ -43,7 +33,7 @@ void	exec_cmd(t_data *pipex, t_cmd_table table)
 	if (dup2(pipex->outfd, 1) == -1)
 		ft_exit(NULL, NULL, errno);
 	close(pipex->outfd);
-	if (access(table.line[0], F_OK | X_OK))
+	if (access(table.line[0], F_OK))
 		ft_exit(table.line[0], ": command not found", 1);
 	if (execve(table.line[0], table.line, NULL) == -1)
 		ft_exit(NULL, NULL, errno);
