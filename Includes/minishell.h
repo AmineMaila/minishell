@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/08 15:53:16 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/08 18:49:09 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@
 # include <signal.h>
 # include <errno.h>
 
-typedef struct	s_cmd_line
+typedef struct	s_cmd_table
 {
 	char	**line;
 	int		infd;
 	int		outfd;
-}				t_cmd_line;
+}				t_cmd_table;
 
 typedef struct	s_list_parse
 {
@@ -50,7 +50,8 @@ typedef struct	s_list_parse
 
 typedef struct	s_minishell
 {
-	t_cmd_line	*cmd_table;
+	t_cmd_table	*cmd_table;
+	int			cmd_table_size;
 	char		*input;
 	char		**cmd_line;
 	int			input_red;
@@ -61,6 +62,7 @@ typedef struct	s_minishell
 //	MINISHELL
 void	input_lexer(t_minishell *minishell);
 void	parse(t_minishell *minishell, char **env);
+void	command_table(t_minishell *minishell, t_list_parse *lst);
 
 //	LIBFT
 char			**ft_split(char const *s, char *charset);
@@ -72,14 +74,18 @@ void			ft_lstclear(t_list_parse **lst);
 int				ft_strcmp(char *s1, char *s2);
 
 //	HELPERS
-void	ft_print_matrix(char **matrix);
-void	ft_exit(char *cmd, char *str, int ext);
-void	flag(t_list_parse **lst, char **env);
-void	expand_var(t_list_parse **lst, t_list_parse *node, int start);
-int		is_operator(char c);
-int		is_space(char c);
-int		is_quote(char c);
-int		get_quote_index(char *str, int i);
+void			ft_print_cmd_table(t_minishell *minishell);
+void			ft_print_matrix(char **matrix);
+void			ft_exit(char *cmd, char *str, int ext);
+void			flag(t_list_parse **lst, char **env);
+void			expand_var(t_list_parse **lst, t_list_parse *node, int start);
+int				is_operator(char c);
+int				is_space(char c);
+int				is_quote(char c);
+int				get_quote_index(char *str, int i);
+int				get_cmd_table_size(t_list_parse *lst);
+int				get_line_size(t_list_parse *lst, int pipe_line);
+t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
 
 void	free_2d(char ***arr);
 char	*alloc_cpy(char *str, char **result, int n);
