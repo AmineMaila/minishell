@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/09 21:19:26 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/09 23:05:56 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	get_infd(t_list_parse *lst, int pipe_line)
 	t_list_parse	*current;
 	t_list_parse	*redin;
 	char			*infile;
+	int				fd;
 
 	redin = NULL;
 	current = get_pipe_line(lst, pipe_line);
@@ -61,9 +62,12 @@ int	get_infd(t_list_parse *lst, int pipe_line)
 	}
 	infile = redin->next->str;
 	if (redin->flag == REDIN)
-		return (open(infile, O_RDONLY));
+		fd = open(infile, O_RDONLY);
 	else // if (redin->flag == HEREDOC)
 		return (here_doc(redin->next->str));
+	if (fd == -1)
+		ft_exit(infile, ": no such file or directory", 0);
+	return (fd);
 }
 
 void	fill_fds(t_minishell *minishell, t_list_parse *lst, int pipe_line)
