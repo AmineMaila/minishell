@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/08 20:29:06 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/09 12:39:25 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		read_cmd_line(&minishell);
+		if (!(*minishell.input))
+			continue;
 		input_lexer(&minishell);
 		// ft_print_matrix(minishell.cmd_line);
 		parse(&minishell, env);
