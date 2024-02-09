@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/09 16:41:46 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/09 17:59:41 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	exec_cmd(t_data *pipex, t_cmd_table table)
 	if (dup2(pipex->outfd, 1) == -1)
 		ft_exit(NULL, NULL, errno);
 	close(pipex->outfd);
+	if (access(table.line[0], F_OK | X_OK))
+		ft_exit(table.line[0], ": command not found", 1);
 	if (execve(table.line[0], table.line, NULL) == -1)
 		ft_exit(NULL, NULL, errno);
 }

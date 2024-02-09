@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/08 20:29:00 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/09 18:31:16 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	fill_fds(t_minishell *minishell, t_list_parse *lst, int pipe_line)
 {
 	minishell->cmd_table[pipe_line].infd = get_infd(lst, pipe_line);
 	minishell->cmd_table[pipe_line].outfd = get_outfd(minishell, lst, pipe_line);
+	// if (minishell->cmd_table[pipe_line].outfd == -1)
+	// 	ft_exit(argv[1], ": no such file or directory", 0);
 }
 
 void	fill_line(t_minishell *minishell, t_list_parse *lst, int pipe_line)

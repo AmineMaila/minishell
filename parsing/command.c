@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/08 14:29:45 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/09 18:10:54 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,16 @@ void	flag(t_list_parse **lst, char **env)
 			if (*curr->str != '\'')
 				var_start(lst, curr);
 			if (*curr->str == '\"' || *curr->str == '\'')
+			{
+				if (curr->str[ft_strlen(curr->str) - 1] != curr->str[0])
+					curr->flag = ERR;
 				curr->str = ft_strtrim(&curr->str, curr->str[0]);
-			if (cmd[0] == 0 && cmd[1] == 1)
+			}
+			if (cmd[0] == 0 && cmd[1] == 1 && !curr->flag)
 				(is_cmd(&curr->str, env), curr->flag = COMMAND, is_arg = 1, cmd[0] = 1);
-			else if (is_arg)
+			else if (is_arg && !curr->flag)
 				(curr->flag = ARG, cmd[1] = 0);
-			else
+			else if (!curr->flag)
 				(curr->flag = FILEE, is_arg = 1, cmd[1] = 1);
 		}
 		curr = curr->next;
