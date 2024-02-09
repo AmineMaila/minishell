@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/08 20:30:19 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/09 16:23:37 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ void	parse(t_minishell *minishell, char **env)
 		return ;
 	}
 	command_table(minishell, lst);
-	//execute();
-	print_parse(lst);
-	ft_print_cmd_table(minishell);
+	execute(minishell->cmd_table, minishell->cmd_table_size);
+	//print_parse(lst);
+	//ft_print_cmd_table(minishell);
 	ft_lstclear(&lst);
 	free(minishell->cmd_line);
 }

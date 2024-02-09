@@ -6,9 +6,8 @@
 int main()
 {
 	//char *str = "hello world";
-	//char *arr[] = {"/bin/ls", "~q", NULL};
+	char *arr[] = {"/usr/bin/which", "ls", NULL};
 	//int fd = open("main.c", O_RDONLY);
 	//dup2(fd, 0);
-	//execve(arr[0], arr, NULL);
-	close(7);
+	execve(arr[0], arr, NULL);
 }

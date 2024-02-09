@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+         #
+#    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/08 18:42:07 by nazouz           ###   ########.fr        #
+#    Updated: 2024/02/09 15:59:12 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS			= 		\
 						./utils/ft_lstclear.c \
 						./utils/ft_lstdelone.c \
 						./utils/ft_strcmp.c \
+						./exec/execute.c \
 						main.c
 
 OBJS			= 		$(SRCS:.c=.o)

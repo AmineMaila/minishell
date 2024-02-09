@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/09 14:53:52 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/09 16:26:39 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ typedef struct s_data
 	int		infd;
 	int		outfd;
 	int		id_count;
-	int		outstatus;
-	int		index;
 	int		heredoc;
 }				t_data;
 
@@ -105,6 +103,7 @@ t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
 char	*get_next_line(int fd);
 int		newline(char *buf);
 
+void	execute(t_cmd_table *table, int size);
 int		here_doc(char *lim, t_data *pipex);
 void	ft_exit(char *cmd, char *str, int ext);
 void	free_2d(char ***arr);
