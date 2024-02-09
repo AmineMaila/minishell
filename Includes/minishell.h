@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/08 15:53:16 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/08 18:04:27 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # define APPEND 8
 # define ERR 9
 
+# define BUFFER_SIZE 10
+
 # include "../libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
@@ -34,12 +36,24 @@
 # include <signal.h>
 # include <errno.h>
 
-typedef struct	s_cmd_line
+// pipex
+typedef struct s_data
+{
+	int		*pids;
+	int		infd;
+	int		outfd;
+	int		id_count;
+	int		outstatus;
+	int		index;
+	int		heredoc;
+}				t_data;
+
+typedef struct	s_cmd_table
 {
 	char	**line;
 	int		infd;
 	int		outfd;
-}				t_cmd_line;
+}				t_cmd_table;
 
 typedef struct	s_list_parse
 {
@@ -50,7 +64,7 @@ typedef struct	s_list_parse
 
 typedef struct	s_minishell
 {
-	t_cmd_line	*cmd_table;
+	t_cmd_table	*cmd_table;
 	char		*input;
 	char		**cmd_line;
 	int			input_red;
@@ -73,7 +87,6 @@ int				ft_strcmp(char *s1, char *s2);
 
 //	HELPERS
 void	ft_print_matrix(char **matrix);
-void	ft_exit(char *cmd, char *str, int ext);
 void	flag(t_list_parse **lst, char **env);
 void	expand_var(t_list_parse **lst, t_list_parse *node, int start);
 int		is_operator(char c);
@@ -81,7 +94,14 @@ int		is_space(char c);
 int		is_quote(char c);
 int		get_quote_index(char *str, int i);
 
+// get_next_line
+char	*get_next_line(int fd);
+int		newline(char *buf);
+
+int		here_doc(char *lim, t_data *pipex);
+void	ft_exit(char *cmd, char *str, int ext);
 void	free_2d(char ***arr);
+
 char	*alloc_cpy(char *str, char **result, int n);
 
 void	print_parse(t_list_parse *lst);
