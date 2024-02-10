@@ -6,7 +6,7 @@
 #    By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/08 18:42:07 by nazouz           ###   ########.fr        #
+#    Updated: 2024/02/09 18:08:08 by nazouz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			= 		minishell
 
 CC				= 		cc
 
-CFLAGS			= 		-Wall -Werror -Wextra
+CFLAGS			= 		-Wall -Werror -Wextra -g3
 
 LIBFT			=		./libft/libft.a
 
@@ -36,6 +36,7 @@ SRCS			= 		\
 						./utils/ft_lstclear.c \
 						./utils/ft_lstdelone.c \
 						./utils/ft_strcmp.c \
+						./env/env.c \
 						main.c
 
 OBJS			= 		$(SRCS:.c=.o)

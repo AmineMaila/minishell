@@ -6,16 +6,18 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/09 12:39:25 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/09 18:30:58 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./Includes/minishell.h"
 
-void	minishell_init(t_minishell *minishell)
+void	minishell_init(t_minishell *minishell, char **env)
 {
 	minishell->input = NULL;
 	minishell->cmd_line = NULL;
+	minishell->env = NULL;
+	minishell_env(&minishell->env, env);
 }
 
 void	read_cmd_line(t_minishell *minishell)
@@ -47,7 +49,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, interrupt);
-	minishell_init(&minishell);
+	minishell_init(&minishell, env);
 	while (1)
 	{
 		read_cmd_line(&minishell);
