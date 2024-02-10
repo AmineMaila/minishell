@@ -3,17 +3,11 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-int main(int argc, char **argv, char **env)
+int main()
 {
-	char *arr;
 
-	(void)argc;
-	(void)argv;
-	arr = NULL;
-	arr = env[0];
-	printf("%s\n", arr);
 	//char *str = "hello world";
-	char *arr[] = {"/bin/ls", "ls", NULL};
+	char *arr[] = {"/bin/echo", "hello", "world", NULL};
 	//int fd = open("main.c", O_RDONLY);
 	//dup2(fd, 0);
 	execve(arr[0], arr, NULL);

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/10 12:12:38 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/10 13:46:11 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ void	parse(t_minishell *minishell, char **env)
 	int				i;
 	t_list_parse	*lst;
 
+	if (!minishell->cmd_line[0])
+	{
+		free(minishell->cmd_line);
+		return ;
+	}
 	lst = NULL;
 	i = 0;
 	while (minishell->cmd_line[i])
