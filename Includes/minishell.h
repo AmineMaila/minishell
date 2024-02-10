@@ -6,12 +6,12 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/10 11:24:41 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/10 12:41:43 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHEL_H
-# define MINISHEL_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # define COMMAND 1
 # define PIPE 2
@@ -47,21 +47,21 @@ typedef struct s_data
 	int		heredoc;
 }				t_data;
 
-typedef struct	s_cmd_table
+typedef struct s_cmd_table
 {
 	char	**line;
 	int		infd;
 	int		outfd;
 }				t_cmd_table;
 
-typedef struct	s_list_parse
+typedef struct s_list_parse
 {
 	char				*str;
 	int					flag;
 	struct s_list_parse	*next;
 }				t_list_parse;
 
-typedef struct	s_minishell
+typedef struct s_minishell
 {
 	t_cmd_table	*cmd_table;
 	int			cmd_table_size;
@@ -71,11 +71,10 @@ typedef struct	s_minishell
 	int			output_red;
 }	t_minishell;
 
-
 //	MINISHELL
-void	input_lexer(t_minishell *minishell);
-void	parse(t_minishell *minishell, char **env);
-void	command_table(t_minishell *minishell, t_list_parse *lst);
+void			input_lexer(t_minishell *minishell);
+void			parse(t_minishell *minishell, char **env);
+void			command_table(t_minishell *minishell, t_list_parse *lst);
 
 //	LIBFT
 char			**ft_split(char const *s, char *charset);
@@ -101,19 +100,19 @@ int				get_line_size(t_list_parse *lst, int pipe_line);
 t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
 
 // get_next_line
-char	*get_next_line(int fd);
-int		newline(char *buf);
-char	*ft_strcpy(char *s1, char *s2);
-char	*ft_strncat(char *dest, const char *src, unsigned int nb);
+char			*get_next_line(int fd);
+int				newline(char *buf);
+char			*ft_strcpy(char *s1, char *s2);
+char			*ft_strncat(char *dest, const char *src, unsigned int nb);
 
-void	execute(t_cmd_table *table, int size);
-int		here_doc(char *lim);
-void	ft_exit(char *cmd, char *str, int ext);
-void	free_2d(char ***arr);
+void			execute(t_cmd_table *table, int size);
+int				here_doc(char *lim);
+void			ft_exit(char *cmd, char *str, int ext);
+void			free_2d(char ***arr);
 
-char	*alloc_cpy(char *str, char **result, int n);
+char			*alloc_cpy(char *str, char **result, int n);
 
-void	print_parse(t_list_parse *lst);
-void	print_open_file_descriptors();
+void			print_parse(t_list_parse *lst);
+void			print_open_file_descriptors(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/09 18:25:16 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/10 12:42:43 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	delete_node(t_list_parse **lst, t_list_parse *node)
 {
 	t_list_parse	*prev;
 	t_list_parse	*tmp;
-	
+
 	prev = *lst;
 	if (!ft_strcmp(prev->str, node->str))
 	{
@@ -50,7 +50,7 @@ void	delete_node(t_list_parse **lst, t_list_parse *node)
 
 int	env_len(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

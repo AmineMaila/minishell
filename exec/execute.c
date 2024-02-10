@@ -6,13 +6,13 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/10 12:19:39 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/10 12:41:50 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-void	print_open_file_descriptors()
+void	print_open_file_descriptors(void)
 {
     int max_fd = getdtablesize(); // Get the maximum number of file descriptors
     printf("Open file descriptors:\n");
@@ -80,7 +80,7 @@ void	birth(t_data *pipex, t_cmd_table table, int table_fd)
 
 void	wait_child(t_data *pipex, t_cmd_table table)
 {
-	int fd[2];
+	int	fd[2];
 	int	i;
 
 	if (pipe(fd) == -1)
@@ -106,35 +106,29 @@ void	wait_child(t_data *pipex, t_cmd_table table)
 	free(pipex->pids);
 }
 
-void	spawn_children(t_data *pipex, t_cmd_table *table, int size)
-{
-	int	i;
-
-	i = 0;
-	while (i < size - 1)
-	{
-		if (!table[i].line[0])
-		{
-			close(pipex->infd);
-			pipex->infd = table[i + 1].infd;
-			if (table[i].outfd > 2)
-				close(table[i].outfd);
-		}
-		else
-			birth(pipex, table[i], table[i + 1].infd);
-		i++;
-	}
-	wait_child(pipex, table[i]);
-}
-
 void	execute(t_cmd_table *table, int size)
 {
 	t_data	pipex;
+	int		i;
 
 	pipex.id_count = 0;
 	pipex.heredoc = 0;
 	pipex.pids = malloc(size * sizeof(int));
 	pipex.infd = table[0].infd;
-	spawn_children(&pipex, table, size);
+	i = 0;
+	while (i < size - 1)
+	{
+		if (!table[i].line[0])
+		{
+			close(pipex.infd);
+			pipex.infd = table[i + 1].infd;
+			if (table[i].outfd > 2)
+				close(table[i].outfd);
+		}
+		else
+			birth(&pipex, table[i], table[i + 1].infd);
+		i++;
+	}
+	wait_child(&pipex, table[i]);
 	// print_open_file_descriptors();
 }
