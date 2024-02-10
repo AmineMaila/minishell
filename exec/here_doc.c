@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:17:42 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/09 21:41:42 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/10 11:28:05 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ void	is_lim(char **lim, int fd)
 		ft_putstr_fd("> ", 0);
 		tmp = get_next_line(0);
 		if (!tmp)
+		{
+			free(*lim);
+			close(fd);
 			exit(0);
+		}
 		if (!ft_strcmp(*lim, tmp))
 		{
 			free(tmp);

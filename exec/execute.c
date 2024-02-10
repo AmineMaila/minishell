@@ -6,11 +6,22 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/09 22:53:32 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/10 12:19:39 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
+
+void	print_open_file_descriptors()
+{
+    int max_fd = getdtablesize(); // Get the maximum number of file descriptors
+    printf("Open file descriptors:\n");
+    for (int fd = 0; fd < max_fd; fd++) {
+        if (fcntl(fd, F_GETFD) != -1 || errno != EBADF) { // Check if the file descriptor is valid
+            printf("----[%d]----\n", fd);
+        }
+    }
+}
 
 void	out_fd(t_data *pipex, int out, int fd)
 {
@@ -67,25 +78,24 @@ void	birth(t_data *pipex, t_cmd_table table, int table_fd)
 	close(pipex->outfd);
 }
 
-void	spawn_children(t_data *pipex, t_cmd_table *table, int size)
+void	wait_child(t_data *pipex, t_cmd_table table)
 {
+	int fd[2];
 	int	i;
 
-	i = 0;
-	while (i < size - 1)
-	{
-		if (table[i].line[0])
-			birth(pipex, table[i], table[i + 1].infd);
-		else if (table[i + 1].infd > 2)
-			pipex->infd = table[i + 1].infd;
-		i++;
-	}
-	pipex->outfd = table[i].outfd;
+	if (pipe(fd) == -1)
+		ft_exit(NULL, NULL, errno);
+	close(fd[1]);
+	if (pipex->infd == -42)
+		pipex->infd = fd[0];
+	else
+		close(fd[0]);
+	pipex->outfd = table.outfd;
 	pipex->pids[pipex->id_count] = fork();
 	if (pipex->pids[pipex->id_count] == -1)
 		ft_exit(NULL, NULL, errno);
 	if (pipex->pids[pipex->id_count] == 0)
-		exec_cmd(pipex, table[i]);
+		exec_cmd(pipex, table);
 	pipex->id_count++;
 	close(pipex->infd);
 	close(pipex->outfd);
@@ -94,6 +104,27 @@ void	spawn_children(t_data *pipex, t_cmd_table *table, int size)
 		if (waitpid(pipex->pids[i++], 0, 0) == -1)
 			ft_exit(NULL, NULL, errno);
 	free(pipex->pids);
+}
+
+void	spawn_children(t_data *pipex, t_cmd_table *table, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size - 1)
+	{
+		if (!table[i].line[0])
+		{
+			close(pipex->infd);
+			pipex->infd = table[i + 1].infd;
+			if (table[i].outfd > 2)
+				close(table[i].outfd);
+		}
+		else
+			birth(pipex, table[i], table[i + 1].infd);
+		i++;
+	}
+	wait_child(pipex, table[i]);
 }
 
 void	execute(t_cmd_table *table, int size)
@@ -105,4 +136,5 @@ void	execute(t_cmd_table *table, int size)
 	pipex.pids = malloc(size * sizeof(int));
 	pipex.infd = table[0].infd;
 	spawn_children(&pipex, table, size);
+	// print_open_file_descriptors();
 }

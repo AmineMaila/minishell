@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/09 23:04:19 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/10 12:12:38 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	parse(t_minishell *minishell, char **env)
 	execute(minishell->cmd_table, minishell->cmd_table_size);
 	// print_parse(lst);
 	// ft_print_cmd_table(minishell);
+	// print_open_file_descriptors();
 	free(minishell->cmd_table);
 	ft_lstclear(&lst);
 	free(minishell->cmd_line);
