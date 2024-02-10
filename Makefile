@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
+#    By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/09 21:42:32 by mmaila           ###   ########.fr        #
+#    Updated: 2024/02/10 13:18:44 by nazouz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			= 		minishell
 
 CC				= 		cc
 
-CFLAGS			= 		-Wall -Werror -Wextra
+CFLAGS			= 		-Wall -Werror -Wextra -g3
 
 LIBFT			=		./libft/libft.a
 
@@ -40,6 +40,7 @@ SRCS			= 		\
 						./exec/here_doc.c \
 						./exec/get_next_line/get_next_line.c \
 						./exec/get_next_line/get_next_line_utils.c \
+						./env/env.c \
 						main.c
 
 OBJS			= 		$(SRCS:.c=.o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/10 12:41:43 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/10 13:16:20 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_cmd_table
 	int		outfd;
 }				t_cmd_table;
 
-typedef struct s_list_parse
+typedef struct	s_list_parse
 {
 	char				*str;
 	int					flag;
@@ -63,18 +63,21 @@ typedef struct s_list_parse
 
 typedef struct s_minishell
 {
-	t_cmd_table	*cmd_table;
-	int			cmd_table_size;
-	char		*input;
-	char		**cmd_line;
-	int			input_red;
-	int			output_red;
+	t_list_parse		*env;
+	t_cmd_table			*cmd_table;
+	int					cmd_table_size;
+	char				*input;
+	char				**cmd_line;
+	int					input_red;
+	int					output_red;
 }	t_minishell;
 
 //	MINISHELL
-void			input_lexer(t_minishell *minishell);
-void			parse(t_minishell *minishell, char **env);
-void			command_table(t_minishell *minishell, t_list_parse *lst);
+void	input_lexer(t_minishell *minishell);
+void	parse(t_minishell *minishell, char **env);
+void	command_table(t_minishell *minishell, t_list_parse *lst);
+void	minishell_env(t_list_parse **lst, char **env);
+char	*get_env(t_minishell *minishell, char *str);
 
 //	LIBFT
 char			**ft_split(char const *s, char *charset);
