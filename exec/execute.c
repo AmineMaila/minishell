@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/11 12:30:31 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/11 18:35:53 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	out_fd(t_data *pipex, int out, int fd)
 
 void	exec_cmd(t_data *pipex, t_cmd_table table)
 {
-	if (pipex->infd == -1 || pipex->outfd == -1)
+	if (pipex->infd == -1 || pipex->outfd == -1 || !table.line[0])
 		exit(0);
 	if (dup2(pipex->infd, 0) == -1)
 		ft_exit(NULL, NULL, errno);
@@ -44,6 +44,8 @@ void	exec_cmd(t_data *pipex, t_cmd_table table)
 	if (dup2(pipex->outfd, 1) == -1)
 		ft_exit(NULL, NULL, errno);
 	close(pipex->outfd);
+	if (exec_builtin(table.line))
+		exit(0);
 	is_cmd(&table.line[0], pipex->env);
 	if (access(table.line[0], F_OK))
 		ft_exit(table.line[0], ": command not found", 1);

@@ -14,8 +14,10 @@ int main()
 {
 
 	//char *str = "hello world";
-	char *arr[] = {"/bin/echo", "hello", "world", NULL};
+	//char *arr[] = {"/bin/echo", "hello", "world", NULL};
 	//int fd = open("main.c", O_RDONLY);
 	//dup2(fd, 0);
-	execve(arr[0], arr, NULL);
+	//execve(arr[0], arr, NULL);
+	char arr[200];
+	printf("%s\n",getcwd(0, 0));
 }

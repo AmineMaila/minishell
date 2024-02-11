@@ -6,7 +6,7 @@
 #    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/10 15:44:07 by mmaila           ###   ########.fr        #
+#    Updated: 2024/02/11 19:06:49 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,9 @@ SRCS			= 		\
 						./exec/get_next_line/get_next_line.c \
 						./exec/get_next_line/get_next_line_utils.c \
 						./env/env.c \
+						./builtins/echo.c \
+						./builtins/builtin.c \
+						./builtins/pwd.c \
 						main.c
 
 OBJS			= 		$(SRCS:.c=.o)
