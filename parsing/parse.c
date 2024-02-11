@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/10 13:46:11 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/10 15:40:59 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	parse(t_minishell *minishell, char **env)
 	i = 0;
 	while (minishell->cmd_line[i])
 		ft_lstadd_back(&lst, minishell->cmd_line[i++]);
-	flag(&lst, env);
+	flag(&lst);
 	if (syntax(lst) == -1)
 	{
 		ft_lstclear(&lst);
@@ -86,7 +86,7 @@ void	parse(t_minishell *minishell, char **env)
 		return ;
 	}
 	command_table(minishell, lst);
-	execute(minishell->cmd_table, minishell->cmd_table_size);
+	execute(minishell->cmd_table, env, minishell->cmd_table_size);
 	// print_parse(lst);
 	// ft_print_cmd_table(minishell);
 	// print_open_file_descriptors();

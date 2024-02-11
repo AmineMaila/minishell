@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/10 12:41:50 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/11 12:30:31 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,10 @@ void	exec_cmd(t_data *pipex, t_cmd_table table)
 	if (dup2(pipex->outfd, 1) == -1)
 		ft_exit(NULL, NULL, errno);
 	close(pipex->outfd);
+	is_cmd(&table.line[0], pipex->env);
 	if (access(table.line[0], F_OK))
 		ft_exit(table.line[0], ": command not found", 1);
-	if (execve(table.line[0], table.line, NULL) == -1)
+	if (execve(table.line[0], table.line, pipex->env) == -1)
 		ft_exit(NULL, NULL, errno);
 }
 
@@ -106,11 +107,12 @@ void	wait_child(t_data *pipex, t_cmd_table table)
 	free(pipex->pids);
 }
 
-void	execute(t_cmd_table *table, int size)
+void	execute(t_cmd_table *table, char **env, int size)
 {
 	t_data	pipex;
 	int		i;
 
+	pipex.env = env;
 	pipex.id_count = 0;
 	pipex.heredoc = 0;
 	pipex.pids = malloc(size * sizeof(int));

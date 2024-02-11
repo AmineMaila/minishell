@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/10 13:16:20 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/10 15:44:55 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 // pipex
 typedef struct s_data
 {
+	char	**env;
 	int		*pids;
 	int		infd;
 	int		outfd;
@@ -73,11 +74,11 @@ typedef struct s_minishell
 }	t_minishell;
 
 //	MINISHELL
-void	input_lexer(t_minishell *minishell);
-void	parse(t_minishell *minishell, char **env);
-void	command_table(t_minishell *minishell, t_list_parse *lst);
-void	minishell_env(t_list_parse **lst, char **env);
-char	*get_env(t_minishell *minishell, char *str);
+void			input_lexer(t_minishell *minishell);
+void			parse(t_minishell *minishell, char **env);
+void			command_table(t_minishell *minishell, t_list_parse *lst);
+void			minishell_env(t_list_parse **lst, char **env);
+char			*get_env(t_minishell *minishell, char *str);
 
 //	LIBFT
 char			**ft_split(char const *s, char *charset);
@@ -92,7 +93,7 @@ int				ft_strcmp(char *s1, char *s2);
 void			ft_print_cmd_table(t_minishell *minishell);
 void			ft_print_matrix(char **matrix);
 void			ft_exit(char *cmd, char *str, int ext);
-void			flag(t_list_parse **lst, char **env);
+void			flag(t_list_parse **lst);
 void			expand_var(t_list_parse **lst, t_list_parse *node, int start);
 int				is_operator(char c);
 int				is_space(char c);
@@ -108,7 +109,8 @@ int				newline(char *buf);
 char			*ft_strcpy(char *s1, char *s2);
 char			*ft_strncat(char *dest, const char *src, unsigned int nb);
 
-void			execute(t_cmd_table *table, int size);
+void			execute(t_cmd_table *table, char **env, int size);
+int				is_cmd(char **token, char **env);
 int				here_doc(char *lim);
 void			ft_exit(char *cmd, char *str, int ext);
 void			free_2d(char ***arr);

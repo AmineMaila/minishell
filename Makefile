@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+         #
+#    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/10 13:18:44 by nazouz           ###   ########.fr        #
+#    Updated: 2024/02/10 15:44:07 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS			= 		\
 						./parsing/tokenize.c \
 						./parsing/tokenize_quotes.c \
 						./parsing/tokenize_utils.c \
-						./parsing/command.c \
+						./parsing/flag.c \
 						./parsing/command_table.c \
 						./parsing/command_table_utils.c \
 						./parsing/exit.c \
@@ -38,6 +38,7 @@ SRCS			= 		\
 						./utils/ft_strcmp.c \
 						./exec/execute.c \
 						./exec/here_doc.c \
+						./exec/command.c \
 						./exec/get_next_line/get_next_line.c \
 						./exec/get_next_line/get_next_line_utils.c \
 						./env/env.c \
