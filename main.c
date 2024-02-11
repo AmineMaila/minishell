@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/11 15:51:47 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/11 19:28:39 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	minishell_init(t_minishell *minishell, char **env)
 	minishell->input = NULL;
 	minishell->cmd_line = NULL;
 	minishell->env = NULL;
-	minishell_env(&minishell->env, env);
+	minishell_env(minishell, env);
 }
 
 void	read_cmd_line(t_minishell *minishell)

@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:15:21 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/09 18:26:37 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/11 20:08:25 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,46 @@
 
 char	*get_env(t_minishell *minishell, char *str)
 {
-	t_list_parse	*current;
+	int			i;
 
 	if (!minishell->env)
 		return (NULL);
-	current = minishell->env;
-	while (current && current->str)
+	while (minishell->env[i])
 	{
-		if (!ft_strncmp(str, current->str, ft_strlen(str))
-			&& *(current->str + ft_strlen(str)) == '=')
-			return ((current->str + ft_strlen(str) + 1));
-		current = current->next;
+		if (!ft_strncmp(str, minishell->env[i], ft_strlen(str))
+			&& *(minishell->env[i] + ft_strlen(str)) == '=')
+			return ((minishell->env[i] + ft_strlen(str) + 1));
+		i++;
 	}
 	return (NULL);
 }
 
-void	minishell_env(t_list_parse **lst, char **env)
+void	minishell_env(t_minishell *minishell, char **env)
 {
 	int			i;
-	char		*tmp;
+	int			size;
 
-	i = 0;
-	if (!env)
+	if (!env || !env[0])
 		return ;
+	size = 0;
+	while (env[size])
+		size++;
+	minishell->env = malloc(sizeof(char *) * (size + 1));
+	if (!minishell->env)
+		return ;
+	i = 0;
 	while (env[i])
 	{
-		tmp = ft_strdup(env[i++]);
-		// if (!tmp)
-			// ft_exit;
-		ft_lstadd_back(lst, tmp);
+		if (!ft_strncmp(env[i], "SHLVL=", 6))
+		{
+			minishell->env[i] = ft_strjoin("SHLVL=", ft_itoa(ft_atoi(env[i] + 6) + 1)); // malloc protection
+			i++;
+		}
+		else
+		{
+			minishell->env[i] = ft_strdup(env[i]);
+			i++;
+		}
 	}
+	minishell->env[i] = NULL;
 }

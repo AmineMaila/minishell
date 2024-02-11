@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/09 13:04:41 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/11 19:18:02 by nazouz           ###   ########.fr       */
+/*   Created: 2024/02/11 19:37:35 by nazouz            #+#    #+#             */
+/*   Updated: 2024/02/11 19:39:40 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-void	pwd()
+void	env(t_minishell *minishell)
 {
-	char	*arr;
+	int			i;
 
-	arr = getcwd(0, 0);
-	printf("%s\n", arr);
-	free(arr);
+	if (!minishell->env || !minishell->env[0])
+		return ;
+	i = 0;
+	while (minishell->env[i])
+		printf("%s\n", minishell->env[i++]);
+	return ;
 }
