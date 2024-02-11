@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:35:24 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/09 18:24:32 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/11 18:33:28 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,25 @@ int	get_line_size(t_list_parse *lst, int pipe_line)
 		current = current->next;
 	}
 	return (size);
+}
+
+int	open_redins(t_list_parse *lst, int pipe_line)
+{
+	t_list_parse	*current;
+	int				infd;
+
+	infd = -42;
+	current = get_pipe_line(lst, pipe_line);
+	while (current && current->flag != PIPE)
+	{
+		if (current->flag == REDIN)
+		{
+			close(infd);
+			infd = open(current->next->str, O_RDONLY);
+			if (infd == -1)
+				return (ft_exit(current->next->str, ": no such file or directory", 0), -1);
+		}
+		current = current->next;
+	}
+	return (infd);
 }

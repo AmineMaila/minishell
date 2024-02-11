@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/09 23:19:21 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/11 18:35:00 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,28 @@ int	get_infd(t_list_parse *lst, int pipe_line)
 {
 	t_list_parse	*current;
 	t_list_parse	*redin;
-	char			*infile;
-	int				fd;
+	int				heredoc_fd;
 
 	redin = NULL;
+	heredoc_fd = -1;
 	current = get_pipe_line(lst, pipe_line);
 	while (current && current->flag != PIPE)
 	{
 		if (current->flag == REDIN || current->flag == HEREDOC)
 			redin = current;
+		if (current->flag == HEREDOC)
+			(close(heredoc_fd), heredoc_fd = here_doc(current->next->str));
 		current = current->next;
 	}
-	if (!redin && pipe_line == 0)
-		return (open("/dev/stdin", O_RDONLY));
-	else if (!redin)
+	if (!redin)
+	{
+		if (pipe_line == 0)
+			return (open("/dev/stdin", O_RDONLY));
 		return (-42);
-	infile = redin->next->str;
+	}
 	if (redin->flag == HEREDOC)
-		return (here_doc(redin->next->str));
-	fd = open(infile, O_RDONLY);
-	if (fd == -1)
-		ft_exit(infile, ": no such file or directory", 0);
-	return (fd);
+		return (open_redins(lst, pipe_line), heredoc_fd);
+	return (close(heredoc_fd), open_redins(lst, pipe_line));
 }
 
 void	fill_fds(t_minishell *minishell, t_list_parse *lst, int pipe_line)
