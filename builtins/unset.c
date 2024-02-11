@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:48:06 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/11 23:00:56 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/12 00:26:10 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,18 @@ void	ft_remove(char ***env, char *to_remove)
 	int		i;
 	int		j;
 	int		len;
-
 	i = 0;
 	j = 0;
 	result = malloc(len_2d(*env) * sizeof(char *));
 	len = ft_strlen(to_remove);
-	while (env[i])
+	while ((*env)[i])
 	{
-		if (!ft_strncmp(env[i], to_remove, len) && (env[i]) + len == '=')
+		if (!ft_strncmp((*env)[i], to_remove, len) && *(((*env)[i]) + len) == '=')
 			i++;
 		else
-			(*result)[j++] = ft_strdup(env[i++]); // protect
+			result[j++] = ft_strdup((*env)[i++]);
 	}
-	(*result)[i] = NULL;
+	result[j] = NULL;
 	free_2d(env);
 	*env = result;
 }
@@ -52,7 +51,7 @@ void	unset(char **line, char ***env)
 	i = 1;
 	while (line[i])
 	{
-		if(getenv(line[i]))
+		if(get_env(*env, line[i]))
 			ft_remove(env, line[i]);
 		i++;
 	}

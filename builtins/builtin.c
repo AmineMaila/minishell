@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:19:58 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/11 23:04:24 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/11 23:54:40 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*to_lower(char *str)
 	return (result);
 }
 
-int	exec_builtin(char **line, char **env)
+int	exec_builtin(char **line, char ***env)
 {
 	char	*lower;
 
@@ -43,10 +43,13 @@ int	exec_builtin(char **line, char **env)
 		return(pwd(), 1);
 	// else if(!ft_strcmp("export", line[0]))
 	// 	return(export(), 1);
-	// else if(!ft_strcmp("unset", line[0]))
-	// 	return(unset(line, &env), 1);
-	// else if(!ft_strcmp("env", lower))
-	// 	return(env(), 1);
+	else if(!ft_strcmp("unset", line[0]))
+	{
+		printf("%s\n", line[0]);
+		return(unset(line, env), 1);
+	}
+	else if(!ft_strcmp("env", lower))
+		return(environment(*env), 1);
 	// else if(!ft_strcmp("exit", line[0]))
 	// 	return(exit(), 1);
 	else

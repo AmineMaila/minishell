@@ -3,26 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:15:21 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/11 20:08:25 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/12 00:01:06 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-char	*get_env(t_minishell *minishell, char *str)
+char	*get_env(char **env, char *str)
 {
 	int			i;
 
-	if (!minishell->env)
+	if (!env)
 		return (NULL);
-	while (minishell->env[i])
+	i = 0;
+	while (env[i])
 	{
-		if (!ft_strncmp(str, minishell->env[i], ft_strlen(str))
-			&& *(minishell->env[i] + ft_strlen(str)) == '=')
-			return ((minishell->env[i] + ft_strlen(str) + 1));
+		if (!ft_strncmp(str, env[i], ft_strlen(str))
+			&& *(env[i] + ft_strlen(str)) == '=')
+			return ((env[i] + ft_strlen(str) + 1));
 		i++;
 	}
 	return (NULL);

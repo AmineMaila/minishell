@@ -6,7 +6,7 @@
 #    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/11 19:06:49 by mmaila           ###   ########.fr        #
+#    Updated: 2024/02/11 23:47:55 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,8 @@ SRCS			= 		\
 						./builtins/echo.c \
 						./builtins/builtin.c \
 						./builtins/pwd.c \
+						./builtins/unset.c \
+						./builtins/env.c \
 						main.c
 
 OBJS			= 		$(SRCS:.c=.o)

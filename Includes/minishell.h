@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/11 19:44:40 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/12 00:01:25 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 // pipex
 typedef struct s_data
 {
-	char	**env;
+	char	***env;
 	int		*pids;
 	int		infd;
 	int		outfd;
@@ -76,10 +76,10 @@ typedef struct s_minishell
 
 //	MINISHELL
 void			input_lexer(t_minishell *minishell);
-void			parse(t_minishell *minishell, char **env);
+void			parse(t_minishell *minishell);
 void			command_table(t_minishell *minishell, t_list_parse *lst);
 void			minishell_env(t_minishell *minishell, char **env);
-char			*get_env(t_minishell *minishell, char *str);
+char			*get_env(char **env, char *str);
 
 //	LIBFT
 char			**ft_split(char const *s, char *charset);
@@ -111,7 +111,7 @@ int				newline(char *buf);
 char			*ft_strcpy(char *s1, char *s2);
 char			*ft_strncat(char *dest, const char *src, unsigned int nb);
 
-void			execute(t_cmd_table *table, char **env, int size);
+void			execute(t_cmd_table *table, char ***env, int size);
 int				is_cmd(char **token, char **env);
 int				here_doc(char *lim);
 void			ft_exit(char *cmd, char *str, int ext);
@@ -120,8 +120,10 @@ void			free_2d(char ***arr);
 char			*alloc_cpy(char *str, char **result, int n);
 
 // built ins
-int				exec_builtin(char **line);
+int				exec_builtin(char **line, char ***env);
 void			echo(char **line);
+void			environment(char **env);
+void			unset(char **line, char ***env);
 void			pwd();
 
 
