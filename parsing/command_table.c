@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/11 19:17:26 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/11 19:56:04 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,11 @@ int	get_infd(t_list_parse *lst, int pipe_line)
 		return (-42);
 	}
 	if (redin->flag == HEREDOC)
-		return (open_redins(lst, pipe_line), heredoc_fd);
+	{
+		if (open_redins(lst, pipe_line) == -1)
+			return (-1);
+		return (heredoc_fd);
+	}
 	return (close(heredoc_fd), open_redins(lst, pipe_line));
 }
 
