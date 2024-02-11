@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:35:15 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/05 16:47:37 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/11 13:32:18 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,18 @@ static	size_t	word_len(const char *str, char *charset)
 	char	quote;
 
 	len = 0;
-	if (str[len] == 34 || str[len] == 39)
+	while (str[len] && !is_charset(str[len], charset))
 	{
-		quote = str[len++];
-		while (str[len] && str[len] != quote)
-			len++;
-		return (len + 1);
-	}
-	while (str[len] && !is_charset(str[len], charset)
-		&& str[len] != 34 && str[len] != 39)
+		if (str[len] == 34 || str[len] == 39)
+		{
+			quote = str[len++];
+			while (str[len] && str[len] != quote)
+				len++;
+			if (!str[len])
+				return (len);
+		}
 		len++;
+	}
 	return (len);
 }
 
@@ -56,17 +58,18 @@ static size_t	word_count(char const *s, char *charset)
 			i++;
 		if (s[i] != '\0')
 			count++;
-		if (s[i] == 34 || s[i] == 39)
+		while (s[i] && !is_charset(s[i], charset))
 		{
-			quote = s[i++];
-			while (s[i] && s[i] != quote)
-				i++;
-			if (s[i] == quote)
-				i++;
-			continue ;
-		}
-		while (!is_charset(s[i], charset) && s[i] != 34 && s[i] != 39 && s[i])
+			if (s[i] == 34 || s[i] == 39)
+			{
+				quote = s[i++];
+				while (s[i] && s[i] != quote)
+					i++;
+				if (!s[i])
+					break ;
+			}
 			i++;
+		}
 	}
 	return (count);
 }

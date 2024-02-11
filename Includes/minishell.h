@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/10 15:44:55 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/11 16:04:13 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # define HEREDOC 7
 # define APPEND 8
 # define ERR 9
-# define LIM 10
+# define ERR2 10
+# define LIM 11
 
 # define BUFFER_SIZE 10
 

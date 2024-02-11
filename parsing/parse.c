@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/10 15:40:59 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/11 16:06:49 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	syntax(t_list_parse *lst)
 	{
 		if (lst->flag == ERR)
 			return (print_error(lst->str), -1);
+		if (lst->flag == ERR2)
+			return (ft_putstr_fd("minishell: syntax error: unclosed quote\n", 2), -1);
 		if ((lst->flag == REDIN || lst->flag == REDOUT
 				|| lst->flag == HEREDOC || lst->flag == APPEND))
 		{
@@ -79,7 +81,7 @@ void	parse(t_minishell *minishell, char **env)
 	while (minishell->cmd_line[i])
 		ft_lstadd_back(&lst, minishell->cmd_line[i++]);
 	flag(&lst);
-	if (syntax(lst) == -1)
+	if (!lst || syntax(lst) == -1)
 	{
 		ft_lstclear(&lst);
 		free(minishell->cmd_line);

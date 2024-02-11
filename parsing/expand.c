@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/10 12:42:43 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/11 15:13:13 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	delete_node(t_list_parse **lst, t_list_parse *node)
 		if (!ft_strcmp(prev->next->str, node->str))
 		{
 			tmp = prev->next->next;
-			free(prev->next->str);
 			ft_lstdelone(prev->next);
 			prev->next = tmp;
 			return ;
