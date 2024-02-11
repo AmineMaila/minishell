@@ -1,22 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/09 13:04:41 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/11 19:16:03 by mmaila           ###   ########.fr       */
+/*   Created: 2024/02/11 18:19:34 by mmaila            #+#    #+#             */
+/*   Updated: 2024/02/11 18:47:04 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-void	pwd()
+int	is_nflag(char *str)
 {
-	char	*arr;
+	int	i;
 
-	arr = getcwd(0, 0);
-	printf("%s\n", arr);
-	free(arr);
+	i = 0;
+	if (str[i++] == '-')
+	{
+		while(str[i])
+		{
+			if (str[i] != 'n')
+				return (0);
+			i++;
+		}
+	}
+	else
+		return (0);
+	return (1);
+}
+
+void	echo(char **line)
+{
+	int nflag;
+	int	i;
+
+	nflag = 0;
+	i = 1;
+	while (line[i])
+	{
+		if (is_nflag(line[i]))
+			nflag = 1;
+		else
+		{
+			printf("%s", line[i]);
+			if (line[i + 1])
+				printf(" ");
+		}
+		i++;
+	}
+	if (!nflag)
+		printf("\n");
 }

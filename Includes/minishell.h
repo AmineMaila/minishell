@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/11 18:33:16 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/11 19:17:12 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,15 @@ void			free_2d(char ***arr);
 
 char			*alloc_cpy(char *str, char **result, int n);
 
+// built ins
+int				exec_builtin(char **line);
+void			echo(char **line);
+void			pwd();
+
+
 void			print_parse(t_list_parse *lst);
 void			print_open_file_descriptors(void);
+
+
 
 #endif
