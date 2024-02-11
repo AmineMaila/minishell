@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:19:58 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/11 19:09:33 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/11 23:04:24 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,24 @@ char	*to_lower(char *str)
 	return (result);
 }
 
-int	exec_builtin(char **line)
+int	exec_builtin(char **line, char **env)
 {
 	char	*lower;
 
 	lower = to_lower(line[0]);
 	if (!ft_strcmp("echo", lower))
 		return(echo(line), 1);
-	// else if(!ft_strcmp("cd", lower))
+	// else if(!ft_strcmp("cd", line[0]))
 	// 	return(cd(), 1);
 	else if(!ft_strcmp("pwd", lower))
 		return(pwd(), 1);
-	// else if(!ft_strcmp("export", lower))
+	// else if(!ft_strcmp("export", line[0]))
 	// 	return(export(), 1);
-	// else if(!ft_strcmp("unset", lower))
-	// 	return(unset(), 1);
+	// else if(!ft_strcmp("unset", line[0]))
+	// 	return(unset(line, &env), 1);
 	// else if(!ft_strcmp("env", lower))
 	// 	return(env(), 1);
-	// else if(!ft_strcmp("exit", lower))
+	// else if(!ft_strcmp("exit", line[0]))
 	// 	return(exit(), 1);
 	else
 		return (0);
