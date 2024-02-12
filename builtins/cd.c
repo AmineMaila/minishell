@@ -6,56 +6,58 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:40:57 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/12 13:28:40 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/12 17:23:45 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-void	chdir_home(t_minishell *minishell, char *dir)
+int	chdir_relative(char *path, char **env)
 {
+	char	pwd[PATH_MAX];
 	char	*temp;
 
-	if (!dir[1])
-	{
-		dir = get_env(minishell->env, "HOME");
-		if (!dir)
-		{
-			printf("minishell: cd: HOME not set");
-			return ;
-		}
-	}
-	else
-	{
-		temp = ft_substr(dir, 1, ft_strlen(&dir[1]));
-		if (!temp)
-			return ;
-		dir = ft_strjoin("~", temp);
-		if (!dir)
-		{
-			free(temp);
-			return ;
-		}
-	}
-	if (chdir(dir) == -1)
-		perror("minishell");
+	if (!getcwd(pwd, PATH_MAX))
+		return (perror("minishell: cd"), -1);
+	if ((ft_strlen(pwd) + ft_strlen(path) + 1) >= PATH_MAX)
+		return (printf("minishell: cd: path is too long\n"), -1);
+	temp = ft_strjoin(pwd, "/"); // malloc protection
+	path = ft_strjoin(temp, path); // malloc protection
+	free(temp);
+	if (chdir(path) != 0)
+		return (free(path), perror("minishell: cd"), -1);
+	return (free(path), 1);
 }
 
-void	cd(t_minishell *minishell, char **line)
+int	chdir_home(char *path, char **env)
 {
-	char	*dir;
-	char	*temp;
 	char	*home;
+	
+	home = get_env(env, "HOME");
+	if (!home)
+		return (printf("minishell: cd: HOME is not set\n"), -1);
+	if (!path[1] && chdir(home) != 0) // if path contains only '~'
+		return (perror("minishell: cd"), -1);
+	else if (path[1]) // if path == "~/some/thing"
+	{
+		if ((ft_strlen(home) + ft_strlen(path)) >= PATH_MAX)
+			return (printf("minishell: cd: path is too long\n"), -1);
+		path = ft_strjoin(home, &path[1]); // malloc protection
+	}
+	if (chdir(path) != 0)
+		return (free(path), perror("minishell: cd"), -1);
+	return (free(path), 1);
+}
 
-	dir = line[0];
-	if (!ft_strncmp(dir, "~", 1))
-	{
-		chdir_home(minishell, dir);
-		// update pwd
-	}
-	else if (chdir(dir) == -1)
-	{
-		perror("minishell");
-		// update pwd
-	}
+int	cd(char *path, char **env)
+{
+	if ((ft_strlen(path) + 1) >= PATH_MAX)
+		return (printf("minishell: cd: path is too long\n"), -1);
+	if (!path || path[0] == '~') // if path contains '~'
+		return (chdir_home(path, env));
+	if (path[0] != '/') // if path is relative
+		return (chdir_relative(path, env));
+	if (chdir(path) != 0)
+		return (perror("minishell: cd"), -1);
+	return (1);
 }
