@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:40:57 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/12 17:23:45 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/12 19:59:02 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	chdir_relative(char *path, char **env)
 	char	pwd[PATH_MAX];
 	char	*temp;
 
+	(void)env;
 	if (!getcwd(pwd, PATH_MAX))
 		return (perror("minishell: cd"), -1);
 	if ((ft_strlen(pwd) + ft_strlen(path) + 1) >= PATH_MAX)
@@ -36,8 +37,12 @@ int	chdir_home(char *path, char **env)
 	home = get_env(env, "HOME");
 	if (!home)
 		return (printf("minishell: cd: HOME is not set\n"), -1);
-	if (!path[1] && chdir(home) != 0) // if path contains only '~'
-		return (perror("minishell: cd"), -1);
+	if (!path || !path[1]) // if path contains only '~'
+	{
+		if (chdir(home) != 0)
+			return (perror("minishell: cd"), -1);
+		return (1);
+	}
 	else if (path[1]) // if path == "~/some/thing"
 	{
 		if ((ft_strlen(home) + ft_strlen(path)) >= PATH_MAX)
@@ -51,7 +56,7 @@ int	chdir_home(char *path, char **env)
 
 int	cd(char *path, char **env)
 {
-	if ((ft_strlen(path) + 1) >= PATH_MAX)
+	if (path && (ft_strlen(path) + 1 >= PATH_MAX))
 		return (printf("minishell: cd: path is too long\n"), -1);
 	if (!path || path[0] == '~') // if path contains '~'
 		return (chdir_home(path, env));
