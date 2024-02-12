@@ -6,11 +6,13 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/11 19:56:04 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/12 16:10:13 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
+
+
 
 int	get_outfd(t_minishell *minishell, t_list_parse *lst, int pipe_line)
 {
@@ -73,8 +75,21 @@ int	get_infd(t_list_parse *lst, int pipe_line)
 
 void	fill_fds(t_minishell *minishell, t_list_parse *lst, int pipe_line)
 {
+	int	fd[2];
+
+	if (pipe(fd) == -1)
+		ft_exit(NULL, NULL, errno);
 	minishell->cmd_table[pipe_line].infd = get_infd(lst, pipe_line);
+	if (minishell->cmd_table[pipe_line].infd == -42)
+		minishell->cmd_table[pipe_line].infd = minishell->pipeinfd;
+	else
+		close(minishell->pipeinfd);
 	minishell->cmd_table[pipe_line].outfd = get_outfd(minishell, lst, pipe_line);
+	if (minishell->cmd_table[pipe_line].outfd == -42)
+		minishell->cmd_table[pipe_line].outfd = fd[1];
+	else
+		close(fd[1]);
+	minishell->pipeinfd = fd[0];
 }
 
 void	fill_line(t_minishell *minishell, t_list_parse *lst, int pipe_line)
@@ -101,12 +116,13 @@ void	fill_line(t_minishell *minishell, t_list_parse *lst, int pipe_line)
 
 void	command_table(t_minishell *minishell, t_list_parse *lst)
 {
-	int				i;
+	int	i;
 
 	minishell->cmd_table_size = get_cmd_table_size(lst);
 	minishell->cmd_table = malloc(sizeof(t_cmd_table) * minishell->cmd_table_size);
 	if (!minishell->cmd_table)
 		return ; // needs to be fixed
+	minishell->pipeinfd = -2;
 	i = 0;
 	while (i < minishell->cmd_table_size)
 	{
@@ -114,4 +130,5 @@ void	command_table(t_minishell *minishell, t_list_parse *lst)
 		fill_fds(minishell, lst, i);
 		i++;
 	}
+	close(minishell->pipeinfd);
 }

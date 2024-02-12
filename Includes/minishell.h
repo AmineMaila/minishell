@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/12 00:01:25 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/12 15:55:54 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,12 @@ typedef struct	s_list_parse
 
 typedef struct s_minishell
 {
-	char				**env;
 	t_cmd_table			*cmd_table;
-	int					cmd_table_size;
-	char				*input;
 	char				**cmd_line;
-	int					input_red;
-	int					output_red;
+	char				**env;
+	char				*input;
+	int					cmd_table_size;
+	int					pipeinfd;
 }	t_minishell;
 
 //	MINISHELL
