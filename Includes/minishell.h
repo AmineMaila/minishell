@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/12 17:33:28 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/12 18:09:29 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int				exec_builtin(char **line, char ***env);
 void			echo(char **line);
 void			environment(char **env);
 void			unset(char **line, char ***env);
+void			export(char **line, char ***env);
 void			pwd();
 
 

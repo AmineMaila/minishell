@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/12 17:42:10 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/12 18:10:02 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int	exec_parent(char **line, char ***env)
 		return (unset(line, env), 1);
 	else if(!ft_strcmp("cd", line[0]))
 		return(cd(line[1], *env), 1);
-	// else if (!ft_strcmp("export", line[0]))
-	// 	return (export(), 1);
+	else if (!ft_strcmp("export", line[0]))
+		return (export(line, env), 1);
 	return (0);
 }
 
