@@ -6,22 +6,22 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/12 16:26:45 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/12 17:24:04 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-// void	print_open_file_descriptors(void)
-// {
-//     int max_fd = getdtablesize(); // Get the maximum number of file descriptors
-//     printf("Open file descriptors:\n");
-//     for (int fd = 0; fd < max_fd; fd++) {
-//         if (fcntl(fd, F_GETFD) != -1 || errno != EBADF) { // Check if the file descriptor is valid
-//             printf("----[%d]----\n", fd);
-//         }
-//     }
-// }
+void	print_open_file_descriptors(void)
+{
+    int max_fd = getdtablesize(); // Get the maximum number of file descriptors
+    printf("Open file descriptors:\n");
+    for (int fd = 0; fd < max_fd; fd++) {
+        if (fcntl(fd, F_GETFD) != -1 || errno != EBADF) { // Check if the file descriptor is valid
+            printf("----[%d]----\n", fd);
+        }
+    }
+}
 
 void	exec_cmd(t_data *pipex, t_cmd_table table)
 {
@@ -65,6 +65,15 @@ void	wait_child(t_data *pipex)
 	free(pipex->pids);
 }
 
+int	is_unset_export(char **line, char ***env)
+{
+	if (!ft_strcmp("unset", line[0]))
+		return (unset(line, env), 1);
+	// else if (!ft_strcmp("export", line[0]))
+	// 	return (export(), 1);
+	return (0);
+}
+
 void	execute(t_cmd_table *table, char ***env, int size)
 {
 	t_data	pipex;
@@ -77,7 +86,7 @@ void	execute(t_cmd_table *table, char ***env, int size)
 	i = 0;
 	while (i < size)
 	{
-		if (!table[i].line[0])
+		if (!table[i].line[0] || is_unset_export(table[i].line, env))
 		{
 			close(table[i].infd);
 			close(table[i].outfd);

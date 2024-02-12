@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:15:21 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/12 00:01:06 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/12 16:50:19 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	minishell_env(t_minishell *minishell, char **env)
 	size = 0;
 	while (env[size])
 		size++;
-	minishell->env = malloc(sizeof(char *) * (size + 1));
+	minishell->env = malloc(sizeof(char *) * (size + 2));
 	if (!minishell->env)
 		return ;
 	i = 0;
@@ -48,6 +48,7 @@ void	minishell_env(t_minishell *minishell, char **env)
 		if (!ft_strncmp(env[i], "SHLVL=", 6))
 		{
 			minishell->env[i] = ft_strjoin("SHLVL=", ft_itoa(ft_atoi(env[i] + 6) + 1)); // malloc protection
+			minishell->env[++i] = ft_strdup("OLDPWD=");
 			i++;
 		}
 		else
