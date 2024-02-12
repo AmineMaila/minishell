@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:19:58 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/12 17:30:10 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/12 17:42:22 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,11 @@ int	exec_builtin(char **line, char ***env)
 	lower = to_lower(line[0]);
 	if (!ft_strcmp("echo", lower))
 		return(echo(line), 1);
-	else if(!ft_strcmp("cd", line[0]))
-		return(cd(line[0], *env), 1);
 	else if(!ft_strcmp("pwd", lower))
 		return(pwd(), 1);
-	// else if(!ft_strcmp("export", line[0]))
-	// 	return(export(), 1);
-	else if(!ft_strcmp("unset", line[0]))
-		return(unset(line, env), 1);
 	else if(!ft_strcmp("env", lower))
 		return(environment(*env), 1);
 	// else if(!ft_strcmp("exit", line[0]))
 	// 	return(exit(), 1);
-	else
-		return (0);
+	return (0);
 }

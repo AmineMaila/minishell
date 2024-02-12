@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/12 17:24:04 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/12 17:42:10 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,12 @@ void	wait_child(t_data *pipex)
 	free(pipex->pids);
 }
 
-int	is_unset_export(char **line, char ***env)
+int	exec_parent(char **line, char ***env)
 {
 	if (!ft_strcmp("unset", line[0]))
 		return (unset(line, env), 1);
+	else if(!ft_strcmp("cd", line[0]))
+		return(cd(line[1], *env), 1);
 	// else if (!ft_strcmp("export", line[0]))
 	// 	return (export(), 1);
 	return (0);
@@ -86,7 +88,7 @@ void	execute(t_cmd_table *table, char ***env, int size)
 	i = 0;
 	while (i < size)
 	{
-		if (!table[i].line[0] || is_unset_export(table[i].line, env))
+		if (!table[i].line[0] || exec_parent(table[i].line, env))
 		{
 			close(table[i].infd);
 			close(table[i].outfd);
