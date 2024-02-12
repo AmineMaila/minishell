@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/12 18:09:29 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/12 18:35:57 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,13 @@ void			free_2d(char ***arr);
 char			*alloc_cpy(char *str, char **result, int n);
 
 // built ins
+int				len_2d(char **arr);
 int				exec_builtin(char **line, char ***env);
 void			echo(char **line);
 void			environment(char **env);
 void			unset(char **line, char ***env);
 void			export(char **line, char ***env);
-void			pwd();
+void			pwd(void);
 
 
 void			print_parse(t_list_parse *lst);
