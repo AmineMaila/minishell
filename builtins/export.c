@@ -6,11 +6,27 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:47:56 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/12 18:53:25 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/12 20:17:42 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
+
+int	varlen(char *str)
+{
+	int	len;
+
+	len = 0;
+	while (str[len])
+	{
+		if (str[len] == '=')
+			return (len);
+		if (str[len] != '_' && !ft_isalpha(str[len]))
+			return (0);
+		len++;
+	}
+	return (0);
+}
 
 void	ft_add(char ***env, char *to_add)
 {
@@ -35,13 +51,9 @@ int	update(char *to_replace, char ***env)
 	int	len;
 	int	i;
 
-	len = 0;
-	while (to_replace[len] != '=')
-	{
-		if (!to_replace[len])
-			return (1);
-		len++;
-	}
+	len = varlen(to_replace);
+	if (!len)
+		return(ft_exit(to_replace, ": not a valid identifier", 0), 1);
 	i = 0;
 	while ((*env)[i])
 	{
