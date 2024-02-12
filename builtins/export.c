@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:47:56 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/12 17:29:28 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/12 17:40:24 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,39 @@ void	ft_remove(char ***env, char *to_remove)
 	*env = result;
 }
 
+void	ft_add(char ***env, char *to_add)
+{
+	char	*result;
+	int		i;
+	int		len;
+
+	result = malloc(len_2d(*env) + 2)
+	i = 0;
+	while (env[i])
+	{
+		(*result)[i] = ft_strdup(env[i]); // protect
+		i++;
+	}
+	(*result)[i++] = ft_strdup(to_add);
+	(*result)[i] = NULL;
+}
+
 void	export(char **line, char ***env)
 {
 	int	i;
 
 	i = 1;
 	if (!line[1])
+	{
 		environment(*env);
+		return ;
+	}
 	while (line[i])
 	{
 		if(get_env(*env, line[i]))
-			ft_remove(env, line[i]);
+			ft_replace(env, line[i]);
+		else
+			ft_add(env, line[i]);
 		i++;
 	}
 }
