@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/12 16:24:35 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/12 16:26:45 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,5 @@ void	execute(t_cmd_table *table, char ***env, int size)
 		i++;
 	}
 	wait_child(&pipex);
-	print_open_file_descriptors();
+	// print_open_file_descriptors();
 }
