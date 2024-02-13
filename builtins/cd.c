@@ -6,18 +6,37 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:40:57 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/12 20:18:15 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/13 14:17:43 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-int	update_pwd(char *path, char **env)
+int	update_oldpwd(char *oldpwd, char **env)
 {
-	
+	char	*var;
+
+	var = ft_strjoin("OLDPWD=", oldpwd);
+	free(oldpwd);
+	update(var, &env);
+	free(var);
+	return (1);
 }
 
-int	chdir_relative(char *path, char **env)
+int	update_pwd(char **env)
+{
+	char	*pwd;
+	char	*var;
+
+	pwd = getcwd(0, 0);
+	var = ft_strjoin("PWD=", pwd);
+	free(pwd);
+	update(var, &env);
+	free(var);
+	return (1);
+}
+
+int	chdir_relative(char *path, char *oldpwd, char **env)
 {
 	char	pwd[PATH_MAX];
 	char	*temp;
@@ -32,10 +51,10 @@ int	chdir_relative(char *path, char **env)
 	free(temp);
 	if (chdir(path) != 0)
 		return (free(path), ft_exit(path, ": No such file or directory", 0), -1);
-	return (free(path), 1);
+	return (free(path), update_pwd(env), update_oldpwd(oldpwd, env), 1);
 }
 
-int	chdir_home(char *path, char **env)
+int	chdir_home(char *path, char *oldpwd, char **env)
 {
 	char	*home;
 	
@@ -46,7 +65,7 @@ int	chdir_home(char *path, char **env)
 	{
 		if (chdir(home) != 0)
 			return (ft_exit(NULL, NULL, 0), -1);
-		return (1);
+		return (update_pwd(env), update_oldpwd(oldpwd, env), 1);
 	}
 	else if (path[1]) // if path == "~/some/thing"
 	{
@@ -56,22 +75,30 @@ int	chdir_home(char *path, char **env)
 	}
 	if (chdir(path) != 0)
 		return (free(path), ft_exit(path, ": No such file or directory", 0), -1);
-	return (free(path), 1);
+	return (free(path), update_pwd(env), update_oldpwd(oldpwd, env), 1);
 }
 
 int	cd(char *path, char **env)
 {
+	char	*oldpwd;
+
+	oldpwd = getcwd(0, 0);
 	if (path && (ft_strlen(path) + 1 >= PATH_MAX))
 		return (printf("minishell: cd: path is too long\n"), -1);
 	if (!path || path[0] == '~')  // if path contains '~'
+		return (chdir_home(path, oldpwd, env));
+	if (path[0] == '-' && !path[1])
 	{
-		chdir_home(path, env);
-		update_pwd(path, env);
-		// return (chdir_home(path, env));
+		path = get_env(env, "OLDPWD");
+		if (*path == '\0')
+			return (printf("minishell: cd: OLDPWD not set\n"), -1);
+		printf("%s\n", path);
 	}
 	if (path[0] != '/') // if path is relative
-		return (chdir_relative(path, env));
+		return (chdir_relative(path, oldpwd, env));
 	if (chdir(path) != 0) // absolute path
 		return (ft_exit(path, ": No such file or directory", 0), -1);
+	update_pwd(env);
+	update_oldpwd(oldpwd, env);
 	return (1);
 }
