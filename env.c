@@ -6,11 +6,11 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:15:21 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/12 16:50:19 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/13 15:42:02 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Includes/minishell.h"
+#include "Includes/minishell.h"
 
 char	*get_env(char **env, char *str)
 {
@@ -29,17 +29,32 @@ char	*get_env(char **env, char *str)
 	return (NULL);
 }
 
+void	default_env(t_minishell *minishell)
+{
+	char	*pwd;
+
+	minishell->env = malloc(3 * sizeof(char *));
+	pwd = getcwd(0, 0);
+	minishell->env[0] = ft_strjoin("PWD=", pwd);
+	free(pwd);
+	minishell->env[1] = ft_strdup("SHLVL=1");
+	minishell->env[2] = NULL;
+}
+
 void	minishell_env(t_minishell *minishell, char **env)
 {
 	int			i;
 	int			size;
 
 	if (!env || !env[0])
+	{
+		default_env(minishell);
 		return ;
+	}
 	size = 0;
 	while (env[size])
 		size++;
-	minishell->env = malloc(sizeof(char *) * (size + 2));
+	minishell->env = malloc(sizeof(char *) * (size + 1));
 	if (!minishell->env)
 		return ;
 	i = 0;
@@ -48,7 +63,6 @@ void	minishell_env(t_minishell *minishell, char **env)
 		if (!ft_strncmp(env[i], "SHLVL=", 6))
 		{
 			minishell->env[i] = ft_strjoin("SHLVL=", ft_itoa(ft_atoi(env[i] + 6) + 1)); // malloc protection
-			minishell->env[++i] = ft_strdup("OLDPWD=");
 			i++;
 		}
 		else
@@ -58,4 +72,5 @@ void	minishell_env(t_minishell *minishell, char **env)
 		}
 	}
 	minishell->env[i] = NULL;
+	// export({NULL, "OLDPWD=", NULL}, &minishell->env);
 }

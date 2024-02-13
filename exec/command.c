@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 15:44:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/10 15:44:41 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/13 13:56:12 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ char	*get_path(char *cmd, char **env)
 	char	*tmp;
 
 	i = 0;
-	while (ft_strncmp("PATH", env[i], 4))
+	while (env[i] && ft_strncmp("PATH", env[i], 4))
 		i++;
+	if (!env[i])
+		return (NULL);
 	path = ft_split(env[i] + 5, ":");
 	if (!path)
 		return (NULL);
@@ -43,6 +45,8 @@ int	is_cmd(char **token, char **env)
 	char	*tmp;
 	char	*cmd;
 
+	if (!(*token)[0])
+		ft_exit(*token, ": command not found", 1);
 	if (access(*token, F_OK | X_OK))
 	{
 		tmp = ft_strjoin("/", *token);

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/12 20:19:34 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/13 15:28:06 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void			free_2d(char ***arr);
 char			*alloc_cpy(char *str, char **result, int n);
 
 // built ins
+void			ft_add(char ***env, char *to_add);
 int				update(char *to_replace, char ***env);
 int				len_2d(char **arr);
 int				exec_builtin(char **line, char ***env);

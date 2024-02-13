@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:40:57 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/12 20:18:15 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/13 12:49:42 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-int	update_pwd(char *path, char **env)
-{
+// int	update_pwd(char *path, char **env)
+// {
 	
-}
+// }
 
 int	chdir_relative(char *path, char **env)
 {
@@ -66,7 +66,7 @@ int	cd(char *path, char **env)
 	if (!path || path[0] == '~')  // if path contains '~'
 	{
 		chdir_home(path, env);
-		update_pwd(path, env);
+		// update_pwd(path, env);
 		// return (chdir_home(path, env));
 	}
 	if (path[0] != '/') // if path is relative
