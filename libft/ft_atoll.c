@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atoll.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 19:08:37 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/13 16:43:38 by nazouz           ###   ########.fr       */
+/*   Created: 2024/02/13 15:38:52 by nazouz            #+#    #+#             */
+/*   Updated: 2024/02/13 16:43:24 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+long long	ft_atoll(const char *str)
 {
 	int				sign;
-	long			result;
-	long			resulttemp;
+	long long		resulttemp;
+	long long		result;
 
 	sign = 1;
 	result = 0;
