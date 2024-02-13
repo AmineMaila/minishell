@@ -6,7 +6,7 @@
 #    By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/12 19:59:30 by nazouz           ###   ########.fr        #
+#    Updated: 2024/02/13 15:35:05 by nazouz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRCS			= 		\
 						./builtins/env.c \
 						./builtins/export.c \
 						./builtins/cd.c \
+						./builtins/exit.c \
 						main.c
 
 OBJS			= 		$(SRCS:.c=.o)

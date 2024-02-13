@@ -32,6 +32,7 @@ SRCS_PART1		=	\
 					./ft_tolower.c \
 					./ft_toupper.c \
 					./ft_atoi.c \
+					./ft_atoll.c \
 					./ft_calloc.c \
 					./ft_strchr.c \
 					./ft_strdup.c \

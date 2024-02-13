@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/12 20:12:55 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/13 15:36:13 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	exec_parent(char **line, char ***env)
 		return (export(line, env), 1);
 	else if(!ft_strcmp("cd", line[0]))
 		return(cd(line[1], *env), 1);
+	else if(!ft_strcmp("exit", line[0]))
+		return(exit_builtin(line), 1);
 	return (0);
 }
 
