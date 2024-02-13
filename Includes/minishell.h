@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/13 18:20:20 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/13 19:23:44 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_data
 {
 	char	***env;
 	int		*pids;
+	int		infd;
 	int		id_count;
 	int		heredoc;
 }				t_data;
@@ -121,6 +122,7 @@ char			*alloc_cpy(char *str, char **result, int n);
 void			ft_add(char ***env, char *to_add);
 int				update(char *to_replace, char ***env);
 int				len_2d(char **arr);
+int				exec_parent(char **line, char ***env);
 int				exec_builtin(char **line, char ***env);
 void			echo(char **line);
 void			environment(char **env);
