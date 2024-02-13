@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:15:21 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/13 15:42:02 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/13 18:11:29 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ void	default_env(t_minishell *minishell)
 {
 	char	*pwd;
 
-	minishell->env = malloc(3 * sizeof(char *));
+	minishell->env = malloc(4 * sizeof(char *));
 	pwd = getcwd(0, 0);
 	minishell->env[0] = ft_strjoin("PWD=", pwd);
 	free(pwd);
 	minishell->env[1] = ft_strdup("SHLVL=1");
-	minishell->env[2] = NULL;
+	minishell->env[2] = ft_strdup("PATH=/bin:/bin:/usr/bin:/usr/ucb:/usr/local/bin");
+	minishell->env[3] = NULL;
 }
 
 void	minishell_env(t_minishell *minishell, char **env)

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/13 16:25:06 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/13 17:42:16 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,33 @@ void	exec_cmd(t_data *pipex, t_cmd_table table)
 		ft_exit(NULL, NULL, errno);
 }
 
-void	birth(t_data *pipex, t_cmd_table table)
+void	birth(t_data *pipex, t_cmd_table table, t_cmd_table *next)
 {
+	int	fd[2];
+
+	if (pipe(fd) == -1)
+		ft_exit(NULL, NULL, errno);
+	if (table.outfd == -42)
+		table.outfd = fd[1];
+	else
+		close(fd[1]);
 	pipex->pids[pipex->id_count] = fork();
 	if (pipex->pids[pipex->id_count] == -1)
 		ft_exit(NULL, NULL, errno);
 	if (pipex->pids[pipex->id_count] == 0)
+	{
+		close(fd[0]);
 		exec_cmd(pipex, table);
+	}
 	pipex->id_count++;
 	close(table.infd);
+	if (next)
+	{
+		if (next->infd == -42)
+			next->infd = fd[0];
+		else
+			close(fd[0]);
+	}
 	close(table.outfd);
 }
 
@@ -78,8 +96,9 @@ int	exec_parent(char **line, char ***env)
 
 void	execute(t_cmd_table *table, char ***env, int size)
 {
-	t_data	pipex;
-	int		i;
+	t_cmd_table	*next;
+	t_data		pipex;
+	int			i;
 
 	pipex.env = env;
 	pipex.id_count = 0;
@@ -88,13 +107,17 @@ void	execute(t_cmd_table *table, char ***env, int size)
 	i = 0;
 	while (i < size)
 	{
+		if (i != size - 1)
+			next = &table[i + 1];
+		else
+			next = NULL;
 		if (!table[i].line[0] || exec_parent(table[i].line, env))
 		{
 			close(table[i].infd);
 			close(table[i].outfd);
 		}
 		else
-			birth(&pipex, table[i]);
+			birth(&pipex, table[i], next);
 		i++;
 	}
 	wait_child(&pipex);

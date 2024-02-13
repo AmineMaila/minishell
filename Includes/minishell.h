@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/13 15:28:06 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/13 17:40:17 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ typedef struct s_data
 {
 	char	***env;
 	int		*pids;
-	int		infd;
-	int		outfd;
 	int		id_count;
 	int		heredoc;
 }				t_data;
