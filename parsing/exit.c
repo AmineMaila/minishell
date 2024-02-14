@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/09 15:58:57 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/14 16:12:35 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ void	free_2d(char ***arr)
 	while ((*arr)[i])
 		free((*arr)[i++]);
 	free(*arr);
+}
+
+void	cleanup()
+{
+	
 }
 
 void	ft_exit(char *cmd, char *str, int ext)

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:15:21 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/13 18:11:29 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/14 16:15:22 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,4 @@ void	minishell_env(t_minishell *minishell, char **env)
 		}
 	}
 	minishell->env[i] = NULL;
-	// export({NULL, "OLDPWD=", NULL}, &minishell->env);
 }

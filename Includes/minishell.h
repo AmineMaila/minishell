@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/14 15:42:46 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/14 16:54:21 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void			echo(char **line);
 void			environment(char **env);
 void			unset(char **line, char ***env);
 void			export(char **line, char ***env);
-int				cd(char *path, char **env);
+int				cd(char *path, char ***env);
 int				exit_builtin(char **args);
 void			pwd(char **env);
 

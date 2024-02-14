@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:40:57 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/13 21:49:53 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/14 16:55:32 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-int	update_oldpwd(char *oldpwd, char **env)
+int	update_oldpwd(char *oldpwd, char ***env)
 {
 	char	*var;
 
 	var = ft_strjoin("OLDPWD=", oldpwd);
 	// free(oldpwd);
-	update(var, &env);
+	if (!update(var, env))
+		ft_add(env, var);
 	// free(var);
 	return (1);
 }
 
-int	update_pwd(char *path, char **env)
+int	update_pwd(char *path, char ***env)
 {
 	char	*pwd;
 	char	*temp;
@@ -32,29 +33,27 @@ int	update_pwd(char *path, char **env)
 	pwd = getcwd(0, 0);
 	if (!pwd)
 	{
-		temp = ft_strjoin(get_env(env, "PWD"), "/");
+		temp = ft_strjoin(get_env(*env, "PWD"), "/");
 		pwd = ft_strjoin(temp, path);
 		// free(temp);
 	}
 	var = ft_strjoin("PWD=", pwd);
 	// free(pwd);
-	update(var, &env);
+	update(var, env);
 	// free(var);
 	return (1);
 }
 
-int	chdir_relative(char *path, char *oldpwd, char **env)
+int	chdir_relative(char *path, char *oldpwd, char ***env)
 {
 	char	*pwd;
 	// char	*temp;
 
-	(void)env;
 	pwd = getcwd(0, 0);
-	printf("%s\n",pwd);
 	if (!pwd)
 	{
 		printf("cd: error retrieving current directory: getcwd: cannot access parent directories\n");
-		pwd = ft_strdup(get_env(env, "PWD"));
+		pwd = ft_strdup(get_env(*env, "PWD"));
 		// update_oldpwd(oldpwd, env);
 		// update_pwd(path, env);
 		// return (update_oldpwd(oldpwd, env), update_pwd(path, env), -1);
@@ -71,13 +70,13 @@ int	chdir_relative(char *path, char *oldpwd, char **env)
 	return (update_pwd(path, env), update_oldpwd(oldpwd, env), 1);
 }
 
-int	cd(char *path, char **env)
+int	cd(char *path, char ***env)
 {
 	char	*oldpwd;
 
 	oldpwd = getcwd(0, 0);
 	if (!oldpwd)
-		oldpwd = ft_strdup(get_env(env, "PWD"));
+		oldpwd = ft_strdup(get_env(*env, "PWD"));
 	if (path && (ft_strlen(path) + 1 >= PATH_MAX))
 		return (printf("minishell: cd: path is too long\n"), -1);
 	if (path[0] != '/') // if path is relative
