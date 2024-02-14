@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/14 16:09:48 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/14 16:41:23 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,7 @@ void	read_cmd_line(t_minishell *minishell)
 {
 	minishell->input = readline("minishell-4.81$ ");
 	if (minishell->input)
-	{
 		add_history(minishell->input);
-		// if (!strcmp(minishell->input, "exit"))
-		// 	exit(EXIT_SUCCESS);
-	}
 	else
 		exit(EXIT_SUCCESS);
 }
@@ -55,8 +51,8 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		read_cmd_line(&minishell);
-		if (!(*minishell.input))
-			continue ;
+		// if (!(*minishell.input))
+		// 	continue ;
 		input_lexer(&minishell);
 		// ft_print_matrix(minishell.cmd_line);
 		parse(&minishell);
