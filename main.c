@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/14 16:41:23 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/14 20:24:22 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	minishell_init(t_minishell *minishell, char **env)
 {
 	minishell->input = NULL;
 	minishell->cmd_line = NULL;
+	minishell->cmd_table = NULL;
 	minishell->env = NULL;
 	minishell_env(minishell, env);
 }

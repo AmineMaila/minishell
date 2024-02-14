@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/13 16:36:49 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/14 20:18:48 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	fill_fds(t_minishell *minishell, t_list_parse *lst, int pipe_line)
 	// minishell->pipeinfd = fd[0];
 }
 
-void	fill_line(t_minishell *minishell, t_list_parse *lst, int pipe_line)
+int	fill_line(t_minishell *minishell, t_list_parse *lst, int pipe_line)
 {
 	int				line_size;
 	t_list_parse	*current;
@@ -100,7 +100,7 @@ void	fill_line(t_minishell *minishell, t_list_parse *lst, int pipe_line)
 	minishell->cmd_table[pipe_line].line
 		= malloc(sizeof(char *) * (line_size + 1));
 	if (!minishell->cmd_table[pipe_line].line)
-		return ; // needs to be fixed
+		return (0);
 	current = get_pipe_line(lst, pipe_line);
 	i = 0;
 	while (i < line_size)
@@ -110,23 +110,26 @@ void	fill_line(t_minishell *minishell, t_list_parse *lst, int pipe_line)
 		current = current->next;
 	}
 	minishell->cmd_table[pipe_line].line[i] = NULL;
+	return (1);
 }
 
-void	command_table(t_minishell *minishell, t_list_parse *lst)
+int	command_table(t_minishell *minishell, t_list_parse *lst)
 {
 	int	i;
 
 	minishell->cmd_table_size = get_cmd_table_size(lst);
 	minishell->cmd_table = malloc(sizeof(t_cmd_table) * minishell->cmd_table_size);
 	if (!minishell->cmd_table)
-		return ; // needs to be fixed
+		return (0);
 	minishell->pipeinfd = -2;
 	i = 0;
 	while (i < minishell->cmd_table_size)
 	{
-		fill_line(minishell, lst, i);
+		if (!fill_line(minishell, lst, i))
+			return (0);
 		fill_fds(minishell, lst, i);
 		i++;
 	}
 	// close(minishell->pipeinfd);
+	return (1);
 }

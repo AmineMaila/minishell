@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/14 20:01:34 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/14 20:45:09 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	input_lexer(t_minishell *minishell)
 	if (spaces_count == 0)
 	{
 		minishell->cmd_line = split(minishell->input, " \t");
-		free(minishell->input);
+		// free(minishell->input);
 		if (!minishell->cmd_line)
 			ft_exit(NULL, NULL, errno);
 		return ;
@@ -97,9 +97,9 @@ void	input_lexer(t_minishell *minishell)
 	old_input = minishell->input;
 	minishell->input
 		= insert_spaces(minishell->input, spaces_count);
-	free(old_input);
+	// free(old_input);
 	minishell->cmd_line = split(minishell->input, " \t");
-	free(minishell->input);
+	// free(minishell->input);
 	if (!minishell->cmd_line)
 		ft_exit(NULL, NULL, errno);
 }

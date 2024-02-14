@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/14 16:44:12 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/14 21:07:38 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,35 +66,25 @@ int	syntax(t_list_parse *lst)
 	return (0);
 }
 
-void	parse(t_minishell *minishell)
+int	parse(t_minishell *minishell)
 {
 	int				i;
 	t_list_parse	*lst;
 
-	if (!minishell->cmd_line[0])
-	{
-		free(minishell->cmd_line);
-		return ;
-	}
+	if (!minishell->cmd_line[0]) 
+		return (free(minishell->cmd_line), 0);
 	lst = NULL;
 	i = 0;
 	while (minishell->cmd_line[i])
 		ft_lstadd_back(&lst, minishell->cmd_line[i++]);
 	flag(&lst, minishell->env);
 	if (!lst || syntax(lst) == -1)
-	{
-		ft_lstclear(&lst);
-		free(minishell->cmd_line);
-		return ;
-	}
-	command_table(minishell, lst);
+		return (cleanup(minishell, lst, EXIT_SUCCESS), 0);
+	if (!command_table(minishell, lst))
+		cleanup(minishell, lst, 1);
 	execute(minishell->cmd_table, &minishell->env, minishell->cmd_table_size);
-	// print_parse(lst);
-	// ft_print_cmd_table(minishell);
-	// print_open_file_descriptors();
-	free(minishell->cmd_table);
-	ft_lstclear(&lst);
-	free(minishell->cmd_line);
+	cleanup(minishell, lst, 0);
+	return (1);
 }
 
 void	print_parse(t_list_parse *xx)

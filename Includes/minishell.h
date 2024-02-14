@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/14 19:51:29 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/14 21:07:27 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ typedef struct s_minishell
 
 //	MINISHELL
 void			input_lexer(t_minishell *minishell);
-void			parse(t_minishell *minishell);
-void			command_table(t_minishell *minishell, t_list_parse *lst);
+int				parse(t_minishell *minishell);
+int				command_table(t_minishell *minishell, t_list_parse *lst);
 int				minishell_env(t_minishell *minishell, char **env);
 char			*get_env(char **env, char *str);
 
@@ -103,6 +103,7 @@ int				get_cmd_table_size(t_list_parse *lst);
 int				get_line_size(t_list_parse *lst, int pipe_line);
 t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
 int				open_redins(t_list_parse *lst, int pipe_line);
+void			cleanup(t_minishell *minishell, t_list_parse *lst, int exit_status);
 
 // get_next_line
 char			*get_next_line(int fd);
