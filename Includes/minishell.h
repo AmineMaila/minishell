@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/13 19:23:44 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/13 19:28:07 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void			unset(char **line, char ***env);
 void			export(char **line, char ***env);
 int				cd(char *path, char **env);
 int				exit_builtin(char **args);
-void			pwd(void);
+void			pwd(char **env);
 
 
 void			print_parse(t_list_parse *lst);

@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:20:08 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/13 16:58:56 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/13 19:56:12 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	exit_builtin(char **args)
 			|| !str_is_digit(args[1]))
 			return (ft_exit(args[1], ": numeric argument required", 0), 0);
 	}
-	exit(exit_code);
+	printf("exiting minishell!\n");
+	exit(0);
 	return (1);
 }

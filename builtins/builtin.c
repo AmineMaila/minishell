@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:19:58 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/13 18:52:47 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/13 19:38:16 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,13 @@ int	exec_builtin(char **line, char ***env)
 	if (!ft_strcmp("echo", lower))
 		return(echo(line), 1);
 	else if(!ft_strcmp("pwd", lower))
-		return(pwd(), 1);
+		return(pwd(*env), 1);
 	else if(!ft_strcmp("env", lower))
 		return(environment(*env), 1);
-	// else if(!ft_strcmp("exit", line[0]))
-	// 	return(exit(), 1);
+	else if(!ft_strcmp("exit", line[0]))
+	{
+		printf("exit_buitin\n");
+		return(exit_builtin(line), 1);
+	}
 	return (0);
 }
