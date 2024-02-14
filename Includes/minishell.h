@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/14 16:54:21 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/14 19:51:29 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_minishell
 void			input_lexer(t_minishell *minishell);
 void			parse(t_minishell *minishell);
 void			command_table(t_minishell *minishell, t_list_parse *lst);
-void			minishell_env(t_minishell *minishell, char **env);
+int				minishell_env(t_minishell *minishell, char **env);
 char			*get_env(char **env, char *str);
 
 //	LIBFT

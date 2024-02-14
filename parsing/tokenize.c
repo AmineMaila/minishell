@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/11 12:31:38 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/14 16:46:56 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	input_lexer(t_minishell *minishell)
 	if (spaces_count == 0)
 	{
 		minishell->cmd_line = split(minishell->input, " \t");
+		if (!minishell->cmd_line)
+			ft_exit(NULL, NULL, errno);
 		return ;
 	}
 	minishell->input
