@@ -6,13 +6,13 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/11 16:03:59 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/14 14:07:23 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-void	var_start(t_list_parse **lst, t_list_parse *curr)
+void	var_start(t_list_parse **lst, t_list_parse *curr, char **env)
 {
 	int	i;
 
@@ -23,7 +23,7 @@ void	var_start(t_list_parse **lst, t_list_parse *curr)
 			&& curr->str[i + 1] != '\"'
 			&& curr->str[i + 1] != '\'')
 		{
-			expand_var(lst, curr, i + 1);
+			expand_var(lst, curr, i + 1, env);
 			break ;
 		}
 		i++;
@@ -95,7 +95,7 @@ char	*delquote(char **str, int count)
 	return (result);
 }
 
-int	quote_count(t_list_parse **lst,  t_list_parse *curr)
+int	quote_count(t_list_parse **lst,  t_list_parse *curr, char **env)
 {
 	int 	i;
 	int 	count;
@@ -105,7 +105,7 @@ int	quote_count(t_list_parse **lst,  t_list_parse *curr)
 	count = 0;
 	quote = get_quote(curr->str);
 	if (quote != '\'')
-		var_start(lst, curr);
+		var_start(lst, curr, env);
 	if (!quote)
 		return (0);
 	while (curr->str[i])
@@ -117,7 +117,7 @@ int	quote_count(t_list_parse **lst,  t_list_parse *curr)
 	return (count);
 }
 
-void	flag(t_list_parse **lst)
+void	flag(t_list_parse **lst, char **env)
 {
 	t_list_parse	*curr;
 	int				is_arg;
@@ -142,7 +142,7 @@ void	flag(t_list_parse **lst)
 			(redirections(curr, REDOUT), is_arg = 0, cmd[1] = 0);
 		else
 		{
-			count = quote_count(lst, curr);
+			count = quote_count(lst, curr, env);
 			if (count)
 			{
 				if (count % 2)

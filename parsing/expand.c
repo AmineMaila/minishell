@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/11 15:13:13 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/14 14:01:44 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*strrem(t_list_parse *node, char *envvar, int len)
 	return (free(node->str), result);
 }
 
-void	expand_var(t_list_parse **lst, t_list_parse *node, int start)
+void	expand_var(t_list_parse **lst, t_list_parse *node, int start, char **env)
 {
 	char	*var;
 	char	*envvar;
@@ -100,7 +100,7 @@ void	expand_var(t_list_parse **lst, t_list_parse *node, int start)
 	i = 0;
 	len = var_end(node->str, start) - start;
 	var = ft_substr(node->str, start, len);
-	envvar = getenv(var);
+	envvar = get_env(env, var);
 	free(var);
 	if (!envvar && (len + 1) == (int)ft_strlen(node->str))
 	{

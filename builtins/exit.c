@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:20:08 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/13 19:56:12 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/14 13:53:35 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,5 @@ int	exit_builtin(char **args)
 			|| !str_is_digit(args[1]))
 			return (ft_exit(args[1], ": numeric argument required", 0), 0);
 	}
-	printf("exiting minishell!\n");
 	exit(0);
-	return (1);
 }

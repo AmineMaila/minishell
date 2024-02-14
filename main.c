@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/13 19:23:52 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/14 16:09:48 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+	if (!isatty(0))
+		return (ft_putstr_fd("minishell: input is not a terminal\n", 2) ,-1);
 	signal(SIGINT, interrupt);
 	minishell_init(&minishell, env);
 	while (1)
