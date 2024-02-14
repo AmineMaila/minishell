@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/14 16:46:56 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/14 19:58:42 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	count_needed_spaces(char *str)
 void	input_lexer(t_minishell *minishell)
 {
 	int		i;
+	char	*old_input;
 	int		spaces_count;
 
 	i = 0;
@@ -88,9 +89,15 @@ void	input_lexer(t_minishell *minishell)
 		minishell->cmd_line = split(minishell->input, " \t");
 		if (!minishell->cmd_line)
 			ft_exit(NULL, NULL, errno);
+		free(minishell->input);
 		return ;
 	}
+	old_input = minishell->input;
 	minishell->input
 		= insert_spaces(minishell->input, spaces_count);
+	free(old_input);
 	minishell->cmd_line = split(minishell->input, " \t");
+	free(minishell->input);
+	if (!minishell->cmd_line)
+		ft_exit(NULL, NULL, errno);
 }
