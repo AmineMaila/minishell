@@ -71,15 +71,15 @@ OBJS			=	$(SRCS:.c=.o)
 all : $(NAME)
 
 %.o : %.c $(INCLUDES)
-	@ $(CC) -c $(CFLAGS) $< -o $@
+	$(CC) -c $(CFLAGS) $< -o $@
 
 $(NAME) : $(OBJS)
-	@ $(AR) $(NAME) $(OBJS)
+	$(AR) $(NAME) $(OBJS)
 
 clean :
-	@ $(RM) $(OBJS)
+	$(RM) $(OBJS)
 
 fclean : clean
-	@ $(RM) $(NAME)
+	$(RM) $(NAME)
 
 re : fclean all

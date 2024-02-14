@@ -6,7 +6,7 @@
 #    By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/13 18:20:48 by nazouz           ###   ########.fr        #
+#    Updated: 2024/02/14 21:33:21 by nazouz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			= 		minishell
 
 CC				= 		cc
 
-CFLAGS			= 		-Wall -Werror -Wextra -g3
+CFLAGS			= 		-Wall -Werror -Wextra
 
 LIBFT			=		./libft/libft.a
 
