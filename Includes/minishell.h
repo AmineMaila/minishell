@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/16 15:07:54 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/16 16:08:19 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,9 @@ int				ft_strcmp(char *s1, char *s2);
 void			ft_print_cmd_table(t_minishell *minishell);
 void			ft_print_matrix(char **matrix);
 void			ft_exit(char *cmd, char *str, int ext);
-void			flag(t_list_parse **lst, char **env);
-void			expand_var(t_list_parse **lst, t_list_parse *node, int start, char **env);
+void			flag(t_minishell *minishell);
+int			expand_var(t_minishell *minishell, t_list_parse *node);
+int				var_start(t_list_parse *curr);
 int				is_operator(char c);
 int				is_space(char c);
 int				is_quote(char c);

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 15:15:39 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/16 17:26:31 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	minishell_init(t_minishell *minishell, char **env)
 	minishell->cmd_line = NULL;
 	minishell->cmd_table = NULL;
 	minishell->env = NULL;
+	minishell->lst = NULL;
 	minishell_env(minishell, env);
 }
 

@@ -6,13 +6,13 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/14 14:07:23 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/16 17:30:46 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-void	var_start(t_list_parse **lst, t_list_parse *curr, char **env)
+int	var_start(t_list_parse *curr)
 {
 	int	i;
 
@@ -22,12 +22,10 @@ void	var_start(t_list_parse **lst, t_list_parse *curr, char **env)
 		if (curr->str[i] == '$' && curr->str[i + 1]
 			&& curr->str[i + 1] != '\"'
 			&& curr->str[i + 1] != '\'')
-		{
-			expand_var(lst, curr, i + 1, env);
-			break ;
-		}
+			return (i + 1);
 		i++;
 	}
+	return (0);
 }
 
 void	redirections(t_list_parse *lst, int flag)
@@ -95,17 +93,24 @@ char	*delquote(char **str, int count)
 	return (result);
 }
 
-int	quote_count(t_list_parse **lst,  t_list_parse *curr, char **env)
+int	quote_count(t_minishell *minishell, t_list_parse *curr)
 {
+	char	quote;
+	int		expansion;
 	int 	i;
 	int 	count;
-	char	quote;
 
 	i = 0;
 	count = 0;
 	quote = get_quote(curr->str);
+	expansion = 0;
+	while (curr->str[i])
+		if (curr->str[i++] == '$')
+			expansion++;
 	if (quote != '\'')
-		var_start(lst, curr, env);
+		while (expansion--)
+			if (!expand_var(minishell, curr))
+				break ;
 	if (!quote)
 		return (0);
 	while (curr->str[i])
@@ -117,7 +122,7 @@ int	quote_count(t_list_parse **lst,  t_list_parse *curr, char **env)
 	return (count);
 }
 
-void	flag(t_list_parse **lst, char **env)
+void	flag(t_minishell *minishell)
 {
 	t_list_parse	*curr;
 	int				is_arg;
@@ -127,7 +132,7 @@ void	flag(t_list_parse **lst, char **env)
 	is_arg = 0;
 	cmd[0] = 0; // meaning current cmd line is avaible for a command
 	cmd[1] = 1; // meaning the current node can be a command
-	curr = *lst;
+	curr = minishell->lst;
 	while(curr)
 	{
 		if (*curr->str ==  '|')
@@ -142,7 +147,7 @@ void	flag(t_list_parse **lst, char **env)
 			(redirections(curr, REDOUT), is_arg = 0, cmd[1] = 0);
 		else
 		{
-			count = quote_count(lst, curr, env);
+			count = quote_count(minishell, curr);
 			if (count)
 			{
 				if (count % 2)

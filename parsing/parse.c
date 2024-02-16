@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 15:13:29 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/16 17:26:40 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,10 @@ int	parse(t_minishell *minishell)
 
 	if (!minishell->cmd_line[0]) 
 		return (free(minishell->cmd_line), 0);
-	minishell->lst = NULL;
 	i = 0;
 	while (minishell->cmd_line[i])
 		ft_lstadd_back(&minishell->lst, minishell->cmd_line[i++]);
-	flag(&minishell->lst, minishell->env);
+	flag(minishell);
 	if (!minishell->lst || syntax(minishell->lst) == -1)
 		return (cleanup(minishell, EXIT_SUCCESS), 0);
 	if (!command_table(minishell, minishell->lst))
