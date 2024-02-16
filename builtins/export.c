@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:47:56 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/14 16:49:15 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/16 17:32:37 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ int	varlen(char *str)
 	return (0);
 }
 
-void	ft_add(char ***env, char *to_add)
+int	ft_add(char ***env, char *to_add)
 {
 	char	**result;
 	int		i;
 
 	result = malloc((len_2d(*env) + 2) * sizeof(char *));
+	if (!result)
+		return (0);
 	i = 0;
 	while ((*env)[i])
 	{
@@ -44,6 +46,7 @@ void	ft_add(char ***env, char *to_add)
 	result[i] = NULL;
 	free_2d(env);
 	*env = result;
+	return (1);
 }
 
 int	update(char *to_replace, char ***env)
@@ -53,14 +56,16 @@ int	update(char *to_replace, char ***env)
 
 	len = varlen(to_replace);
 	if (!len)
-		return(ft_exit(to_replace, ": not a valid identifier", 0), 1);
+		return (ft_exit(to_replace, ": not a valid identifier", 0), 1);
 	i = 0;
 	while ((*env)[i])
 	{
 		if (!ft_strncmp((*env)[i], to_replace, len) && (*env)[i][len] == '=')
 		{
 			free((*env)[i]);
-			(*env)[i] = ft_strdup(to_replace);
+			(*env)[i] = ft_strdup(to_replace); // if failed means malloc error should cleanup and exit
+			if (!(*env)[i])
+				return (0);
 			return (1);
 		}
 		i++;
@@ -68,20 +73,21 @@ int	update(char *to_replace, char ***env)
 	return (0);
 }
 
-void	export(char **line, char ***env)
+int	export(char **line, char ***env)
 {
 	int	i;
 
 	i = 1;
 	if (!line[1])
-	{
-		environment(*env);
-		return ;
-	}
+		return (environment(*env));
 	while (line[i])
 	{
-		if (!update(line[i], env))
-			ft_add(env, line[i]);
+		if (!update(line[i], env)) // multiple cases either malloc, on didn't found to_replace
+		{
+			if (!ft_add(env, line[i]))
+				return (1);
+		}
 		i++;
 	}
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:19:58 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 15:47:05 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/16 20:31:21 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ char	*to_lower(char *str)
 int	exec_parent(char **line, char ***env)
 {
 	if (!ft_strcmp("unset", line[0]))
-		return (unset(line, env), 1);
+		return (unset(line, env)); // will return 0 on success and errno on failure
 	else if (!ft_strcmp("export", line[0]))
-		return (export(line, env), 1);
+		return (export(line, env));
 	else if(!ft_strcmp("cd", line[0]))
-		return(cd(line[1], env), 1);
+		return(cd(line[1], env));
 	else if(!ft_strcmp("exit", line[0]))
-		return(exit_builtin(line), 1);
-	return (0);
+		return(exit_builtin(line));
+	return (-1); // means not found, else return the exit status of builtins
 }
 
 int	exec_builtin(char **line, char ***env)

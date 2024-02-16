@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/16 16:08:19 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/16 20:32:45 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,18 +124,18 @@ void			free_2d(char ***arr);
 char			*alloc_cpy(char *str, char **result, int n);
 
 // built ins
-void			ft_add(char ***env, char *to_add);
+int				ft_add(char ***env, char *to_add);
 int				update(char *to_replace, char ***env);
 int				len_2d(char **arr);
 int				exec_parent(char **line, char ***env);
 int				exec_builtin(char **line, char ***env);
-void			echo(char **line);
-void			environment(char **env);
-void			unset(char **line, char ***env);
-void			export(char **line, char ***env);
+int				echo(char **line);
+int				environment(char **env);
+int				unset(char **line, char ***env);
+int				export(char **line, char ***env);
 int				cd(char *path, char ***env);
 int				exit_builtin(char **args);
-void			pwd(char **env);
+int				pwd(char **env);
 
 
 void			print_parse(t_list_parse *lst);
