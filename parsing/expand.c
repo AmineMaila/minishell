@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 16:52:23 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/16 20:15:40 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,14 @@ char	*strrem(t_list_parse *node, char *envvar, int start, int len)
 	return (free(node->str), result);
 }
 
+int	not_expandable(char c)
+{
+	if (c == '\0' || (c >= 9 && c <= 13)
+		|| c == 32 || c == '\'' || c == '\"')
+		return (1);
+	return (0);
+}
+
 int	expand_var(t_minishell *minishell, t_list_parse *node)
 {
 	char	*varname;
@@ -99,7 +107,7 @@ int	expand_var(t_minishell *minishell, t_list_parse *node)
 	int		end;
 
 	start = var_start(node);
-	if (!start)
+	if (!start || not_expandable(node->str[start]))
 		return (0);
 	end = var_end(node->str, start);
 	varname = ft_substr(node->str, start, end - start);

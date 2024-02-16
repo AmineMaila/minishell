@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 17:30:46 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/16 20:16:53 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,15 @@ int	var_start(t_list_parse *curr)
 	i = 0;
 	while (curr->str[i])
 	{
-		if (curr->str[i] == '$' && curr->str[i + 1]
-			&& curr->str[i + 1] != '\"'
-			&& curr->str[i + 1] != '\'')
+		if (curr->str[i] == '\'')
+		{
+			i++;
+			while (curr->str[i] && curr->str[i] != '\'')
+				i++;
+			if (!curr->str[i])
+				break ;
+		}
+		if (curr->str[i] == '$')
 			return (i + 1);
 		i++;
 	}
@@ -50,73 +56,71 @@ void	redirections(t_list_parse *lst, int flag)
 	}
 }
 
-char	get_quote(char *str)
-{
-	int		i;
-	char	quote;
-
-	quote = '\0';
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			quote = str[i++];
-			break ;
-		}
-		i++;
-	}
-	return (quote);
-}
-
 char	*delquote(char **str, int count)
 {
 	char	*result;
 	char	quote;
-	int		len;
 	int		j;
 	int		i;
 
-	len = ft_strlen(*str) - count;
-	result = malloc((len + 1) * sizeof(char));
-	quote = get_quote(*str);
+	result = malloc(((ft_strlen(*str) - count) + 1) * sizeof(char));
 	i = 0;
 	j = 0;
 	while ((*str)[j])
 	{
-		if ((*str)[j] != quote)
-			result[i++] = (*str)[j];
-		j++;
+		if ((*str)[j] == '\'' || (*str)[j] == '\"')
+		{
+			quote = (*str)[j++];
+			while ((*str)[j] && (*str)[j] != quote)
+				result[i++] = (*str)[j++];
+			if ((*str)[j] == quote)
+				j++;
+			continue ;
+		}
+		result[i++] = (*str)[j++];
 	}
 	result[i] = '\0';
 	free(*str);
 	return (result);
 }
 
-int	quote_count(t_minishell *minishell, t_list_parse *curr)
+void	expansion(t_minishell *minishell, t_list_parse *curr)
 {
-	char	quote;
-	int		expansion;
-	int 	i;
-	int 	count;
+	int	i;
+	int	count;
 
 	i = 0;
 	count = 0;
-	quote = get_quote(curr->str);
-	expansion = 0;
-	while (curr->str[i])
-		if (curr->str[i++] == '$')
-			expansion++;
-	if (quote != '\'')
-		while (expansion--)
-			if (!expand_var(minishell, curr))
-				break ;
-	if (!quote)
-		return (0);
 	while (curr->str[i])
 	{
-		if (curr->str[i] == quote)
+		if (curr->str[i] == '$')
 			count++;
+		i++;
+	}
+	while (count--)
+		expand_var(minishell, curr);
+}
+
+int	quote_count(t_list_parse *curr)
+{
+	char	quote;
+	int 	count;
+	int 	i;
+
+	count = 0;
+	i = 0;
+	while (curr->str[i])
+	{
+		if (curr->str[i] == '\'' || curr->str[i] == '\"')
+		{
+			count++;
+			quote = curr->str[i++];
+			while (curr->str[i] && curr->str[i] != quote)
+				i++;
+			if (!curr->str[i])
+				continue ;
+			count++;
+		}
 		i++;
 	}
 	return (count);
@@ -147,7 +151,8 @@ void	flag(t_minishell *minishell)
 			(redirections(curr, REDOUT), is_arg = 0, cmd[1] = 0);
 		else
 		{
-			count = quote_count(minishell, curr);
+			expansion(minishell, curr);
+			count = quote_count(curr);
 			if (count)
 			{
 				if (count % 2)
