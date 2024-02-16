@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/14 21:07:38 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/16 13:00:42 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,12 @@ int	parse(t_minishell *minishell)
 		return (cleanup(minishell, lst, EXIT_SUCCESS), 0);
 	if (!command_table(minishell, lst))
 		cleanup(minishell, lst, 1);
-	execute(minishell->cmd_table, &minishell->env, minishell->cmd_table_size);
+	/*
+			i think we should exit here;
+			cuz cmd_table func failed means: allocation failed.
+	*/
+	minishell->exit_status
+		= execute(minishell, minishell->cmd_table, &minishell->env);
 	cleanup(minishell, lst, 0);
 	return (1);
 }

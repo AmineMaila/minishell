@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/14 21:07:27 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/16 13:50:02 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_minishell
 	char				*input;
 	int					cmd_table_size;
 	int					pipeinfd;
+	int					exit_status;
 }	t_minishell;
 
 //	MINISHELL
@@ -104,6 +105,7 @@ int				get_line_size(t_list_parse *lst, int pipe_line);
 t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
 int				open_redins(t_list_parse *lst, int pipe_line);
 void			cleanup(t_minishell *minishell, t_list_parse *lst, int exit_status);
+void			signals_handler(void);
 
 // get_next_line
 char			*get_next_line(int fd);
@@ -111,7 +113,7 @@ int				newline(char *buf);
 char			*ft_strcpy(char *s1, char *s2);
 char			*ft_strncat(char *dest, const char *src, unsigned int nb);
 
-void			execute(t_cmd_table *table, char ***env, int size);
+int			execute(t_minishell *minishell, t_cmd_table *table, char ***env);
 int				is_cmd(char **token, char **env);
 int				here_doc(char *lim);
 void			ft_exit(char *cmd, char *str, int ext);

@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/14 20:24:22 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/16 13:49:18 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	minishell_init(t_minishell *minishell, char **env)
 {
+	minishell->exit_status = 0;
 	minishell->input = NULL;
 	minishell->cmd_line = NULL;
 	minishell->cmd_table = NULL;
@@ -30,15 +31,6 @@ void	read_cmd_line(t_minishell *minishell)
 		exit(EXIT_SUCCESS);
 }
 
-void	interrupt(int signum)
-{
-	(void)signum;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 1);
-	rl_redisplay();
-}
-
 int	main(int argc, char **argv, char **env)
 {
 	t_minishell		minishell;
@@ -47,7 +39,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	if (!isatty(0))
 		return (ft_putstr_fd("minishell: input is not a terminal\n", 2) ,-1);
-	signal(SIGINT, interrupt);
+	signals_handler();
 	minishell_init(&minishell, env);
 	while (1)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/14 16:46:55 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/16 13:03:42 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	birth(t_data *pipex, t_cmd_table table)
 	close(table.outfd);
 }
 
-void	wait_child(t_data *pipex)
+int	wait_child(t_data *pipex)
 {
 	int	i;
 	int	status;
@@ -82,6 +82,17 @@ void	wait_child(t_data *pipex)
 			ft_exit(NULL, NULL, errno);
 	}
 	free(pipex->pids);
+	if (WIFSIGNALED(status))
+	{
+		// if (status == SIGSEGV)
+		// 	printf("Segmentation fault: %d\n", status);
+		// else if (status == SIGABRT)
+		// 	printf("Abort: %d\n", status);
+		// else if (status == SIGBUS)
+		// 	printf("Bus error: %d\n", status);
+		return (status + 128);
+	}
+	return (WEXITSTATUS(status));
 }
 
 void	spawn_children(t_cmd_table *table, t_data *pipex, int size)
@@ -113,7 +124,7 @@ void	spawn_children(t_cmd_table *table, t_data *pipex, int size)
 	}
 }
 
-void	execute(t_cmd_table *table, char ***env, int size)
+int	execute(t_minishell *minishell, t_cmd_table *table, char ***env)
 {
 	t_data		pipex;
 
@@ -121,9 +132,10 @@ void	execute(t_cmd_table *table, char ***env, int size)
 	pipex.id_count = 0;
 	pipex.heredoc = 0;
 	pipex.infd = table[0].infd;
-	pipex.pids = malloc(size * sizeof(int));
-	if (table[0].line[0] && size == 1 && exec_parent(table[0].line, pipex.env))
-		return ;
-	spawn_children(table, &pipex, size);
-	wait_child(&pipex);
+	pipex.pids = malloc(minishell->cmd_table_size * sizeof(int)); // should be protected
+	if (table[0].line[0] && minishell->cmd_table_size == 1
+		&& exec_parent(table[0].line, pipex.env))
+		return (0);
+	spawn_children(table, &pipex, minishell->cmd_table_size);
+	return (wait_child(&pipex));
 }
