@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:40:57 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/16 16:25:20 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/16 17:42:14 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,18 @@
 // 	return (oldpwd);
 // }
 
-int	update_oldpwd(char *oldpwd, char ***env)
+int	update_oldpwd(char **oldpwd, char ***env)
 {
 	char	*var;
 
-	var = ft_strjoin("OLDPWD=", oldpwd);
-	// free(oldpwd);
+	if (!(*oldpwd))
+		return (0);
+	var = ft_strjoin("OLDPWD=", *oldpwd);
+	free(*oldpwd);
 	if (!update(var, env))
-		ft_add(env, var);
-	// free(var);
-	return (1);
+		if (!ft_add(env, var))
+			return (free(var), 0);
+	return (free(var), 1);
 }
 
 int	update_pwd(char *path, char ***env)
@@ -46,14 +48,20 @@ int	update_pwd(char *path, char ***env)
 	if (!pwd)
 	{
 		temp = ft_strjoin(get_env(*env, "PWD"), "/");
+		if (!temp)
+			return (0);
 		pwd = ft_strjoin(temp, path);
-		// free(temp);
+		if (!pwd)
+			return (free(temp), 0);
+		free(temp);
 	}
 	var = ft_strjoin("PWD=", pwd);
-	// free(pwd);
-	update(var, env);
-	// free(var);
-	return (1);
+	if (!var)
+		return (free(pwd), 0);
+	free(pwd);
+	if (!update(var, env))
+		return (free(var), 0);
+	return (free(var), 1);
 }
 
 int	chdir_relative(char *path, char *oldpwd, char ***env)
@@ -66,7 +74,7 @@ int	chdir_relative(char *path, char *oldpwd, char ***env)
 		ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories\n", 2);
 		pwd = ft_strdup(get_env(*env, "PWD"));
 		if (!pwd)
-			return (errno);
+			return (1);
 		// update_oldpwd(oldpwd, env);
 		// update_pwd(path, env);
 		// return (update_oldpwd(oldpwd, env), update_pwd(path, env), -1);
@@ -96,7 +104,7 @@ int	cd(char *path, char ***env)
 		return (chdir_relative(path, oldpwd, env));
 	if (chdir(path) != 0) // absolute path
 		return (ft_exit(path, ": No such file or directory", 0), 1);
-	update_pwd(path, env);
-	update_oldpwd(oldpwd, env);
+	if (!update_pwd(path, env) || !update_oldpwd(oldpwd, env))
+		return (1);
 	return (0);
 }

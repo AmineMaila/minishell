@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:47:56 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 16:14:31 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/16 17:32:37 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ int	varlen(char *str)
 	return (0);
 }
 
-void	ft_add(char ***env, char *to_add)
+int	ft_add(char ***env, char *to_add)
 {
 	char	**result;
 	int		i;
 
 	result = malloc((len_2d(*env) + 2) * sizeof(char *));
+	if (!result)
+		return (0);
 	i = 0;
 	while ((*env)[i])
 	{
@@ -44,6 +46,7 @@ void	ft_add(char ***env, char *to_add)
 	result[i] = NULL;
 	free_2d(env);
 	*env = result;
+	return (1);
 }
 
 int	update(char *to_replace, char ***env)
@@ -80,7 +83,11 @@ int	export(char **line, char ***env)
 	while (line[i])
 	{
 		if (!update(line[i], env)) // multiple cases either malloc, on didn't found to_replace
-			ft_add(env, line[i]);
+		{
+			if (!ft_add(env, line[i]))
+				return (1);
+		}
 		i++;
 	}
+	return (0);
 }

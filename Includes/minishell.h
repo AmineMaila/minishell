@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/16 16:06:36 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/16 17:39:02 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void			free_2d(char ***arr);
 char			*alloc_cpy(char *str, char **result, int n);
 
 // built ins
-void			ft_add(char ***env, char *to_add);
+int				ft_add(char ***env, char *to_add);
 int				update(char *to_replace, char ***env);
 int				len_2d(char **arr);
 int				exec_parent(char **line, char ***env);

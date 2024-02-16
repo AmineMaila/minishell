@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 19:37:35 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/16 16:09:55 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/16 17:28:47 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	environment(char **env)
 	int			i;
 
 	if (!env || !env[0])
-		return ;
+		return (1);
 	i = 0;
 	while (env[i])
 	{
