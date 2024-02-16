@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 19:37:35 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/11 23:49:20 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/16 16:09:55 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-void	environment(char **env)
+int	environment(char **env)
 {
 	int			i;
 
@@ -20,6 +20,9 @@ void	environment(char **env)
 		return ;
 	i = 0;
 	while (env[i])
-		printf("%s\n", env[i++]);
-	return ;
+	{
+		if (printf("%s\n", env[i++]) == -1)
+			return (1);
+	}
+	return (0);
 }

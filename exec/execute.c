@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 15:14:39 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/16 15:57:48 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,14 +130,18 @@ void	spawn_children(t_minishell *minishell, t_data *pipex)
 int	execute(t_minishell *minishell)
 {
 	t_data		pipex;
+	int			execp;
 
 	pipex.id_count = 0;
 	pipex.heredoc = 0;
 	pipex.infd = minishell->cmd_table[0].infd;
-	pipex.pids = malloc(minishell->cmd_table_size * sizeof(int)); // should be protected
-	if (minishell->cmd_table[0].line[0] && minishell->cmd_table_size == 1
-		&& exec_parent(minishell->cmd_table[0].line, &minishell->env))
-		return (0);
+	pipex.pids = malloc(minishell->cmd_table_size * sizeof(int));
+	if (minishell->cmd_table[0].line[0] && minishell->cmd_table_size == 1) // if there is something in 1st pipeline, and there is one pipeline => should be executed by parent process
+	{
+		execp = exec_parent(minishell->cmd_table[0].line, &minishell->env); // if execp = -1 means the command isn't a buitin so be kind and spawn a children for that command
+		if (execp != -1)	// if execp != -1 means the command is builtin so exec_parent executed it and returned its (builtin func) return value
+			return (execp);
+	}
 	spawn_children(minishell, &pipex);
 	return (wait_child(&pipex, minishell));
 }

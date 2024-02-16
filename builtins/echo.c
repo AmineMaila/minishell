@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:19:34 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/11 18:47:04 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/16 15:58:19 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_nflag(char *str)
 	return (1);
 }
 
-void	echo(char **line)
+int	echo(char **line)
 {
 	int nflag;
 	int	i;
