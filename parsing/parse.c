@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 13:00:42 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/16 15:13:29 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,25 @@ int	syntax(t_list_parse *lst)
 int	parse(t_minishell *minishell)
 {
 	int				i;
-	t_list_parse	*lst;
 
 	if (!minishell->cmd_line[0]) 
 		return (free(minishell->cmd_line), 0);
-	lst = NULL;
+	minishell->lst = NULL;
 	i = 0;
 	while (minishell->cmd_line[i])
-		ft_lstadd_back(&lst, minishell->cmd_line[i++]);
-	flag(&lst, minishell->env);
-	if (!lst || syntax(lst) == -1)
-		return (cleanup(minishell, lst, EXIT_SUCCESS), 0);
-	if (!command_table(minishell, lst))
-		cleanup(minishell, lst, 1);
+		ft_lstadd_back(&minishell->lst, minishell->cmd_line[i++]);
+	flag(&minishell->lst, minishell->env);
+	if (!minishell->lst || syntax(minishell->lst) == -1)
+		return (cleanup(minishell, EXIT_SUCCESS), 0);
+	if (!command_table(minishell, minishell->lst))
+		cleanup(minishell, 1);
 	/*
 			i think we should exit here;
 			cuz cmd_table func failed means: allocation failed.
 	*/
 	minishell->exit_status
-		= execute(minishell, minishell->cmd_table, &minishell->env);
-	cleanup(minishell, lst, 0);
+		= execute(minishell);
+	cleanup(minishell, 0);
 	return (1);
 }
 

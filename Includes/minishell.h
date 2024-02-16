@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/16 13:50:02 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/16 15:07:54 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct	s_list_parse
 
 typedef struct s_minishell
 {
+	t_list_parse		*lst;
 	t_cmd_table			*cmd_table;
 	char				**cmd_line;
 	char				**env;
@@ -104,7 +105,7 @@ int				get_cmd_table_size(t_list_parse *lst);
 int				get_line_size(t_list_parse *lst, int pipe_line);
 t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
 int				open_redins(t_list_parse *lst, int pipe_line);
-void			cleanup(t_minishell *minishell, t_list_parse *lst, int exit_status);
+void			cleanup(t_minishell *minishell, int exit_status);
 void			signals_handler(void);
 
 // get_next_line
@@ -113,7 +114,7 @@ int				newline(char *buf);
 char			*ft_strcpy(char *s1, char *s2);
 char			*ft_strncat(char *dest, const char *src, unsigned int nb);
 
-int			execute(t_minishell *minishell, t_cmd_table *table, char ***env);
+int				execute(t_minishell *minishell);
 int				is_cmd(char **token, char **env);
 int				here_doc(char *lim);
 void			ft_exit(char *cmd, char *str, int ext);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/14 21:04:30 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/16 15:07:01 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,22 @@ void	free_cmd_table(t_minishell *minishell)
 	minishell->input doesn't need to be freed, cuz input_lexer already did it
 */
 
-void	cleanup(t_minishell *minishell, t_list_parse *lst, int exit_status)
+void	cleanup(t_minishell *minishell, int exit_status)
 {
 	if (minishell->cmd_table)
 	{
 		free_cmd_table(minishell);
 		minishell->cmd_table = NULL;
 	}
-	if (lst)
-		ft_lstclear(&lst);
+	if (minishell->lst)
+		ft_lstclear(&minishell->lst);
 	if (minishell->cmd_line)
 	{
 		free(minishell->cmd_line);
 		minishell->cmd_line = NULL;
 	}
 	if (exit_status != EXIT_SUCCESS)
-		(free_2d(&minishell->env), ft_exit(NULL, NULL, 1));
+		(free_2d(&minishell->env), ft_exit(NULL, NULL, exit_status));
 }
 
 void	ft_exit(char *cmd, char *str, int ext)

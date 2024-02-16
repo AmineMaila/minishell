@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 13:49:18 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/16 15:15:39 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	read_cmd_line(t_minishell *minishell)
 	if (minishell->input)
 		add_history(minishell->input);
 	else
-		exit(EXIT_SUCCESS);
+		cleanup(minishell, 1);
 }
 
 int	main(int argc, char **argv, char **env)
