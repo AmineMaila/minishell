@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/16 20:32:45 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 16:32:06 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@
 # include <signal.h>
 # include <errno.h>
 # include <limits.h>
+
+typedef struct s_flag
+{
+	int is_arg;
+	int	cmd_line;
+	int	cmd;
+}				t_flag;
 
 // pipex
 typedef struct s_data
@@ -95,9 +102,6 @@ int				ft_strcmp(char *s1, char *s2);
 void			ft_print_cmd_table(t_minishell *minishell);
 void			ft_print_matrix(char **matrix);
 void			ft_exit(char *cmd, char *str, int ext);
-void			flag(t_minishell *minishell);
-int			expand_var(t_minishell *minishell, t_list_parse *node);
-int				var_start(t_list_parse *curr);
 int				is_operator(char c);
 int				is_space(char c);
 int				is_quote(char c);
@@ -108,6 +112,21 @@ t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
 int				open_redins(t_list_parse *lst, int pipe_line);
 void			cleanup(t_minishell *minishell, int exit_status);
 void			signals_handler(void);
+
+// flag
+void			flag(t_minishell *minishell);
+char			*delquote(char **str, int count);
+void			redirections(t_list_parse *lst, int flag);
+int				quote_count(t_list_parse *curr);
+
+// expand
+
+int				var_end(char *str, int start);
+int				var_start(t_list_parse *curr);
+int				env_len(char *str);
+int				not_expandable(char c);
+int				expand_var(t_minishell *minishell, t_list_parse *node);
+void			expansion(t_minishell *minishell, t_list_parse *curr);
 
 // get_next_line
 char			*get_next_line(int fd);

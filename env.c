@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:15:21 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/14 19:51:17 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 16:35:45 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	default_env(t_minishell *minishell)
 	minishell->env[1] = ft_strdup("SHLVL=1");
 	if (!minishell->env[1])
 		ft_exit(NULL, NULL, errno);
-	minishell->env[2] = ft_strdup("PATH=/bin:/bin:/usr/bin:/usr/ucb:/usr/local/bin");
+	minishell->env[2]
+		= ft_strdup("PATH=/bin:/bin:/usr/bin:/usr/ucb:/usr/local/bin");
 	if (!minishell->env[2])
 		ft_exit(NULL, NULL, errno);
 	minishell->env[3] = NULL;
@@ -61,7 +62,8 @@ int	env_fill(t_minishell *minishell, char **env)
 	{
 		if (!ft_strncmp(env[i], "SHLVL=", 6))
 		{
-			minishell->env[i] = ft_strjoin("SHLVL=", ft_itoa(ft_atoi(env[i] + 6) + 1));
+			minishell->env[i]
+				= ft_strjoin("SHLVL=", ft_itoa(ft_atoi(env[i] + 6) + 1));
 			if (!minishell->env[i])
 				return (0);
 			i++;

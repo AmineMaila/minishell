@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 14:06:40 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/08 20:29:57 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 16:35:56 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Includes/minishell.h"
-
-void	leaks(void)
-{
-	system ("leaks minishell");
-}
 
 void	ft_print_matrix(char **matrix)
 {

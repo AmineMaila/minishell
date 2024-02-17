@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:47:56 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 17:32:37 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 16:45:54 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,15 @@ int	ft_add(char ***env, char *to_add)
 	i = 0;
 	while ((*env)[i])
 	{
-		result[i] = ft_strdup((*env)[i]); // protect
+		result[i] = ft_strdup((*env)[i]);
+		if (!result[i])
+			return (free_2d(&result), 0);
 		i++;
 	}
-	result[i++] = ft_strdup(to_add);
-	result[i] = NULL;
+	result[i] = ft_strdup(to_add);
+	if (!result[i])
+		return (free_2d(&result), 0);
+	result[++i] = NULL;
 	free_2d(env);
 	*env = result;
 	return (1);
@@ -65,7 +69,7 @@ int	update(char *to_replace, char ***env)
 			free((*env)[i]);
 			(*env)[i] = ft_strdup(to_replace); // if failed means malloc error should cleanup and exit
 			if (!(*env)[i])
-				return (0);
+				return (-1);
 			return (1);
 		}
 		i++;
@@ -76,17 +80,21 @@ int	update(char *to_replace, char ***env)
 int	export(char **line, char ***env)
 {
 	int	i;
+	int value;
 
 	i = 1;
 	if (!line[1])
 		return (environment(*env));
 	while (line[i])
 	{
-		if (!update(line[i], env)) // multiple cases either malloc, on didn't found to_replace
+		value = update(line[i], env);
+		if (!value) // multiple cases either malloc, on didn't found to_replace
 		{
 			if (!ft_add(env, line[i]))
 				return (1);
 		}
+		else if (value == -1)
+			return (1);
 		i++;
 	}
 	return (0);

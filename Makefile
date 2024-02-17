@@ -6,7 +6,7 @@
 #    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/17 15:00:04 by mmaila           ###   ########.fr        #
+#    Updated: 2024/02/17 16:34:20 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,13 @@ SRCS			= 		\
 						./parsing/tokenize.c \
 						./parsing/tokenize_quotes.c \
 						./parsing/tokenize_utils.c \
+						./parsing/flag_utils.c \
 						./parsing/flag.c \
 						./parsing/command_table.c \
 						./parsing/command_table_utils.c \
 						./parsing/exit.c \
 						./parsing/parse.c \
+						./parsing/expand_utils.c \
 						./parsing/expand.c \
 						./utils/ft_lstadd_back.c \
 						./utils/ft_lstnew.c \

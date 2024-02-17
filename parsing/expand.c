@@ -6,21 +6,11 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 15:18:45 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 15:46:24 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
-
-int	var_end(char *str, int start)
-{
-	int	i;
-
-	i = start;
-	while (ft_isalnum(str[i]) || str[i] == '_')
-		i++;
-	return (i);
-}
 
 void	delete_node(t_list_parse **lst, t_list_parse *node)
 {
@@ -47,27 +37,13 @@ void	delete_node(t_list_parse **lst, t_list_parse *node)
 	}
 }
 
-int	env_len(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
 char	*strrem(t_list_parse *node, char *envvar, int start, int len)
 {
 	char	*result;
 	int		j;
 	int		i;
 
-	result = malloc(((ft_strlen(node->str) - (len + 1)) + ft_strlen(envvar)) + 1);
+	result = malloc((ft_strlen(node->str) - len - 1) + ft_strlen(envvar) + 1);
 	if (!result)
 		return (free(node->str), NULL);
 	j = 0;
@@ -86,16 +62,7 @@ char	*strrem(t_list_parse *node, char *envvar, int start, int len)
 		}
 		result[j++] = node->str[i++];
 	}
-	result[j] = '\0';
-	return (free(node->str), result);
-}
-
-int	not_expandable(char c)
-{
-	if (c == '\0' || (c >= 9 && c <= 13)
-		|| c == 32 || c == '\'' || c == '\"')
-		return (1);
-	return (0);
+	return (result[j] = '\0', free(node->str), result);
 }
 
 void	expand_exit(t_minishell *minishell, t_list_parse *node, int start)

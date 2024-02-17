@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 20:32:52 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 16:30:08 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,9 @@ int	syntax(t_list_parse *lst)
 		return (print_error(lst->str), -1);
 	while (lst)
 	{
-		if (lst->flag == ERR)
-			return (print_error(lst->str), -1);
 		if (lst->flag == ERR2)
-			return (ft_putstr_fd("minishell: syntax error: unclosed quote\n", 2), -1);
+			return (ft_putstr_fd("minishell: syntax error: unclosed quote\n",
+					2), -1);
 		if ((lst->flag == REDIN || lst->flag == REDOUT
 				|| lst->flag == HEREDOC || lst->flag == APPEND))
 		{
@@ -58,7 +57,7 @@ int	syntax(t_list_parse *lst)
 			else if (lst->next->flag == PIPE)
 				return (print_error(lst->next->str), -1);
 		}
-		if ((lst->flag == PIPE && lst->next == NULL)
+		if ((lst->flag == PIPE && lst->next == NULL) || lst->flag == ERR
 			|| (lst->flag == PIPE && lst->next->flag == PIPE))
 			return (print_error(lst->str), -1);
 		lst = lst->next;
@@ -68,90 +67,87 @@ int	syntax(t_list_parse *lst)
 
 int	parse(t_minishell *minishell)
 {
-	int				i;
+	int	i;
 
-	if (!minishell->cmd_line[0]) 
+	if (!minishell->cmd_line[0])
 		return (free(minishell->cmd_line), 0);
 	i = 0;
 	while (minishell->cmd_line[i])
 		ft_lstadd_back(&minishell->lst, minishell->cmd_line[i++]);
 	flag(minishell);
+	// print_parse(minishell->lst);
 	if (!minishell->lst || syntax(minishell->lst) == -1)
 		return (cleanup(minishell, EXIT_SUCCESS), 0);
 	if (!command_table(minishell, minishell->lst))
 		cleanup(minishell, 1);
-	/*
-			i think we should exit here;
-			cuz cmd_table func failed means: allocation failed.
-	*/
 	minishell->exit_status = execute(minishell);
 	cleanup(minishell, 0);
 	return (1);
 }
 
-void	print_parse(t_list_parse *xx)
-{
-	t_list_parse *lst = xx;
-	printf("\n");
-	while (lst)
-	{
-		printf("[");
-		if (lst->flag == COMMAND)
-		{
-			printf("\033[0;31m");
-			printf("COMMAND");
-			printf("\033[0m");
-		}
-		else if (lst->flag == PIPE)
-		{
-			printf("\033[0;33m");
-			printf("PIPE");
-			printf("\033[0m");
-		}
-		else if (lst->flag == FILEE)
-		{
-			printf("\033[1;30m");
-			printf("FILE");
-			printf("\033[0m");
-		}
-		else if (lst->flag == ARG)
-		{
-			printf("\033[0;32m");
-			printf("ARG");
-			printf("\033[0m");
-		}
-		else if (lst->flag == REDIN)
-		{
-			printf("\033[1;34m");
-			printf("RED-IN");
-			printf("\033[0m");
-		}
-		else if (lst->flag == REDOUT)
-		{
-			printf("\033[1;34m");
-			printf("RED-OUT");
-			printf("\033[0m");
-		}
-		else if (lst->flag == HEREDOC)
-		{
-			printf("\033[1;36m");
-			printf("HEREDOC");
-			printf("\033[0m");
-		}
-		else if (lst->flag == APPEND)
-		{
-			printf("\033[1;37m");
-			printf("APPEND");
-			printf("\033[0m");
-		}
-		else if (lst->flag == LIM)
-		{
-			printf("\033[1;38m");
-			printf("LIM");
-			printf("\033[0m");
-		}
-		printf("]-");
-		lst = lst->next;
-	}
-	printf("\n");
-}
+// void	print_parse(t_list_parse *xx)
+// {
+// 	t_list_parse *lst = xx;
+// 	printf("\n");
+// 	while (lst)
+// 	{
+// 		printf("[");
+// 		if (lst->flag == COMMAND)
+// 		{
+// 			printf("\033[0;31m");
+// 			printf("COMMAND");
+// 			printf("\033[0m");
+// 		}
+// 		else if (lst->flag == PIPE)
+// 		{
+// 			printf("\033[0;33m");
+// 			printf("PIPE");
+// 			printf("\033[0m");
+// 		}
+// 		else if (lst->flag == FILEE)
+// 		{
+// 			printf("\033[1;30m");
+// 			printf("FILE");
+// 			printf("\033[0m");
+// 		}
+// 		else if (lst->flag == ARG)
+// 		{
+// 			printf("\033[0;32m");
+// 			printf("ARG");
+// 			printf("\033[0m");
+// 		}
+// 		else if (lst->flag == REDIN)
+// 		{
+// 			printf("\033[1;34m");
+// 			printf("RED-IN");
+// 			printf("\033[0m");
+// 		}
+// 		else if (lst->flag == REDOUT)
+// 		{
+// 			printf("\033[1;34m");
+// 			printf("RED-OUT");
+// 			printf("\033[0m");
+// 		}
+// 		else if (lst->flag == HEREDOC)
+// 		{
+// 			printf("\033[1;36m");
+// 			printf("HEREDOC");
+// 			printf("\033[0m");
+// 		}
+// 		else if (lst->flag == APPEND)
+// 		{
+// 			printf("\033[1;37m");
+// 			printf("APPEND");
+// 			printf("\033[0m");
+// 		}
+// 		else if (lst->flag == LIM)
+// 		{
+// 			printf("\033[1;38m");
+// 			printf("LIM");
+// 			printf("\033[0m");
+// 		}
+// 		printf("]-");
+// 		lst = lst->next;
+// 	}
+// 	printf("\n");
+// }

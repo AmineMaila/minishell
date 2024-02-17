@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:19:34 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 14:57:43 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 16:39:37 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_nflag(char *str)
 	if (str[i] == '-' && str[i + 1] == 'n')
 	{
 		i++;
-		while(str[i])
+		while (str[i])
 		{
 			if (str[i] != 'n')
 				return (0);
@@ -34,7 +34,7 @@ int	is_nflag(char *str)
 
 int	echo(char **line)
 {
-	int nflag;
+	int	nflag;
 	int	i;
 
 	nflag = 0;
