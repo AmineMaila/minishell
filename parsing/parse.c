@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 16:30:08 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 17:13:43 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	parse(t_minishell *minishell)
 	if (!command_table(minishell, minishell->lst))
 		cleanup(minishell, 1);
 	minishell->exit_status = execute(minishell);
+	if (minishell->exit_status == ENOMEM)
+		cleanup(minishell, 1);
 	cleanup(minishell, 0);
 	return (1);
 }
