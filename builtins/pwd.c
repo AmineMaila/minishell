@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:04:41 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/16 15:58:35 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 13:41:40 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,5 @@ int	pwd(char **env)
 		arr = ft_strdup(get_env(env, "PWD"));
 	printf("%s\n", arr);
 	free(arr);
+	return (0);
 }

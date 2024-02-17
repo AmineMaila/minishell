@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 20:15:40 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 13:41:18 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ char	*strrem(t_list_parse *node, char *envvar, int start, int len)
 				envvar++;
 			}
 		}
-		result[j++] = node->str[i++];
+		if (node->str[i])
+			result[j++] = node->str[i++];
 	}
 	result[j] = '\0';
 	return (free(node->str), result);
