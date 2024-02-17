@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 20:15:40 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 14:56:09 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*strrem(t_list_parse *node, char *envvar, int start, int len)
 	int		j;
 	int		i;
 
-	resultlen = (ft_strlen(node->str) - len) + ft_strlen(envvar);
+	resultlen = (ft_strlen(node->str) - (len + 1)) + ft_strlen(envvar);
 	result = malloc(resultlen + 1);
 	if (!result)
 		return (free(node->str), NULL);
@@ -84,6 +84,7 @@ char	*strrem(t_list_parse *node, char *envvar, int start, int len)
 				result[j++] = *envvar;
 				envvar++;
 			}
+			continue ;
 		}
 		result[j++] = node->str[i++];
 	}

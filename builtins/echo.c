@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:19:34 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 20:18:31 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/16 20:29:49 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ void	echo(char **line)
 
 	nflag = 0;
 	i = 1;
+	while (is_nflag(line[i]))
+	{
+		nflag = 1;
+		i++;
+	}
 	while (line[i])
 	{
-		if (is_nflag(line[i]))
-			nflag = 1;
-		else
-		{
-			printf("%s", line[i]);
-			if (line[i + 1])
-				printf(" ");
-		}
+		printf("%s", line[i]);
+		if (line[i + 1])
+			printf(" ");
 		i++;
 	}
 	if (!nflag)
