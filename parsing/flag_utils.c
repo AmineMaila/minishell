@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 15:57:53 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 21:43:49 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 22:12:47 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ char	*delquote(char **str, int count)
 		result[i++] = (*str)[j++];
 	}
 	result[i] = '\0';
-	free(*str);
-	return (result);
+	return (free(*str), result);
 }
 
 int	quote_count(t_list_parse *curr)

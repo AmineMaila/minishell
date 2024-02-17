@@ -6,13 +6,13 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 15:44:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 21:23:15 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 22:10:43 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-char	*get_path(char *cmd, char **env)
+char	*get_path(t_mini *mini, char *cmd, char **env)
 {
 	int		i;
 	char	**path;
@@ -25,13 +25,13 @@ char	*get_path(char *cmd, char **env)
 		return (NULL);
 	path = ft_split(env[i] + 5, ":");
 	if (!path)
-		return (NULL);
+		ft_exit(mini, NULL, NULL, errno);
 	i = 0;
 	while (path[i])
 	{
 		tmp = ft_strjoin(path[i++], cmd);
 		if (!tmp)
-			return (free_2d(&path), NULL);
+			return (free_2d(&path), ft_exit(mini, NULL, NULL, errno), NULL);
 		if (!access(tmp, F_OK))
 			return (free_2d(&path), tmp);
 		free(tmp);
@@ -51,8 +51,8 @@ int	is_cmd(t_mini *mini, char **token, char **env)
 	{
 		tmp = ft_strjoin("/", *token);
 		if (!tmp)
-			ft_exit(mini, NULL, NULL, errno);
-		cmd = get_path(tmp, env);
+			ft_exit(mini, NULL, NULL, 12);
+		cmd = get_path(mini, tmp, env);
 		if (!cmd)
 		{
 			free(tmp);
