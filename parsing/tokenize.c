@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/17 19:19:24 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:19:58 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,28 +78,28 @@ int	count_needed_spaces(char *str)
 	return (count);
 }
 
-void	input_lexer(t_minishell *minishell)
+void	input_lexer(t_mini *mini)
 {
 	int		i;
 	char	*old_input;
 	int		spaces_count;
 
 	i = 0;
-	spaces_count = count_needed_spaces(minishell->input);
+	spaces_count = count_needed_spaces(mini->input);
 	if (spaces_count == 0)
 	{
-		minishell->cmd_line = split(minishell->input, " \t");
-		// free(minishell->input);
-		if (!minishell->cmd_line)
-			ft_exit(minishell, NULL, NULL, errno);
+		mini->cmd_line = split(mini->input, " \t");
+		// free(mini->input);
+		if (!mini->cmd_line)
+			ft_exit(mini, NULL, NULL, errno);
 		return ;
 	}
-	old_input = minishell->input;
-	minishell->input
-		= insert_spaces(minishell->input, spaces_count);
+	old_input = mini->input;
+	mini->input
+		= insert_spaces(mini->input, spaces_count);
 	// free(old_input);
-	minishell->cmd_line = split(minishell->input, " \t");
-	// free(minishell->input);
-	if (!minishell->cmd_line)
-		ft_exit(minishell, NULL, NULL, errno);
+	mini->cmd_line = split(mini->input, " \t");
+	// free(mini->input);
+	if (!mini->cmd_line)
+		ft_exit(mini, NULL, NULL, errno);
 }

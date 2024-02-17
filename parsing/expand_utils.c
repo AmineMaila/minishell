@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 15:33:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 15:36:52 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:21:01 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	not_expandable(char c)
 	return (0);
 }
 
-void	expansion(t_minishell *minishell, t_list_parse *curr)
+void	expansion(t_mini *mini, t_list_parse *curr)
 {
 	int	i;
 	int	count;
@@ -80,5 +80,5 @@ void	expansion(t_minishell *minishell, t_list_parse *curr)
 		i++;
 	}
 	while (count--)
-		expand_var(minishell, curr);
+		expand_var(mini, curr);
 }

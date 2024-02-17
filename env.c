@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:15:21 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/17 19:18:18 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:19:27 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,31 @@ char	*get_env(char **env, char *str)
 	return (NULL);
 }
 
-void	default_env(t_minishell *minishell)
+void	default_env(t_mini *mini)
 {
 	char	*pwd;
 
-	minishell->env = malloc(4 * sizeof(char *));
-	if (!minishell->env)
-		ft_exit(minishell, NULL, NULL, errno);
+	mini->env = malloc(4 * sizeof(char *));
+	if (!mini->env)
+		ft_exit(mini, NULL, NULL, errno);
 	pwd = getcwd(0, 0);
 	if (!pwd)
-		ft_exit(minishell, NULL, NULL, errno);
-	minishell->env[0] = ft_strjoin("PWD=", pwd);
-	if (!minishell->env[0])
-		ft_exit(minishell, NULL, NULL, errno);
+		ft_exit(mini, NULL, NULL, errno);
+	mini->env[0] = ft_strjoin("PWD=", pwd);
+	if (!mini->env[0])
+		ft_exit(mini, NULL, NULL, errno);
 	free(pwd);
-	minishell->env[1] = ft_strdup("SHLVL=1");
-	if (!minishell->env[1])
-		ft_exit(minishell, NULL, NULL, errno);
-	minishell->env[2]
+	mini->env[1] = ft_strdup("SHLVL=1");
+	if (!mini->env[1])
+		ft_exit(mini, NULL, NULL, errno);
+	mini->env[2]
 		= ft_strdup("PATH=/bin:/bin:/usr/bin:/usr/ucb:/usr/local/bin");
-	if (!minishell->env[2])
-		ft_exit(minishell, NULL, NULL, errno);
-	minishell->env[3] = NULL;
+	if (!mini->env[2])
+		ft_exit(mini, NULL, NULL, errno);
+	mini->env[3] = NULL;
 }
 
-int	env_fill(t_minishell *minishell, char **env)
+int	env_fill(t_mini *mini, char **env)
 {
 	int			i;
 
@@ -62,37 +62,37 @@ int	env_fill(t_minishell *minishell, char **env)
 	{
 		if (!ft_strncmp(env[i], "SHLVL=", 6))
 		{
-			minishell->env[i]
+			mini->env[i]
 				= ft_strjoin("SHLVL=", ft_itoa(ft_atoi(env[i] + 6) + 1));
-			if (!minishell->env[i])
+			if (!mini->env[i])
 				return (0);
 			i++;
 		}
 		else
 		{
-			minishell->env[i] = ft_strdup(env[i]);
-			if (!minishell->env[i])
+			mini->env[i] = ft_strdup(env[i]);
+			if (!mini->env[i])
 				return (0);
 			i++;
 		}
 	}
-	minishell->env[i] = NULL;
+	mini->env[i] = NULL;
 	return (1);
 }
 
-int	minishell_env(t_minishell *minishell, char **env)
+int	mini_env(t_mini *mini, char **env)
 {
 	int			size;
 
 	if (!env || !env[0])
-		return (default_env(minishell), 1);
+		return (default_env(mini), 1);
 	size = 0;
 	while (env[size])
 		size++;
-	minishell->env = malloc(sizeof(char *) * (size + 1));
-	if (!minishell->env)
-		ft_exit(minishell, NULL, NULL, errno);
-	if (!env_fill(minishell, env))
-		ft_exit(minishell, NULL, NULL, errno);
+	mini->env = malloc(sizeof(char *) * (size + 1));
+	if (!mini->env)
+		ft_exit(mini, NULL, NULL, errno);
+	if (!env_fill(mini, env))
+		ft_exit(mini, NULL, NULL, errno);
 	return (1);
 }

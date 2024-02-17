@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/17 20:27:44 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:25:50 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define LIM 11
 
 # define BUFFER_SIZE 10
+# define MINISHELL "\033[1;31mminishell\033[1;34m-4.81\033[1;32m$ \033[0m"
 
 # include "../libft/libft.h"
 # include <stdio.h>
@@ -56,12 +57,12 @@ typedef struct s_data
 	int		heredoc;
 }				t_data;
 
-typedef struct s_cmd_table
+typedef struct s_table
 {
 	char	**line;
 	int		infd;
 	int		outfd;
-}				t_cmd_table;
+}				t_table;
 
 typedef struct s_list_parse
 {
@@ -70,23 +71,23 @@ typedef struct s_list_parse
 	struct s_list_parse	*next;
 }				t_list_parse;
 
-typedef struct s_minishell
+typedef struct s_mini
 {
 	t_list_parse		*lst;
-	t_cmd_table			*cmd_table;
+	t_table				*table;
 	char				**cmd_line;
 	char				**env;
 	char				*input;
-	int					cmd_table_size;
+	int					table_size;
 	int					pipeinfd;
 	int					exit_status;
-}	t_minishell;
+}	t_mini;
 
-//	MINISHELL
-void			input_lexer(t_minishell *minishell);
-void			parse(t_minishell *minishell);
-int				command_table(t_minishell *minishell, t_list_parse *lst);
-int				minishell_env(t_minishell *minishell, char **env);
+//	mini
+void			input_lexer(t_mini *mini);
+void			parse(t_mini *mini);
+int				command_table(t_mini *mini, t_list_parse *lst);
+int				mini_env(t_mini *mini, char **env);
 char			*get_env(char **env, char *str);
 
 //	LIBFT
@@ -99,22 +100,22 @@ void			ft_lstclear(t_list_parse **lst);
 int				ft_strcmp(char *s1, char *s2);
 
 //	HELPERS
-void			ft_print_cmd_table(t_minishell *minishell);
+void			ft_print_table(t_mini *mini);
 void			ft_print_matrix(char **matrix);
-void			ft_exit(t_minishell *minishell, char *cmd, char *str, int ext);
+void			ft_exit(t_mini *mini, char *cmd, char *str, int ext);
 int				is_operator(char c);
 int				is_space(char c);
 int				is_quote(char c);
 int				get_quote_index(char *str, int i);
-int				get_cmd_table_size(t_list_parse *lst);
+int				get_table_size(t_list_parse *lst);
 int				get_line_size(t_list_parse *lst, int pipe_line);
 t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
-int				open_redins(t_minishell *minishell, int pipe_line);
-void			cleanup(t_minishell *minishell, int exit_status);
+int				open_redins(t_mini *mini, int pipe_line);
+void			cleanup(t_mini *mini, int exit_status);
 void			signals_handler(void);
 
 // flag
-void			flag(t_minishell *minishell);
+void			flag(t_mini *mini);
 char			*delquote(char **str, int count);
 void			redirections(t_list_parse *lst, int flag);
 int				quote_count(t_list_parse *curr);
@@ -125,8 +126,8 @@ int				var_end(char *str, int start);
 int				var_start(t_list_parse *curr);
 int				env_len(char *str);
 int				not_expandable(char c);
-int				expand_var(t_minishell *minishell, t_list_parse *node);
-void			expansion(t_minishell *minishell, t_list_parse *curr);
+int				expand_var(t_mini *mini, t_list_parse *node);
+void			expansion(t_mini *mini, t_list_parse *curr);
 
 // get_next_line
 char			*get_next_line(int fd);
@@ -134,9 +135,9 @@ int				newline(char *buf);
 char			*ft_strcpy(char *s1, char *s2);
 char			*ft_strncat(char *dest, const char *src, unsigned int nb);
 
-int				execute(t_minishell *minishell);
-int				is_cmd(t_minishell *minishell, char **token, char **env);
-int				here_doc(t_minishell *minishell, char *lim);
+int				execute(t_mini *mini);
+int				is_cmd(t_mini *mini, char **token, char **env);
+int				here_doc(t_mini *mini, char *lim);
 void			free_2d(char ***arr);
 
 char			*alloc_cpy(char *str, char **result, int n);

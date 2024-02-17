@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 20:36:50 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:20:28 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,30 +65,30 @@ int	syntax(t_list_parse *lst)
 	return (0);
 }
 
-void	parse(t_minishell *minishell)
+void	parse(t_mini *mini)
 {
 	int	i;
 
-	if (!minishell->cmd_line[0])
+	if (!mini->cmd_line[0])
 	{
-		free(minishell->cmd_line);
+		free(mini->cmd_line);
 		return ;
 	}
 	i = 0;
-	while (minishell->cmd_line[i])
-		ft_lstadd_back(&minishell->lst, minishell->cmd_line[i++]);
-	flag(minishell);
-	// print_parse(minishell->lst);
-	if (!minishell->lst || syntax(minishell->lst) == -1)
+	while (mini->cmd_line[i])
+		ft_lstadd_back(&mini->lst, mini->cmd_line[i++]);
+	flag(mini);
+	// print_parse(mini->lst);
+	if (!mini->lst || syntax(mini->lst) == -1)
 	{
-		minishell->exit_status = 258;
-		ft_exit(minishell, NULL, NULL, 0);
+		mini->exit_status = 258;
+		ft_exit(mini, NULL, NULL, 0);
 		return ;
 	}
-	if (!command_table(minishell, minishell->lst))
-		ft_exit(minishell, NULL, NULL, 12);
-	execute(minishell);
-	ft_exit(minishell, NULL, NULL, 0);
+	if (!command_table(mini, mini->lst))
+		ft_exit(mini, NULL, NULL, 12);
+	execute(mini);
+	ft_exit(mini, NULL, NULL, 0);
 }
 
 void	print_parse(t_list_parse *xx)

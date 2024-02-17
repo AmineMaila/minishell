@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:17:42 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 19:21:50 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:22:37 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,22 @@ void	is_lim(char **lim, int fd)
 	}
 }
 
-int	here_doc(t_minishell *minishell, char *lim)
+int	here_doc(t_mini *mini, char *lim)
 {
 	int		fd[2];
 	int		id;
 
 	if (pipe(fd) == -1)
-		ft_exit(minishell, NULL, NULL, errno);
+		ft_exit(mini, NULL, NULL, errno);
 	id = fork();
 	if (id == -1)
-		ft_exit(minishell, NULL, NULL, errno);
+		ft_exit(mini, NULL, NULL, errno);
 	if (!id)
 	{
 		close(fd[0]);
 		lim = ft_strjoin(lim, "\n");
 		if (!lim)
-			ft_exit(minishell, NULL, NULL, errno);
+			ft_exit(mini, NULL, NULL, errno);
 		is_lim(&lim, fd[1]);
 	}
 	close(fd[1]);

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 15:46:24 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:20:51 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,19 @@ char	*strrem(t_list_parse *node, char *envvar, int start, int len)
 	return (result[j] = '\0', free(node->str), result);
 }
 
-void	expand_exit(t_minishell *minishell, t_list_parse *node, int start)
+void	expand_exit(t_mini *mini, t_list_parse *node, int start)
 {
 	char	*exitvar;
 
-	exitvar = ft_itoa(minishell->exit_status);
+	exitvar = ft_itoa(mini->exit_status);
 	if (!exitvar)
-		cleanup(minishell, errno);
-	node->str = strrem(node, ft_itoa(minishell->exit_status), start, 1);
+		cleanup(mini, errno);
+	node->str = strrem(node, ft_itoa(mini->exit_status), start, 1);
 	if (!node->str)
-		cleanup(minishell, errno);
+		cleanup(mini, errno);
 }
 
-int	expand_var(t_minishell *minishell, t_list_parse *node)
+int	expand_var(t_mini *mini, t_list_parse *node)
 {
 	char	*varname;
 	char	*envvar;
@@ -88,18 +88,18 @@ int	expand_var(t_minishell *minishell, t_list_parse *node)
 	if (!start || not_expandable(node->str[start]))
 		return (0);
 	if (node->str[start] == '?')
-		return (expand_exit(minishell, node, start), 1);
+		return (expand_exit(mini, node, start), 1);
 	end = var_end(node->str, start);
 	varname = ft_substr(node->str, start, end - start);
-	envvar = get_env(minishell->env, varname);
+	envvar = get_env(mini->env, varname);
 	free(varname);
 	if (!envvar && (end - start + 1) == (int)ft_strlen(node->str))
 	{
-		delete_node(&minishell->lst, node);
+		delete_node(&mini->lst, node);
 		return (1);
 	}
 	node->str = strrem(node, envvar, start, end - start);
 	if (!node->str)
-		cleanup(minishell, errno);
+		cleanup(mini, errno);
 	return (1);
 }

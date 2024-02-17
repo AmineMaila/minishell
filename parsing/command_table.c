@@ -6,20 +6,20 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/17 20:26:49 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:27:04 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-int	get_outfd(t_minishell *minishell, int pipe_line)
+int	get_outfd(t_mini *mini, int pipe_line)
 {
 	t_list_parse	*current;
 	t_list_parse	*redout;
 	char			*outfile;
 
 	redout = NULL;
-	current = get_pipe_line(minishell->lst, pipe_line);
+	current = get_pipe_line(mini->lst, pipe_line);
 	while (current && current->flag != PIPE)
 	{
 		if (current->flag == REDOUT || current->flag == APPEND)
@@ -28,7 +28,7 @@ int	get_outfd(t_minishell *minishell, int pipe_line)
 	}
 	if (!redout)
 	{
-		if (pipe_line == minishell->cmd_table_size - 1)
+		if (pipe_line == mini->table_size - 1)
 			return (open("/dev/stdout", O_RDONLY));
 		return (-42);
 	}
@@ -39,7 +39,7 @@ int	get_outfd(t_minishell *minishell, int pipe_line)
 		return (open(outfile, O_RDWR | O_CREAT | O_APPEND, 0644));
 }
 
-int	get_infd(t_minishell *minishell, int pipe_line)
+int	get_infd(t_mini *mini, int pipe_line)
 {
 	t_list_parse	*current;
 	t_list_parse	*redin;
@@ -47,13 +47,13 @@ int	get_infd(t_minishell *minishell, int pipe_line)
 
 	redin = NULL;
 	heredoc_fd = -1;
-	current = get_pipe_line(minishell->lst, pipe_line);
+	current = get_pipe_line(mini->lst, pipe_line);
 	while (current && current->flag != PIPE)
 	{
 		if (current->flag == REDIN || current->flag == HEREDOC)
 			redin = current;
 		if (current->flag == HEREDOC)
-			(close(heredoc_fd), heredoc_fd = here_doc(minishell, current->next->str));
+			(close(heredoc_fd), heredoc_fd = here_doc(mini, current->next->str));
 		current = current->next;
 	}
 	if (!redin)
@@ -64,59 +64,59 @@ int	get_infd(t_minishell *minishell, int pipe_line)
 	}
 	if (redin->flag == HEREDOC)
 	{
-		if (open_redins(minishell, pipe_line) == -1)
+		if (open_redins(mini, pipe_line) == -1)
 			return (-1);
 		return (heredoc_fd);
 	}
-	return (close(heredoc_fd), open_redins(minishell, pipe_line));
+	return (close(heredoc_fd), open_redins(mini, pipe_line));
 }
 
-void	fill_fds(t_minishell *minishell, int pipe_line)
+void	fill_fds(t_mini *mini, int pipe_line)
 {
-	minishell->cmd_table[pipe_line].infd = get_infd(minishell, pipe_line);
-	minishell->cmd_table[pipe_line].outfd = get_outfd(minishell, pipe_line);
+	mini->table[pipe_line].infd = get_infd(mini, pipe_line);
+	mini->table[pipe_line].outfd = get_outfd(mini, pipe_line);
 }
 
-int	fill_line(t_minishell *minishell, t_list_parse *lst, int pipe_line)
+int	fill_line(t_mini *mini, t_list_parse *lst, int pipe_line)
 {
 	int				line_size;
 	t_list_parse	*current;
 	int				i;
 
 	line_size = get_line_size(lst, pipe_line);
-	minishell->cmd_table[pipe_line].line
+	mini->table[pipe_line].line
 		= malloc(sizeof(char *) * (line_size + 1));
-	if (!minishell->cmd_table[pipe_line].line)
+	if (!mini->table[pipe_line].line)
 		return (0);
 	current = get_pipe_line(lst, pipe_line);
 	i = 0;
 	while (i < line_size)
 	{
 		if (current->flag == COMMAND || current->flag == ARG)
-			minishell->cmd_table[pipe_line].line[i++] = current->str;
+			mini->table[pipe_line].line[i++] = current->str;
 		current = current->next;
 	}
-	minishell->cmd_table[pipe_line].line[i] = NULL;
+	mini->table[pipe_line].line[i] = NULL;
 	return (1);
 }
 
-int	command_table(t_minishell *minishell, t_list_parse *lst)
+int	command_table(t_mini *mini, t_list_parse *lst)
 {
 	int	i;
 
-	minishell->cmd_table_size = get_cmd_table_size(lst);
-	minishell->cmd_table = malloc(sizeof(t_cmd_table) * minishell->cmd_table_size);
-	if (!minishell->cmd_table)
+	mini->table_size = get_table_size(lst);
+	mini->table = malloc(sizeof(t_table) * mini->table_size);
+	if (!mini->table)
 		return (0);
-	minishell->pipeinfd = -2;
+	mini->pipeinfd = -2;
 	i = 0;
-	while (i < minishell->cmd_table_size)
+	while (i < mini->table_size)
 	{
-		if (!fill_line(minishell, lst, i))
+		if (!fill_line(mini, lst, i))
 			return (0);
-		fill_fds(minishell, i);
+		fill_fds(mini, i);
 		i++;
 	}
-	// close(minishell->pipeinfd);
+	// close(mini->pipeinfd);
 	return (1);
 }

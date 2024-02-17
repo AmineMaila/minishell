@@ -6,53 +6,53 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 20:08:47 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:25:28 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./Includes/minishell.h"
 
-void	minishell_init(t_minishell *minishell, char **env)
+void	mini_init(t_mini *mini, char **env)
 {
-	minishell->exit_status = 0;
-	minishell->input = NULL;
-	minishell->cmd_line = NULL;
-	minishell->cmd_table = NULL;
-	minishell->env = NULL;
-	minishell->lst = NULL;
-	minishell_env(minishell, env);
+	mini->exit_status = 0;
+	mini->input = NULL;
+	mini->cmd_line = NULL;
+	mini->table = NULL;
+	mini->env = NULL;
+	mini->lst = NULL;
+	mini_env(mini, env);
 }
 
-void	read_cmd_line(t_minishell *minishell)
+void	read_cmd_line(t_mini *mini)
 {
-	minishell->input = readline("minishell-4.81$ ");
-	if (minishell->input)
-		add_history(minishell->input);
+	mini->input = readline(MINISHELL);
+	if (mini->input)
+		add_history(mini->input);
 	else
 	{
-		ft_exit(minishell, NULL, NULL, 0);
+		ft_exit(mini, NULL, NULL, 0);
 		exit (0);
 	}
 }
 
 int	main(int argc, char **argv, char **env)
 {
-	t_minishell		minishell;
+	t_mini		mini;
 
 	(void)argc;
 	(void)argv;
 	if (!isatty(0))
 		return (ft_putstr_fd("minishell: input is not a terminal\n", 2), -1);
 	signals_handler();
-	minishell_init(&minishell, env);
+	mini_init(&mini, env);
 	while (1)
 	{
-		read_cmd_line(&minishell);
-		// if (!(*minishell.input))
+		read_cmd_line(&mini);
+		// if (!(*mini.input))
 		// 	continue ;
-		input_lexer(&minishell);
-		// ft_print_matrix(minishell.cmd_line);
-		parse(&minishell);
-		// printf("%s\n", minishell.input);
+		input_lexer(&mini);
+		// ft_print_matrix(mini.cmd_line);
+		parse(&mini);
+		// printf("%s\n", mini.input);
 	}
 }

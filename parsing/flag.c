@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 16:34:05 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:20:38 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	words(t_list_parse *curr, t_flag *flags)
 	}
 }
 
-void	flag(t_minishell *minishell)
+void	flag(t_mini *mini)
 {
 	t_list_parse	*curr;
 	t_flag			flags;
@@ -70,11 +70,11 @@ void	flag(t_minishell *minishell)
 	flags.is_arg = 0;
 	flags.cmd_line = 0;
 	flags.cmd = 1;
-	curr = minishell->lst;
+	curr = mini->lst;
 	while (curr)
 	{
 		operator(&flags, curr);
-		expansion(minishell, curr);
+		expansion(mini, curr);
 		count = quote_count(curr);
 		if (count)
 		{
