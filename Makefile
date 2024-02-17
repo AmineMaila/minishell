@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+         #
+#    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/16 13:49:31 by nazouz           ###   ########.fr        #
+#    Updated: 2024/02/17 15:00:04 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			= 		minishell
 
 CC				= 		cc
 
-CFLAGS			= 		-Wall -Werror -Wextra
+CFLAGS			= 		-Wall -Werror -Wextra -fsanitize=address
 
 LIBFT			=		./libft/libft.a
 

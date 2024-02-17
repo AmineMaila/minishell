@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 14:57:21 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 15:18:45 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	var_end(char *str, int start)
 	int	i;
 
 	i = start;
-	while (ft_isalnum(str[i]))
+	while (ft_isalnum(str[i]) || str[i] == '_')
 		i++;
 	return (i);
 }
@@ -64,12 +64,10 @@ int	env_len(char *str)
 char	*strrem(t_list_parse *node, char *envvar, int start, int len)
 {
 	char	*result;
-	int		resultlen;
 	int		j;
 	int		i;
 
-	resultlen = (ft_strlen(node->str) - (len + 1)) + ft_strlen(envvar);
-	result = malloc(resultlen + 1);
+	result = malloc(((ft_strlen(node->str) - (len + 1)) + ft_strlen(envvar)) + 1);
 	if (!result)
 		return (free(node->str), NULL);
 	j = 0;
@@ -86,8 +84,7 @@ char	*strrem(t_list_parse *node, char *envvar, int start, int len)
 			}
 			continue ;
 		}
-		if (node->str[i])
-			result[j++] = node->str[i++];
+		result[j++] = node->str[i++];
 	}
 	result[j] = '\0';
 	return (free(node->str), result);
@@ -101,6 +98,18 @@ int	not_expandable(char c)
 	return (0);
 }
 
+void	expand_exit(t_minishell *minishell, t_list_parse *node, int start)
+{
+	char	*exitvar;
+
+	exitvar = ft_itoa(minishell->exit_status);
+	if (!exitvar)
+		cleanup(minishell, errno);
+	node->str = strrem(node, ft_itoa(minishell->exit_status), start, 1);
+	if (!node->str)
+		cleanup(minishell, errno);
+}
+
 int	expand_var(t_minishell *minishell, t_list_parse *node)
 {
 	char	*varname;
@@ -111,6 +120,8 @@ int	expand_var(t_minishell *minishell, t_list_parse *node)
 	start = var_start(node);
 	if (!start || not_expandable(node->str[start]))
 		return (0);
+	if (node->str[start] == '?')
+		return (expand_exit(minishell, node, start), 1);
 	end = var_end(node->str, start);
 	varname = ft_substr(node->str, start, end - start);
 	envvar = get_env(minishell->env, varname);
