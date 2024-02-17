@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/14 20:18:48 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 20:26:49 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-int	get_outfd(t_minishell *minishell, t_list_parse *lst, int pipe_line)
+int	get_outfd(t_minishell *minishell, int pipe_line)
 {
 	t_list_parse	*current;
 	t_list_parse	*redout;
 	char			*outfile;
 
 	redout = NULL;
-	current = get_pipe_line(lst, pipe_line);
+	current = get_pipe_line(minishell->lst, pipe_line);
 	while (current && current->flag != PIPE)
 	{
 		if (current->flag == REDOUT || current->flag == APPEND)
@@ -39,7 +39,7 @@ int	get_outfd(t_minishell *minishell, t_list_parse *lst, int pipe_line)
 		return (open(outfile, O_RDWR | O_CREAT | O_APPEND, 0644));
 }
 
-int	get_infd(t_list_parse *lst, int pipe_line)
+int	get_infd(t_minishell *minishell, int pipe_line)
 {
 	t_list_parse	*current;
 	t_list_parse	*redin;
@@ -47,13 +47,13 @@ int	get_infd(t_list_parse *lst, int pipe_line)
 
 	redin = NULL;
 	heredoc_fd = -1;
-	current = get_pipe_line(lst, pipe_line);
+	current = get_pipe_line(minishell->lst, pipe_line);
 	while (current && current->flag != PIPE)
 	{
 		if (current->flag == REDIN || current->flag == HEREDOC)
 			redin = current;
 		if (current->flag == HEREDOC)
-			(close(heredoc_fd), heredoc_fd = here_doc(current->next->str));
+			(close(heredoc_fd), heredoc_fd = here_doc(minishell, current->next->str));
 		current = current->next;
 	}
 	if (!redin)
@@ -64,30 +64,17 @@ int	get_infd(t_list_parse *lst, int pipe_line)
 	}
 	if (redin->flag == HEREDOC)
 	{
-		if (open_redins(lst, pipe_line) == -1)
+		if (open_redins(minishell, pipe_line) == -1)
 			return (-1);
 		return (heredoc_fd);
 	}
-	return (close(heredoc_fd), open_redins(lst, pipe_line));
+	return (close(heredoc_fd), open_redins(minishell, pipe_line));
 }
 
-void	fill_fds(t_minishell *minishell, t_list_parse *lst, int pipe_line)
+void	fill_fds(t_minishell *minishell, int pipe_line)
 {
-	// int	fd[2];
-
-	// if (pipe(fd) == -1)
-	// 	ft_exit(NULL, NULL, errno);
-	minishell->cmd_table[pipe_line].infd = get_infd(lst, pipe_line);
-	// if (minishell->cmd_table[pipe_line].infd == -42)
-	// 	minishell->cmd_table[pipe_line].infd = minishell->pipeinfd;
-	// else
-	// 	close(minishell->pipeinfd);
-	minishell->cmd_table[pipe_line].outfd = get_outfd(minishell, lst, pipe_line);
-	// if (minishell->cmd_table[pipe_line].outfd == -42)
-	// 	minishell->cmd_table[pipe_line].outfd = fd[1];
-	// else
-	// 	close(fd[1]);
-	// minishell->pipeinfd = fd[0];
+	minishell->cmd_table[pipe_line].infd = get_infd(minishell, pipe_line);
+	minishell->cmd_table[pipe_line].outfd = get_outfd(minishell, pipe_line);
 }
 
 int	fill_line(t_minishell *minishell, t_list_parse *lst, int pipe_line)
@@ -127,7 +114,7 @@ int	command_table(t_minishell *minishell, t_list_parse *lst)
 	{
 		if (!fill_line(minishell, lst, i))
 			return (0);
-		fill_fds(minishell, lst, i);
+		fill_fds(minishell, i);
 		i++;
 	}
 	// close(minishell->pipeinfd);

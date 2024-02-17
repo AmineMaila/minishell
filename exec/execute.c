@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 14:57:34 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 20:38:38 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,20 @@
 void	exec_cmd(t_cmd_table table, t_minishell *minishell)
 {
 	if (table.infd == -1 || table.outfd == -1 || !table.line[0])
-		exit(1);
+		ft_exit(minishell, NULL, NULL, 1);
 	if (dup2(table.infd, 0) == -1)
-		cleanup(minishell, errno);
+		ft_exit(minishell, NULL, NULL, errno);
 	close (table.infd);
 	if (dup2(table.outfd, 1) == -1)
-		cleanup(minishell, errno);
+		ft_exit(minishell, NULL, NULL, errno);
 	close(table.outfd);
 	if (exec_builtin(table.line, &minishell->env))
 		exit(0);
-	is_cmd(&table.line[0], minishell->env);
+	is_cmd(minishell, &table.line[0], minishell->env);
 	if (access(table.line[0], F_OK))
-		ft_exit(table.line[0], ": command not found", 1);
+		ft_exit(minishell, table.line[0], ": command not found", 127);
 	if (execve(table.line[0], table.line, minishell->env) == -1)
-		cleanup(minishell, errno);
+		ft_exit(minishell, NULL, NULL, 126);
 }
 
 void	birth(t_minishell *minishell, t_data *pipex, t_cmd_table table)
@@ -47,14 +47,14 @@ void	birth(t_minishell *minishell, t_data *pipex, t_cmd_table table)
 	int	fd[2];
 
 	if (pipe(fd) == -1)
-		cleanup(minishell, errno);
+		ft_exit(minishell, NULL, NULL, errno);
 	if (table.outfd == -42)
 		table.outfd = fd[1];
 	else
 		close(fd[1]);
 	pipex->pids[pipex->id_count] = fork();
 	if (pipex->pids[pipex->id_count] == -1)
-		cleanup(minishell, errno);
+		ft_exit(minishell, NULL, NULL, errno);
 	if (pipex->pids[pipex->id_count] == 0)
 	{
 		close(fd[0]);
@@ -80,21 +80,13 @@ int	wait_child(t_data *pipex, t_minishell *minishell)
 		if (waitpid(pipex->pids[i++], &status, 0) == -1)
 		{
 			free(pipex->pids);
-			cleanup(minishell, errno);
+			ft_exit(minishell, NULL, NULL, errno);
 		}
 	}
 	free(pipex->pids);
-	if (WIFSIGNALED(status))
-	{
-		// if (status == SIGSEGV)
-		// 	printf("Segmentation fault: %d\n", status);
-		// else if (status == SIGABRT)
-		// 	printf("Abort: %d\n", status);
-		// else if (status == SIGBUS)
-		// 	printf("Bus error: %d\n", status);
-		return (status + 128);
-	}
-	return (WEXITSTATUS(status));
+	if (WIFEXITED(status))
+		minishell->exit_status = WEXITSTATUS(status);
+	return (1);
 }
 
 void	spawn_children(t_minishell *minishell, t_data *pipex)
@@ -113,7 +105,7 @@ void	spawn_children(t_minishell *minishell, t_data *pipex)
 			if (pipex->infd == -42)
 			{
 				if (pipe(fd) == -1)
-					cleanup(minishell, errno);
+					ft_exit(minishell, NULL, NULL, errno);
 				pipex->infd = fd[0];
 				close(fd[1]);
 			}
@@ -136,7 +128,7 @@ int	execute(t_minishell *minishell)
 	pipex.infd = minishell->cmd_table[0].infd;
 	pipex.pids = malloc(minishell->cmd_table_size * sizeof(int));
 	if (!pipex.pids)
-		cleanup(minishell, errno);
+		ft_exit(minishell, NULL, NULL, errno);
 	if (minishell->cmd_table[0].line[0] && minishell->cmd_table_size == 1) // if there is something in 1st pipeline, and there is one pipeline => should be executed by parent process
 	{
 		execp = exec_parent(minishell->cmd_table[0].line, &minishell->env); // if execp = -1 means the command isn't a buitin so be kind and spawn a children for that command
@@ -144,5 +136,6 @@ int	execute(t_minishell *minishell)
 			return (execp);
 	}
 	spawn_children(minishell, &pipex);
-	return (wait_child(&pipex, minishell));
+	wait_child(&pipex, minishell);
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:20:08 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/16 20:31:37 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 19:18:58 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ int	exit_builtin(char **args)
 	exit_code = 0; // last exit status
 	argc = len_2d(args);
 	if (argc > 2)
-		return (ft_exit("exit", ": too many arguments", 0), 1);
+		return (ft_exit(NULL, "exit", ": too many arguments", 0), 1);
 	if (argc == 2)
 	{
 		exit_code = ft_atoll(args[1]);
 		// printf("exit_code = %lld\nstrlen = %zu\nstr_is_digit = %d\n", exit_code, ft_strlen(args[1]), str_is_digit(args[1]));
 		if ((ft_strlen(args[1]) > 1 && (exit_code == 0 || exit_code == -1))
 			|| !str_is_digit(args[1]))
-			return (ft_exit(args[1], ": numeric argument required", 0), 1);
+			return (ft_exit(NULL, args[1], ": numeric argument required", 0), 1);
 	}
 	exit(exit_code);
 }

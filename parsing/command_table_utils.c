@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:35:24 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/11 18:33:28 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 20:27:12 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ int	get_line_size(t_list_parse *lst, int pipe_line)
 	return (size);
 }
 
-int	open_redins(t_list_parse *lst, int pipe_line)
+int	open_redins(t_minishell *minishell, int pipe_line)
 {
 	t_list_parse	*current;
 	int				infd;
 
 	infd = -42;
-	current = get_pipe_line(lst, pipe_line);
+	current = get_pipe_line(minishell->lst, pipe_line);
 	while (current && current->flag != PIPE)
 	{
 		if (current->flag == REDIN)
@@ -78,7 +78,7 @@ int	open_redins(t_list_parse *lst, int pipe_line)
 			close(infd);
 			infd = open(current->next->str, O_RDONLY);
 			if (infd == -1)
-				return (ft_exit(current->next->str, ": no such file or directory", 0), -1);
+				return (minishell->exit_status = 1, ft_exit(NULL, current->next->str, ": no such file or directory", 0), -1);
 		}
 		current = current->next;
 	}

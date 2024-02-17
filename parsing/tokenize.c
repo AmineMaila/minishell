@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/14 20:45:09 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 19:19:24 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	input_lexer(t_minishell *minishell)
 		minishell->cmd_line = split(minishell->input, " \t");
 		// free(minishell->input);
 		if (!minishell->cmd_line)
-			ft_exit(NULL, NULL, errno);
+			ft_exit(minishell, NULL, NULL, errno);
 		return ;
 	}
 	old_input = minishell->input;
@@ -101,5 +101,5 @@ void	input_lexer(t_minishell *minishell)
 	minishell->cmd_line = split(minishell->input, " \t");
 	// free(minishell->input);
 	if (!minishell->cmd_line)
-		ft_exit(NULL, NULL, errno);
+		ft_exit(minishell, NULL, NULL, errno);
 }

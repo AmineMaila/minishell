@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:40:57 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/17 13:42:01 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 19:29:21 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	chdir_relative(char *path, char *oldpwd, char ***env)
 	{
 		update_oldpwd(&oldpwd, env);
 		update_pwd(path, env);
-		return (ft_exit(path, ": No such file or directory", 0), 1);
+		return (ft_exit(NULL, path, ": No such file or directory", 0), 1);
 	}
 	return (update_pwd(path, env), update_oldpwd(&oldpwd, env), 0);
 }
@@ -103,7 +103,7 @@ int	cd(char *path, char ***env)
 	if (path[0] != '/') // if path is relative
 		return (chdir_relative(path, oldpwd, env));
 	if (chdir(path) != 0) // absolute path
-		return (ft_exit(path, ": No such file or directory", 0), 1);
+		return (ft_exit(NULL, path, ": No such file or directory", 0), 1);
 	if (!update_pwd(path, env) || !update_oldpwd(&oldpwd, env))
 		return (1);
 	return (0);

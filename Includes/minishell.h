@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/17 17:23:05 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 20:27:44 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct s_minishell
 
 //	MINISHELL
 void			input_lexer(t_minishell *minishell);
-int				parse(t_minishell *minishell);
+void			parse(t_minishell *minishell);
 int				command_table(t_minishell *minishell, t_list_parse *lst);
 int				minishell_env(t_minishell *minishell, char **env);
 char			*get_env(char **env, char *str);
@@ -101,7 +101,7 @@ int				ft_strcmp(char *s1, char *s2);
 //	HELPERS
 void			ft_print_cmd_table(t_minishell *minishell);
 void			ft_print_matrix(char **matrix);
-void			ft_exit(char *cmd, char *str, int ext);
+void			ft_exit(t_minishell *minishell, char *cmd, char *str, int ext);
 int				is_operator(char c);
 int				is_space(char c);
 int				is_quote(char c);
@@ -109,7 +109,7 @@ int				get_quote_index(char *str, int i);
 int				get_cmd_table_size(t_list_parse *lst);
 int				get_line_size(t_list_parse *lst, int pipe_line);
 t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
-int				open_redins(t_list_parse *lst, int pipe_line);
+int				open_redins(t_minishell *minishell, int pipe_line);
 void			cleanup(t_minishell *minishell, int exit_status);
 void			signals_handler(void);
 
@@ -135,9 +135,8 @@ char			*ft_strcpy(char *s1, char *s2);
 char			*ft_strncat(char *dest, const char *src, unsigned int nb);
 
 int				execute(t_minishell *minishell);
-int				is_cmd(char **token, char **env);
-int				here_doc(char *lim);
-void			ft_exit(char *cmd, char *str, int ext);
+int				is_cmd(t_minishell *minishell, char **token, char **env);
+int				here_doc(t_minishell *minishell, char *lim);
 void			free_2d(char ***arr);
 
 char			*alloc_cpy(char *str, char **result, int n);

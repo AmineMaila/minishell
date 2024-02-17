@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:47:56 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 17:23:12 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 19:02:19 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	update(char *to_replace, char ***env)
 
 	len = varlen(to_replace);
 	if (!len)
-		return (ft_exit(to_replace, ": not a valid identifier", 0), 1);
+		return (ft_exit(NULL, to_replace, ": not a valid identifier", 0), 1);
 	i = 0;
 	while ((*env)[i])
 	{

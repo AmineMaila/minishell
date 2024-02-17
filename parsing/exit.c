@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 15:07:01 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 20:12:37 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,13 @@ void	cleanup(t_minishell *minishell, int exit_status)
 		minishell->cmd_line = NULL;
 	}
 	if (exit_status != EXIT_SUCCESS)
-		(free_2d(&minishell->env), ft_exit(NULL, NULL, exit_status));
+		free_2d(&minishell->env);
 }
 
-void	ft_exit(char *cmd, char *str, int ext)
+void	ft_exit(t_minishell *minishell, char *cmd, char *str, int ext)
 {
+	if (ext == 12)
+		errno = ENOMEM;
 	if (str)
 	{
 		ft_putstr_fd("minishell: ", 2);
@@ -72,8 +74,10 @@ void	ft_exit(char *cmd, char *str, int ext)
 			ft_putstr_fd(cmd, 2);
 		ft_putendl_fd(str, 2);
 	}
-	else
+	else if (ext)
 		perror("minishell");
+	if (minishell)
+		cleanup(minishell, ext);
 	if (ext)
 		exit(ext);
 }

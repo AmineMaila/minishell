@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:15:21 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/17 16:35:45 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 19:18:18 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,21 @@ void	default_env(t_minishell *minishell)
 
 	minishell->env = malloc(4 * sizeof(char *));
 	if (!minishell->env)
-		ft_exit(NULL, NULL, errno);
+		ft_exit(minishell, NULL, NULL, errno);
 	pwd = getcwd(0, 0);
 	if (!pwd)
-		ft_exit(NULL, NULL, errno);
+		ft_exit(minishell, NULL, NULL, errno);
 	minishell->env[0] = ft_strjoin("PWD=", pwd);
 	if (!minishell->env[0])
-		ft_exit(NULL, NULL, errno);
+		ft_exit(minishell, NULL, NULL, errno);
 	free(pwd);
 	minishell->env[1] = ft_strdup("SHLVL=1");
 	if (!minishell->env[1])
-		ft_exit(NULL, NULL, errno);
+		ft_exit(minishell, NULL, NULL, errno);
 	minishell->env[2]
 		= ft_strdup("PATH=/bin:/bin:/usr/bin:/usr/ucb:/usr/local/bin");
 	if (!minishell->env[2])
-		ft_exit(NULL, NULL, errno);
+		ft_exit(minishell, NULL, NULL, errno);
 	minishell->env[3] = NULL;
 }
 
@@ -91,8 +91,8 @@ int	minishell_env(t_minishell *minishell, char **env)
 		size++;
 	minishell->env = malloc(sizeof(char *) * (size + 1));
 	if (!minishell->env)
-		ft_exit(NULL, NULL, errno);
+		ft_exit(minishell, NULL, NULL, errno);
 	if (!env_fill(minishell, env))
-		ft_exit(NULL, NULL, errno);
+		ft_exit(minishell, NULL, NULL, errno);
 	return (1);
 }
