@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:48:06 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/16 17:27:19 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 16:53:06 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,20 @@ int	ft_remove(char ***env, char *to_remove)
 	char	**result;
 	int		i;
 	int		j;
-	int		len;
 
 	i = 0;
 	j = 0;
-	result = malloc(len_2d(*env) * sizeof(char *)); // protection
+	result = malloc(len_2d(*env) * sizeof(char *));
 	if (!result)
 		return (0);
-	len = ft_strlen(to_remove);
 	while ((*env)[i])
 	{
-		if (!ft_strncmp((*env)[i], to_remove, len) && *(((*env)[i]) + len) == '=')
+		if (!ft_strncmp((*env)[i], to_remove, ft_strlen(to_remove))
+				&& *(((*env)[i]) + ft_strlen(to_remove)) == '=')
 			i++;
 		else
 		{
-			result[j++] = ft_strdup((*env)[i++]); // protection
+			result[j++] = ft_strdup((*env)[i++]);
 			if (!result[j - 1])
 				return (free_2d(&result), 0);
 		}

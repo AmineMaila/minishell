@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:45:02 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/14 21:30:40 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 16:55:22 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-
-
-
 
 # include "../Includes/minishell.h"
 # include <stdlib.h>

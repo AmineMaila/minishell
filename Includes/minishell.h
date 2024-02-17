@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/17 16:32:06 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 16:54:54 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 typedef struct s_flag
 {
-	int is_arg;
+	int	is_arg;
 	int	cmd_line;
 	int	cmd;
 }				t_flag;
@@ -63,7 +63,7 @@ typedef struct s_cmd_table
 	int		outfd;
 }				t_cmd_table;
 
-typedef struct	s_list_parse
+typedef struct s_list_parse
 {
 	char				*str;
 	int					flag;
@@ -156,10 +156,7 @@ int				cd(char *path, char ***env);
 int				exit_builtin(char **args);
 int				pwd(char **env);
 
-
 void			print_parse(t_list_parse *lst);
 void			print_open_file_descriptors(void);
-
-
 
 #endif

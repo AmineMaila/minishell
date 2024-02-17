@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:47:56 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 16:45:54 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 16:48:47 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	update(char *to_replace, char ***env)
 		if (!ft_strncmp((*env)[i], to_replace, len) && (*env)[i][len] == '=')
 		{
 			free((*env)[i]);
-			(*env)[i] = ft_strdup(to_replace); // if failed means malloc error should cleanup and exit
+			(*env)[i] = ft_strdup(to_replace);
 			if (!(*env)[i])
 				return (-1);
 			return (1);
@@ -80,7 +80,7 @@ int	update(char *to_replace, char ***env)
 int	export(char **line, char ***env)
 {
 	int	i;
-	int value;
+	int	value;
 
 	i = 1;
 	if (!line[1])
@@ -88,7 +88,7 @@ int	export(char **line, char ***env)
 	while (line[i])
 	{
 		value = update(line[i], env);
-		if (!value) // multiple cases either malloc, on didn't found to_replace
+		if (!value)
 		{
 			if (!ft_add(env, line[i]))
 				return (1);
