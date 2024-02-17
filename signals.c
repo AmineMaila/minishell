@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 13:44:05 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/16 13:53:15 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:53:37 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	sig_quit(int signum)
 {
 	(void)signum;
 	rl_replace_line("", 1);
+	// printf("Quit: 3\n");
 	rl_redisplay();
 }
 

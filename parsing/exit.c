@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 21:26:57 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:37:03 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	cleanup(t_mini *mini, int exit_status)
 		free(mini->cmd_line);
 		mini->cmd_line = NULL;
 	}
-	if (exit_status != EXIT_SUCCESS)
+	if (exit_status != EXIT_SUCCESS && mini->env)
 		free_2d(&mini->env);
 }
 

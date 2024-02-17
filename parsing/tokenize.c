@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/17 21:19:58 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:40:38 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	shift_insert(char *result, int src, int dst, int flag)
 		result[dst] = ' ';
 }
 
-char	*insert_spaces(char *str, int n)
+char	*insert_spaces(char **str, int n)
 {
 	char	*result;
 	int		i;
@@ -81,7 +81,6 @@ int	count_needed_spaces(char *str)
 void	input_lexer(t_mini *mini)
 {
 	int		i;
-	char	*old_input;
 	int		spaces_count;
 
 	i = 0;
@@ -91,15 +90,16 @@ void	input_lexer(t_mini *mini)
 		mini->cmd_line = split(mini->input, " \t");
 		// free(mini->input);
 		if (!mini->cmd_line)
-			ft_exit(mini, NULL, NULL, errno);
+			ft_exit(mini, NULL, NULL, 12);
 		return ;
 	}
-	old_input = mini->input;
 	mini->input
-		= insert_spaces(mini->input, spaces_count);
+		= insert_spaces(&mini->input, spaces_count);
+	if (!mini->input)
+		ft_exit(mini, NULL, NULL, 12);
 	// free(old_input);
 	mini->cmd_line = split(mini->input, " \t");
 	// free(mini->input);
 	if (!mini->cmd_line)
-		ft_exit(mini, NULL, NULL, errno);
+		ft_exit(mini, NULL, NULL, 12);
 }

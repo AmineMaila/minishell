@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 21:20:51 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:30:03 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ void	expand_exit(t_mini *mini, t_list_parse *node, int start)
 
 	exitvar = ft_itoa(mini->exit_status);
 	if (!exitvar)
-		cleanup(mini, errno);
+		ft_exit(mini, NULL, NULL, 12);
 	node->str = strrem(node, ft_itoa(mini->exit_status), start, 1);
 	if (!node->str)
-		cleanup(mini, errno);
+		ft_exit(mini, NULL, NULL, 12);
 }
 
 int	expand_var(t_mini *mini, t_list_parse *node)
@@ -100,6 +100,6 @@ int	expand_var(t_mini *mini, t_list_parse *node)
 	}
 	node->str = strrem(node, envvar, start, end - start);
 	if (!node->str)
-		cleanup(mini, errno);
+		ft_exit(mini, NULL, NULL, 12);
 	return (1);
 }

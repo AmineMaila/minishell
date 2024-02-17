@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:43:13 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/08 14:24:48 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:47:55 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,13 @@ int	get_quote_index(char *str, int i)
 	return (i + 1);
 }
 
-char	*alloc_cpy(char *str, char **result, int n)
+char	*alloc_cpy(char **str, char **result, int n)
 {
-	n += ft_strlen(str);
+	n += ft_strlen(*str);
 	*result = malloc(sizeof(char) * (n + 1));
 	if (!*result)
 		return (NULL);
-	ft_strlcpy(*result, str, n + 1);
+	ft_strlcpy(*result, *str, n + 1);
+	free(*str);
 	return (*result);
 }

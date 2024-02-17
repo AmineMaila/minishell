@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 21:20:38 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:44:18 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	flag(t_mini *mini)
 			if (count % 2)
 				curr->flag = ERR2;
 			curr->str = delquote(&curr->str, count);
+			if (!curr->str)
+				ft_exit(mini, NULL, NULL, 12);
 		}
 		if (!curr->flag)
 			words(curr, &flags);
