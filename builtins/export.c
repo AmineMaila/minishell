@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:47:56 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 16:48:47 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/17 17:23:12 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	update(char *to_replace, char ***env)
 			free((*env)[i]);
 			(*env)[i] = ft_strdup(to_replace);
 			if (!(*env)[i])
-				return (-1);
+				return (0);
 			return (1);
 		}
 		i++;
