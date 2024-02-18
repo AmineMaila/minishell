@@ -6,7 +6,7 @@
 #    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/18 18:58:35 by mmaila           ###   ########.fr        #
+#    Updated: 2024/02/18 19:06:04 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,7 @@ $(NAME) : $(LIBFT) $(OBJS) $(INCLUDE)
 	@$(CC) $(CFLAGS) $(LIBFT) $(OBJS) -o $(NAME) -L$(READLINEDIR)/lib -lreadline
 	@echo "\033[1;32mSUCCESS\033[0m"
 
-$(LIBFT) : $(INCLUDE)
+$(LIBFT) :
 	@echo "\033[1;33mBuilding LIBFT...\033[0m"
 	@make -C ./libft
 	@echo "\033[1;33mBuilding Minishell...\033[0m"
