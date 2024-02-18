@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:19:58 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 16:38:55 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 17:41:42 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	exec_parent(char **line, char ***env)
 		return (cd(line[1], env));
 	else if (!ft_strcmp("exit", line[0]))
 		return (exit_builtin(line));
-	return (-1);
 }
 
 int	exec_builtin(char **line, char ***env)

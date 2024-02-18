@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/18 15:38:43 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 17:37:53 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	read_cmd_line(t_mini *mini)
 	else
 	{
 		ft_exit(mini, NULL, NULL, 0);
-		exit (0);
+		exit(mini->exit_status);
 	}
 }
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_mini		mini;
 
-	atexit(a);
+	// atexit(a);
 	(void)argc;
 	(void)argv;
 	(void)env;
