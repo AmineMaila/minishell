@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/18 18:53:23 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/18 19:10:55 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	execute(t_mini *mini)
 	pipex.infd = mini->table[0].infd;
 	pipex.pids = malloc(mini->table_size * sizeof(int));
 	if (!pipex.pids)
-		ft_exit(mini, NULL, NULL, 12);
+		ft_exit(mini, NULL, NULL, ENOMEM);
 	if (mini->table[0].line[0] && mini->table_size == 1) // if there is something in 1st pipeline, and there is one pipeline => should be executed by parent process
 	{
 		execp = exec_parent(mini, mini->table[0].line); // if execp = -1 means the command isn't a buitin so be kind and spawn a children for that command

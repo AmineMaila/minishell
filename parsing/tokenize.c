@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/18 15:38:08 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 19:13:49 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,14 @@ void	input_lexer(t_mini *mini)
 		mini->cmd_line = split(mini->input, " \t");
 		free(mini->input);
 		if (!mini->cmd_line)
-			ft_exit(mini, NULL, NULL, 12);
+			ft_exit(mini, NULL, NULL, ENOMEM);
 		return ;
 	}
 	mini->input = insert_spaces(&mini->input, spaces_count);
 	if (!mini->input)
-		ft_exit(mini, NULL, NULL, 12);
+		ft_exit(mini, NULL, NULL, ENOMEM);
 	mini->cmd_line = split(mini->input, " \t");
 	free(mini->input);
 	if (!mini->cmd_line)
-		ft_exit(mini, NULL, NULL, 12);
+		ft_exit(mini, NULL, NULL, ENOMEM);
 }

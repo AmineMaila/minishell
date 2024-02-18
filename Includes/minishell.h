@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/18 18:53:01 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/18 19:30:52 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define LIM 11
 
 # define BUFFER_SIZE 10
-# define MINISHELL "\033[1;31mminishell\033[1;34m-4.81\033[1;32m$ \033[0m"
+# define MSH "\033[1;34mminishell\033[2;30m-\033[0m\033[1;36m4.81\033[1;32m × \033[0m"
 
 # include "../libft/libft.h"
 # include <stdio.h>

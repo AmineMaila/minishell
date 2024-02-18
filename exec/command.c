@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 15:44:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 22:10:43 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 19:11:24 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	is_cmd(t_mini *mini, char **token, char **env)
 	{
 		tmp = ft_strjoin("/", *token);
 		if (!tmp)
-			ft_exit(mini, NULL, NULL, 12);
+			ft_exit(mini, NULL, NULL, ENOMEM);
 		cmd = get_path(mini, tmp, env);
 		if (!cmd)
 		{

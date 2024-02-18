@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:19:58 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/18 18:51:37 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/18 19:10:17 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	exec_parent(t_mini *mini, char **line)
 	else
 		return (-1);
 	if (mini->exit_status == ENOMEM)
-		ft_exit(mini, "malloc", ": Cannot Allocate Memory\n", ENOMEM);
+		ft_exit(mini, NULL, NULL, ENOMEM);
 	return (mini->exit_status);
 }
 
@@ -81,6 +81,6 @@ int	exec_builtin(t_mini *mini, char **line)
 	else
 		return (-1);
 	if (mini->exit_status == ENOMEM)
-		ft_exit(mini, "malloc", ": Cannot Allocate Memory\n", ENOMEM);
+		ft_exit(mini, NULL, NULL, ENOMEM);
 	return (mini->exit_status);
 }
