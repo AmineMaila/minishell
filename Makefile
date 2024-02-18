@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+         #
+#    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/18 17:19:48 by nazouz           ###   ########.fr        #
+#    Updated: 2024/02/18 18:58:35 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,13 @@ NAME			= 		minishell
 
 CC				= 		cc
 
-CFLAGS			= 		-Wall -Werror -Wextra -fsanitize=address
+CFLAGS			= 		-Wall -Werror -Wextra
 
 LIBFT			=		./libft/libft.a
 
-INCLUDE			=		./minishell.h
+READLINEDIR		=		$(shell brew --prefix readline)
+
+INCLUDE			=		./Includes/minishell.h ./libft/libft.h
 
 SRCS			= 		\
 						./parsing/tokenize.c \
@@ -59,19 +61,26 @@ OBJS			= 		$(SRCS:.c=.o)
 
 all : $(NAME)
 
-%.o : %.c Includes/minishell.h libft/libft.h
-	$(CC) $(CFLAGS) -c $< -o $@ -I$(shell brew --prefix readline)/include
+%.o : %.c $(INCLUDE)
+	@echo "\033[5;34mCompiling ${notdir $<}\033[0m"
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(READLINEDIR)/include
 
-$(NAME) : $(OBJS)
-	@ cd ./libft && make
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBFT) -L$(shell brew --prefix readline)/lib -lreadline
+$(NAME) : $(LIBFT) $(OBJS) $(INCLUDE)
+	@$(CC) $(CFLAGS) $(LIBFT) $(OBJS) -o $(NAME) -L$(READLINEDIR)/lib -lreadline
+	@echo "\033[1;32mSUCCESS\033[0m"
+
+$(LIBFT) : $(INCLUDE)
+	@echo "\033[1;33mBuilding LIBFT...\033[0m"
+	@make -C ./libft
+	@echo "\033[1;33mBuilding Minishell...\033[0m"
 
 clean :
-	rm -rf $(OBJS)
-	@ cd ./libft && make clean
+	@echo "\033[1;31mCleaning...\033[0m"
+	@rm -rf $(OBJS)
+	@make clean -C ./libft
 
 fclean : clean
-	rm -rf $(NAME) $(OBJS)
-	@ cd ./libft && make fclean
+	@rm -rf $(NAME) $(OBJS)
+	@rm -rf $(LIBFT)
 
 re : fclean all
