@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/18 19:10:55 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 21:35:27 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ void	birth(t_mini *mini, t_data *pipex, t_table table)
 		table.outfd = fd[1];
 	else
 		close(fd[1]);
-	pipex->pids[pipex->id_count] = fork();
-	if (pipex->pids[pipex->id_count] == -1)
+	mini->pids[pipex->id_count] = fork();
+	if (mini->pids[pipex->id_count] == -1)
 		ft_exit(mini, NULL, NULL, errno);
-	if (pipex->pids[pipex->id_count] == 0)
+	if (mini->pids[pipex->id_count] == 0)
 	{
 		close(fd[0]);
 		exec_cmd(table, mini);
@@ -77,13 +77,9 @@ int	wait_child(t_data *pipex, t_mini *mini)
 	i = 0;
 	while (i < pipex->id_count)
 	{
-		if (waitpid(pipex->pids[i++], &status, 0) == -1)
-		{
-			free(pipex->pids);
+		if (waitpid(mini->pids[i++], &status, 0) == -1)
 			ft_exit(mini, NULL, NULL, errno);
-		}
 	}
-	free(pipex->pids);
 	if (WIFEXITED(status))
 		mini->exit_status = WEXITSTATUS(status);
 	return (1);
@@ -126,8 +122,8 @@ int	execute(t_mini *mini)
 	pipex.id_count = 0;
 	pipex.heredoc = 0;
 	pipex.infd = mini->table[0].infd;
-	pipex.pids = malloc(mini->table_size * sizeof(int));
-	if (!pipex.pids)
+	mini->pids = malloc(mini->table_size * sizeof(int));
+	if (!mini->pids)
 		ft_exit(mini, NULL, NULL, ENOMEM);
 	if (mini->table[0].line[0] && mini->table_size == 1) // if there is something in 1st pipeline, and there is one pipeline => should be executed by parent process
 	{

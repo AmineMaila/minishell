@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/18 17:37:53 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/18 21:53:01 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@ void	mini_init(t_mini *mini, char **env)
 	mini->table = NULL;
 	mini->env = NULL;
 	mini->lst = NULL;
+	mini->pids = NULL;
 	mini_env(mini, env);
 }
 
 void	read_cmd_line(t_mini *mini)
 {
-	mini->input = readline(MINISHELL);
+	mini->input = readline(MSH);
 	if (mini->input)
 		add_history(mini->input);
 	else

@@ -6,7 +6,7 @@
 #    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/18 19:06:04 by mmaila           ###   ########.fr        #
+#    Updated: 2024/02/18 21:49:57 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,7 @@ $(LIBFT) :
 	@echo "\033[1;33mBuilding Minishell...\033[0m"
 
 clean :
-	@echo "\033[1;31mCleaning...\033[0m"
+	@echo "\033[3;31mCleaning...\033[0m"
 	@rm -rf $(OBJS)
 	@make clean -C ./libft
 

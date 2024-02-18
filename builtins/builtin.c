@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:19:58 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/18 19:10:17 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 21:56:04 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int	exec_builtin(t_mini *mini, char **line)
 	else if (!ft_strcmp("exit", line[0]))
 		mini->exit_status = exit_builtin(line, mini->exit_status);
 	else
-		return (-1);
+		return (free(lower), -1);
+	free(lower);
 	if (mini->exit_status == ENOMEM)
 		ft_exit(mini, NULL, NULL, ENOMEM);
 	return (mini->exit_status);
