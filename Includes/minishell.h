@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/18 16:24:53 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 18:53:01 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,14 +146,14 @@ char			*alloc_cpy(char **str, char **result, int n);
 int				ft_add(char ***env, char *to_add);
 int				update(char *to_replace, char ***env);
 int				len_2d(char **arr);
-int				exec_parent(char **line, char ***env);
-int				exec_builtin(char **line, char ***env);
+int				exec_parent(t_mini *mini, char **line);
+int				exec_builtin(t_mini *mini, char **line);
 int				echo(char **line);
 int				environment(char **env);
 int				unset(char **line, char ***env);
 int				export(char **line, char ***env);
 int				cd(char *path, char ***env);
-int				exit_builtin(char **args);
+int				exit_builtin(char **args, long long exit_code);
 int				pwd(char **env);
 
 void			print_parse(t_list_parse *lst);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:47:56 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 19:02:19 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 18:53:43 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,22 @@ int	ft_add(char ***env, char *to_add)
 
 	result = malloc((len_2d(*env) + 2) * sizeof(char *));
 	if (!result)
-		return (0);
+		return (ENOMEM);
 	i = 0;
 	while ((*env)[i])
 	{
 		result[i] = ft_strdup((*env)[i]);
 		if (!result[i])
-			return (free_2d(&result), 0);
+			return (free_2d(&result), ENOMEM);
 		i++;
 	}
 	result[i] = ft_strdup(to_add);
 	if (!result[i])
-		return (free_2d(&result), 0);
+		return (free_2d(&result), ENOMEM);
 	result[++i] = NULL;
 	free_2d(env);
 	*env = result;
-	return (1);
+	return (0);
 }
 
 int	update(char *to_replace, char ***env)
@@ -69,12 +69,12 @@ int	update(char *to_replace, char ***env)
 			free((*env)[i]);
 			(*env)[i] = ft_strdup(to_replace);
 			if (!(*env)[i])
-				return (0);
-			return (1);
+				return (ENOMEM);
+			return (0);
 		}
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	export(char **line, char ***env)
@@ -88,13 +88,13 @@ int	export(char **line, char ***env)
 	while (line[i])
 	{
 		value = update(line[i], env);
-		if (!value)
+		if (value == 1)
 		{
-			if (!ft_add(env, line[i]))
-				return (1);
+			if (ft_add(env, line[i]) == ENOMEM)
+				return (ENOMEM);
 		}
-		else if (value == -1)
-			return (1);
+		else if (value == ENOMEM)
+			return (ENOMEM);
 		i++;
 	}
 	return (0);

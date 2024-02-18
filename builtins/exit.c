@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:20:08 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/17 19:18:58 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 18:51:58 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int	str_is_digit(char *str)
 	return (1);
 }
 
-int	exit_builtin(char **args)
+int	exit_builtin(char **args, long long exit_code)
 {
 	int				argc;
-	long long		exit_code;
 
-	exit_code = 0; // last exit status
 	argc = len_2d(args);
+	if (argc == 1)
+		exit(exit_code);
 	if (argc > 2)
 		return (ft_exit(NULL, "exit", ": too many arguments", 0), 1);
 	if (argc == 2)
@@ -46,5 +46,5 @@ int	exit_builtin(char **args)
 			|| !str_is_digit(args[1]))
 			return (ft_exit(NULL, args[1], ": numeric argument required", 0), 1);
 	}
-	exit(exit_code);
+	exit((unsigned char)exit_code);
 }
