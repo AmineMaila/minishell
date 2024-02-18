@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 22:00:56 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 18:53:23 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	exec_cmd(t_table table, t_mini *mini)
 	if (dup2(table.outfd, 1) == -1)
 		ft_exit(mini, NULL, NULL, errno);
 	close(table.outfd);
-	if (exec_builtin(table.line, &mini->env))
-		exit(0);
+	if (exec_builtin(mini, table.line) != -1)
+		(ft_exit(mini, NULL, NULL, 0), exit(mini->exit_status));
 	is_cmd(mini, &table.line[0], mini->env);
 	if (access(table.line[0], F_OK))
 		ft_exit(mini, table.line[0], ": command not found", 127);
@@ -131,7 +131,7 @@ int	execute(t_mini *mini)
 		ft_exit(mini, NULL, NULL, 12);
 	if (mini->table[0].line[0] && mini->table_size == 1) // if there is something in 1st pipeline, and there is one pipeline => should be executed by parent process
 	{
-		execp = exec_parent(mini->table[0].line, &mini->env); // if execp = -1 means the command isn't a buitin so be kind and spawn a children for that command
+		execp = exec_parent(mini, mini->table[0].line); // if execp = -1 means the command isn't a buitin so be kind and spawn a children for that command
 		if (execp != -1)	// if execp != -1 means the command is builtin so exec_parent executed it and returned its (builtin func) return value
 			return (execp);
 	}

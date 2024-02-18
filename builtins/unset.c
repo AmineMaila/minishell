@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:48:06 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/18 16:41:42 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 18:30:31 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_remove(char ***env, char *to_remove)
 	j = 0;
 	result = malloc(len_2d(*env) * sizeof(char *));
 	if (!result)
-		return (0);
+		return (ENOMEM);
 	while ((*env)[i])
 	{
 		if (!ft_strncmp((*env)[i], to_remove, ft_strlen(to_remove))
@@ -32,13 +32,13 @@ int	ft_remove(char ***env, char *to_remove)
 		{
 			result[j] = ft_strdup((*env)[i++]);
 			if (!result[j++])
-				return (free_2d(&result), 0);
+				return (free_2d(&result), ENOMEM);
 		}
 	}
 	result[j] = NULL;
 	free_2d(env);
 	*env = result;
-	return (1);
+	return (0);
 }
 
 int	unset(char **line, char ***env)
@@ -50,8 +50,8 @@ int	unset(char **line, char ***env)
 	{
 		if (get_env(*env, line[i]))
 		{
-			if (!ft_remove(env, line[i])) // if failed means malloc error
-				return (errno); // should cleanup and exit
+			if (ft_remove(env, line[i]) == ENOMEM)
+				return (ENOMEM);
 		}
 		i++;
 	}
