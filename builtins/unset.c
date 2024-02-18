@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:48:06 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 16:53:06 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 16:41:42 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	ft_remove(char ***env, char *to_remove)
 			i++;
 		else
 		{
-			result[j++] = ft_strdup((*env)[i++]);
-			if (!result[j - 1])
+			result[j] = ft_strdup((*env)[i++]);
+			if (!result[j++])
 				return (free_2d(&result), 0);
 		}
 	}
