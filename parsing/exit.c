@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 21:37:03 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 16:30:05 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_table(t_mini *mini)
 	while (i < mini->table_size)
 	{
 		if (mini->table[i].line)
-			free(mini->table[i++].line);
+			free(mini->table[i].line);
 		i++;
 	}
 	free(mini->table);

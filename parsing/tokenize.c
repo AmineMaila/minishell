@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/17 21:40:38 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 15:38:08 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	*insert_spaces(char **str, int n)
 	char	*result;
 	int		i;
 
+	
 	result = alloc_cpy(str, &result, n);
 	if (!result)
 		return (NULL);
@@ -46,7 +47,7 @@ char	*insert_spaces(char **str, int n)
 		}
 		i++;
 	}
-	return (free(str), result);
+	return (result);
 }
 
 int	count_needed_spaces(char *str)
@@ -88,18 +89,16 @@ void	input_lexer(t_mini *mini)
 	if (spaces_count == 0)
 	{
 		mini->cmd_line = split(mini->input, " \t");
-		// free(mini->input);
+		free(mini->input);
 		if (!mini->cmd_line)
 			ft_exit(mini, NULL, NULL, 12);
 		return ;
 	}
-	mini->input
-		= insert_spaces(&mini->input, spaces_count);
+	mini->input = insert_spaces(&mini->input, spaces_count);
 	if (!mini->input)
 		ft_exit(mini, NULL, NULL, 12);
-	// free(old_input);
 	mini->cmd_line = split(mini->input, " \t");
-	// free(mini->input);
+	free(mini->input);
 	if (!mini->cmd_line)
 		ft_exit(mini, NULL, NULL, 12);
 }

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/17 21:48:06 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 16:24:53 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct s_mini
 //	mini
 void			input_lexer(t_mini *mini);
 void			parse(t_mini *mini);
-int				command_table(t_mini *mini, t_list_parse *lst);
+int				command_table(t_mini *mini);
 int				mini_env(t_mini *mini, char **env);
 char			*get_env(char **env, char *str);
 

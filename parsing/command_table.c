@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/17 21:27:04 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 16:30:19 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,18 @@ void	fill_fds(t_mini *mini, int pipe_line)
 	mini->table[pipe_line].outfd = get_outfd(mini, pipe_line);
 }
 
-int	fill_line(t_mini *mini, t_list_parse *lst, int pipe_line)
+int	fill_line(t_mini *mini, int pipe_line)
 {
-	int				line_size;
 	t_list_parse	*current;
+	int				line_size;
 	int				i;
 
-	line_size = get_line_size(lst, pipe_line);
+	line_size = get_line_size(mini->lst, pipe_line);
 	mini->table[pipe_line].line
 		= malloc(sizeof(char *) * (line_size + 1));
 	if (!mini->table[pipe_line].line)
 		return (0);
-	current = get_pipe_line(lst, pipe_line);
+	current = get_pipe_line(mini->lst, pipe_line);
 	i = 0;
 	while (i < line_size)
 	{
@@ -100,11 +100,11 @@ int	fill_line(t_mini *mini, t_list_parse *lst, int pipe_line)
 	return (1);
 }
 
-int	command_table(t_mini *mini, t_list_parse *lst)
+int	command_table(t_mini *mini)
 {
 	int	i;
 
-	mini->table_size = get_table_size(lst);
+	mini->table_size = get_table_size(mini->lst);
 	mini->table = malloc(sizeof(t_table) * mini->table_size);
 	if (!mini->table)
 		return (0);
@@ -112,7 +112,7 @@ int	command_table(t_mini *mini, t_list_parse *lst)
 	i = 0;
 	while (i < mini->table_size)
 	{
-		if (!fill_line(mini, lst, i))
+		if (!fill_line(mini, i))
 			return (0);
 		fill_fds(mini, i);
 		i++;

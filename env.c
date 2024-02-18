@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:15:21 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/17 21:35:28 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/18 15:28:54 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,19 @@ void	default_env(t_mini *mini)
 
 int	env_fill(t_mini *mini, char **env)
 {
-	int			i;
+	char	*lvl;
+	int		i;
 
 	i = 0;
 	while (env[i])
 	{
 		if (!ft_strncmp(env[i], "SHLVL=", 6))
 		{
-			mini->env[i]
-				= ft_strjoin("SHLVL=", ft_itoa(ft_atoi(env[i] + 6) + 1));
+			lvl = ft_itoa(ft_atoi(env[i] + 6) + 1);
+			if (!lvl)
+				return (0);
+			mini->env[i] = ft_strjoin("SHLVL=", lvl);
+			free(lvl);
 			if (!mini->env[i])
 				return (0);
 			i++;
@@ -82,14 +86,9 @@ int	env_fill(t_mini *mini, char **env)
 
 int	mini_env(t_mini *mini, char **env)
 {
-	int			size;
-
 	if (!env || !env[0])
 		return (default_env(mini), 1);
-	size = 0;
-	while (env[size])
-		size++;
-	mini->env = malloc(sizeof(char *) * (size + 1));
+	mini->env = malloc(sizeof(char *) * (len_2d(env) + 1));
 	if (!mini->env)
 		ft_exit(mini, NULL, NULL, 12);
 	if (!env_fill(mini, env))
