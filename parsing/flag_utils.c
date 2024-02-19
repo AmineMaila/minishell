@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 15:57:53 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/17 22:12:47 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/19 22:40:56 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,7 @@ int	quote_count(t_list_parse *curr)
 		}
 		i++;
 	}
+	if (count % 2)
+		curr->flag = ERR2;
 	return (count);
 }

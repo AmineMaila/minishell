@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/19 22:30:55 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/19 22:41:41 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	parse(t_mini *mini)
 	while (mini->cmd_line[i])
 		ft_lstadd_back(&mini->lst, mini->cmd_line[i++]);
 	flag(mini);
-	print_parse(mini->lst);
+	// print_parse(mini->lst);
 	if (!mini->lst || syntax(mini->lst) == -1)
 	{
 		mini->exit_status = 258;
