@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:15:21 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/18 19:14:05 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/19 14:44:24 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	default_env(t_mini *mini)
 	if (!mini->env[1])
 		ft_exit(mini, NULL, NULL, ENOMEM);
 	mini->env[2]
-		= ft_strdup("PATH=/bin:/bin:/usr/bin:/usr/ucb:/usr/local/bin");
+		= ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin");
 	if (!mini->env[2])
 		ft_exit(mini, NULL, NULL, ENOMEM);
 	mini->env[3] = NULL;
