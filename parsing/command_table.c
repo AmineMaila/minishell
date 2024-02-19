@@ -6,11 +6,31 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/18 16:30:19 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/19 23:14:44 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
+
+int	open_out(t_list_parse	*redout, char *outfile)
+{
+	int	outfd;
+
+	if (redout->flag == REDOUT)
+	{
+		outfd = open(outfile, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		if (outfd == -1)
+			outfd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		return (outfd);
+	}
+	else
+	{
+		outfd = open(outfile, O_RDWR | O_CREAT | O_APPEND, 0644);
+		if (outfd == -1)
+			outfd = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		return (outfd);
+	}
+}
 
 int	get_outfd(t_mini *mini, int pipe_line)
 {
@@ -33,10 +53,7 @@ int	get_outfd(t_mini *mini, int pipe_line)
 		return (-42);
 	}
 	outfile = redout->next->str;
-	if (redout->flag == REDOUT)
-		return (open(outfile, O_RDWR | O_CREAT | O_TRUNC, 0644));
-	else // if (redout->flag == APPEND)
-		return (open(outfile, O_RDWR | O_CREAT | O_APPEND, 0644));
+	return (open_out(redout, outfile));
 }
 
 int	get_infd(t_mini *mini, int pipe_line)

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/19 16:40:30 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/19 23:11:38 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 void	exec_cmd(t_table table, t_mini *mini)
 {
 	if (table.infd == -1 || table.outfd == -1 || !table.line[0])
-		ft_exit(mini, NULL, NULL, 1);
+		ft_exit(mini, NULL, NULL, EACCES);
 	if (dup2(table.infd, 0) == -1)
 		ft_exit(mini, NULL, NULL, errno);
 	close (table.infd);

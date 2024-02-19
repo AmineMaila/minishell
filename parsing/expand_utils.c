@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 15:33:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/19 22:21:18 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/19 23:09:07 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	env_len(char *str)
 
 int	not_expandable(char c)
 {
-	if (c == '_')
+	if (c == '_' || c == '?')
 		return (0);
 	else if (!ft_isalpha(c))
 		return (1);
