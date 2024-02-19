@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/18 21:33:23 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/19 22:21:58 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # include <signal.h>
 # include <errno.h>
 # include <limits.h>
+
+int	sig;
 
 typedef struct s_flag
 {
@@ -84,6 +86,9 @@ typedef struct s_mini
 }	t_mini;
 
 //	mini
+void			sigint_cmd(int signum);
+void			sig_int(int signum);
+void			sig_quit(int signum);
 void			input_lexer(t_mini *mini);
 void			parse(t_mini *mini);
 int				command_table(t_mini *mini);
@@ -122,12 +127,14 @@ int				quote_count(t_list_parse *curr);
 
 // expand
 
+int				envvar_count(char *str);
+void			delete_node(t_list_parse **lst, t_list_parse **node);
 int				var_end(char *str, int start);
-int				var_start(t_list_parse *curr);
+int				var_start(char *str);
 int				env_len(char *str);
 int				not_expandable(char c);
-int				expand_var(t_mini *mini, t_list_parse *node);
-void			expansion(t_mini *mini, t_list_parse *curr);
+int				expand_var(t_mini *mini, char **str);
+int				expansion(t_mini *mini, t_list_parse **curr);
 
 // get_next_line
 char			*get_next_line(int fd);

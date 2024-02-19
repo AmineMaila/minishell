@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/18 19:24:04 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/19 22:30:55 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,12 @@ void	parse(t_mini *mini)
 	int	i;
 
 	if (!mini->cmd_line[0])
-	{
-		free(mini->cmd_line);
 		return ;
-	}
 	i = 0;
 	while (mini->cmd_line[i])
 		ft_lstadd_back(&mini->lst, mini->cmd_line[i++]);
 	flag(mini);
-	// print_parse(mini->lst);
+	print_parse(mini->lst);
 	if (!mini->lst || syntax(mini->lst) == -1)
 	{
 		mini->exit_status = 258;
@@ -87,6 +84,13 @@ void	parse(t_mini *mini)
 	}
 	if (!command_table(mini))
 		ft_exit(mini, NULL, NULL, ENOMEM);
+	if (sig == 7)
+	{
+		sig = 0;
+		ft_exit(mini, NULL, NULL, 0);
+		return ;
+	}
+	signal(SIGQUIT, sig_quit);
 	execute(mini);
 	ft_exit(mini, NULL, NULL, 0);
 }

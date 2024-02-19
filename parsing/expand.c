@@ -6,49 +6,51 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/18 19:13:19 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/19 22:21:41 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-void	delete_node(t_list_parse **lst, t_list_parse *node)
+void	delete_node(t_list_parse **lst, t_list_parse **node)
 {
 	t_list_parse	*prev;
 	t_list_parse	*tmp;
 
 	prev = *lst;
-	if (!ft_strcmp(prev->str, node->str))
+	if (!ft_strcmp(prev->str, (*node)->str))
 	{
-		ft_lstdelone(prev);
 		*lst = (*lst)->next;
+		*node = NULL;
+		ft_lstdelone(prev);
 		return ;
 	}
 	while (prev->next)
 	{
-		if (!ft_strcmp(prev->next->str, node->str))
+		if (!ft_strcmp(prev->next->str, (*node)->str))
 		{
-			tmp = prev->next->next;
-			ft_lstdelone(prev->next);
-			prev->next = tmp;
+			tmp = prev->next;
+			prev->next = prev->next->next;
+			*node = NULL;
+			ft_lstdelone(tmp);
 			return ;
 		}
 		prev = prev->next;
 	}
 }
 
-char	*strrem(t_list_parse *node, char *envvar, int start, int len)
+char	*strrem(char **str, char *envvar, int start, int len)
 {
 	char	*result;
 	int		j;
 	int		i;
 
-	result = malloc((ft_strlen(node->str) - len - 1) + ft_strlen(envvar) + 1);
+	result = malloc((ft_strlen(*str) - len - 1) + ft_strlen(envvar) + 1);
 	if (!result)
-		return (free(node->str), NULL);
+		return (free(*str), NULL);
 	j = 0;
 	i = 0;
-	while (node->str[i])
+	while ((*str)[i])
 	{
 		if (i == start - 1)
 		{
@@ -60,47 +62,64 @@ char	*strrem(t_list_parse *node, char *envvar, int start, int len)
 			}
 			continue ;
 		}
-		result[j++] = node->str[i++];
+		result[j++] = (*str)[i++];
 	}
-	return (result[j] = '\0', free(node->str), result);
+	return (result[j] = '\0', free(*str), result);
 }
 
-void	expand_exit(t_mini *mini, t_list_parse *node, int start)
+void	expand_exit(t_mini *mini, char **str, int start)
 {
 	char	*exitvar;
 
 	exitvar = ft_itoa(mini->exit_status);
 	if (!exitvar)
 		ft_exit(mini, NULL, NULL, ENOMEM);
-	node->str = strrem(node, exitvar, start, 1);
+	*str = strrem(str, exitvar, start, 1);
 	free(exitvar);
-	if (!node->str)
+	if (!(*str))
 		ft_exit(mini, NULL, NULL, ENOMEM);
 }
 
-int	expand_var(t_mini *mini, t_list_parse *node)
+int	expand_var(t_mini *mini, char **str)
 {
 	char	*varname;
 	char	*envvar;
 	int		start;
 	int		end;
 
-	start = var_start(node);
-	if (!start || not_expandable(node->str[start]))
+	start = var_start(*str);
+	if (!start || not_expandable((*str)[start]))
 		return (0);
-	if (node->str[start] == '?')
-		return (expand_exit(mini, node, start), 1);
-	end = var_end(node->str, start);
-	varname = ft_substr(node->str, start, end - start);
+	if ((*str)[start] == '?')
+		return (expand_exit(mini, str, start), 1);
+	end = var_end(*str, start);
+	varname = ft_substr(*str, start, end - start);
 	envvar = get_env(mini->env, varname);
 	free(varname);
-	if (!envvar && (end - start + 1) == (int)ft_strlen(node->str))
-	{
-		delete_node(&mini->lst, node);
-		return (1);
-	}
-	node->str = strrem(node, envvar, start, end - start);
-	if (!node->str)
+	*str = strrem(str, envvar, start, end - start);
+	if (!(*str))
 		ft_exit(mini, NULL, NULL, ENOMEM);
+	return (1);
+}
+
+int	expansion(t_mini *mini, t_list_parse **curr)
+{
+	t_list_parse	*next;
+	int				i;
+	int				count;
+
+	i = 0;
+	count = envvar_count((*curr)->str);
+	while (count--)
+	{
+		expand_var(mini, &(*curr)->str);
+		if (!(*curr)->str[0])
+		{
+			next = (*curr)->next;
+			delete_node(&mini->lst, curr);
+			if (!(*curr))
+				return (*curr = next, 0);
+		}
+	}
 	return (1);
 }

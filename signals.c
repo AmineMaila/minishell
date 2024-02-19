@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 13:44:05 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/18 21:47:34 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/19 20:10:07 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 void	sig_quit(int signum)
 {
-	(void)signum;
-	rl_replace_line("", 1);
-	// printf("Quit: 3\n");
-	rl_redisplay();
+	ft_putstr_fd("Quit: ", 2);
+	ft_putnbr_fd(signum, 2);
+	ft_putchar_fd('\n', 2);
 }
 
 void	sig_int(int signum)
@@ -29,8 +28,14 @@ void	sig_int(int signum)
 	rl_redisplay();
 }
 
+void	sigint_cmd(int signum)
+{
+	(void)signum;
+	exit(7);
+}
+
 void	signals_handler(void)
 {
 	signal(SIGINT, sig_int);
-	signal(SIGQUIT, sig_quit);
+	signal(SIGQUIT, SIG_IGN);
 }

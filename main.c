@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/18 21:53:01 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/19 22:30:29 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	read_cmd_line(t_mini *mini)
 		add_history(mini->input);
 	else
 	{
+		printf("exit\n");
 		ft_exit(mini, NULL, NULL, 0);
 		exit(mini->exit_status);
 	}
@@ -51,10 +52,10 @@ int	main(int argc, char **argv, char **env)
 	(void)env;
 	if (!isatty(0))
 		return (ft_putstr_fd("minishell: input is not a terminal\n", 2), -1);
-	signals_handler();
 	mini_init(&mini, env);
 	while (1)
 	{
+		signals_handler();
 		read_cmd_line(&mini);
 		input_lexer(&mini);
 		parse(&mini);

@@ -6,7 +6,7 @@
 #    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/18 22:03:48 by mmaila           ###   ########.fr        #
+#    Updated: 2024/02/19 22:27:35 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			= 		minishell
 
 CC				= 		cc
 
-CFLAGS			= 		-Wall -Werror -Wextra -fsanitize=address
+CFLAGS			= 		-Wall -Werror -Wextra
 
 LIBFT			=		./libft/libft.a
 

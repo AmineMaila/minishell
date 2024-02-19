@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/18 19:13:27 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/19 22:38:15 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	operator(t_flag *flags, t_list_parse *curr)
 		{
 			curr->next->flag = LIM;
 			flags->cmd = 1;
+			flags->is_arg = 1;
 		}
 	}
 	else if (*curr->str == '>')
@@ -74,7 +75,8 @@ void	flag(t_mini *mini)
 	while (curr)
 	{
 		operator(&flags, curr);
-		expansion(mini, curr);
+		if (!expansion(mini, &curr))
+			continue ;
 		count = quote_count(curr);
 		if (count)
 		{
