@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/20 16:18:00 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/20 16:48:37 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	get_infd(t_mini *mini, int pipe_line)
 		{
 			close(heredoc_fd);
 			heredoc_fd = here_doc(mini, current->next->str);
+			if (mini->exit_status == 7)
+				return (heredoc_fd);
 		}
 		current = current->next;
 	}
@@ -96,17 +98,14 @@ void	fill_fds(t_mini *mini, int pipe_line)
 	int	i;
 
 	mini->table[pipe_line].infd = get_infd(mini, pipe_line);
-	mini->table[pipe_line].outfd = get_outfd(mini, pipe_line);
 	i = 0;
 	if (mini->exit_status == 7)
 	{
 		while (i < mini->table_size)
-		{
-			close(mini->table[i].infd);
-			close(mini->table[i].outfd);
-			i++;
-		}
+			close(mini->table[i++].infd);
+		return ;
 	}
+	mini->table[pipe_line].outfd = get_outfd(mini, pipe_line);
 }
 
 int	fill_line(t_mini *mini, int pipe_line)
