@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/20 15:54:43 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/20 16:15:40 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void			signals_handler(void);
 void			sig_int(int signum);
 void			sig_quit(int signum);
 void			input_lexer(t_mini *mini);
-void			parse(t_mini *mini);
+int				parse(t_mini *mini);
 int				command_table(t_mini *mini);
 int				mini_env(t_mini *mini, char **env);
 char			*get_env(char **env, char *str);
