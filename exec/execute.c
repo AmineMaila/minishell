@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/19 23:11:38 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/20 13:52:02 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int	wait_child(t_data *pipex, t_mini *mini)
 	}
 	if (WIFEXITED(status))
 		mini->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		mini->exit_status = status + 128;
 	return (1);
 }
 
