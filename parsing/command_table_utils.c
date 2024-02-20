@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:35:24 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/17 21:27:08 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/20 23:43:02 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,12 @@ int	open_redins(t_mini *mini, int pipe_line)
 			close(infd);
 			infd = open(current->next->str, O_RDONLY);
 			if (infd == -1)
-				return (mini->exit_status = 1, ft_exit(NULL, current->next->str, ": no such file or directory", 0), -1);
+			{
+				mini->exit_status = 1;
+				printf("minishell: %s: %s\n",
+					current->next->str, strerror(errno));
+				return (-1);
+			}
 		}
 		current = current->next;
 	}

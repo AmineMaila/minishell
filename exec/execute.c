@@ -6,27 +6,19 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 16:04:17 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/20 23:46:05 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-void	print_open_file_descriptors(void)
-{
-    int max_fd = getdtablesize(); // Get the maximum number of file descriptors
-    printf("Open file descriptors:\n");
-    for (int fd = 0; fd < max_fd; fd++) {
-        if (fcntl(fd, F_GETFD) != -1 || errno != EBADF) { // Check if the file descriptor is valid
-            printf("----[%d]----\n", fd);
-        }
-    }
-}
-
 void	exec_cmd(t_table table, t_mini *mini)
 {
 	if (table.infd == -1 || table.outfd == -1 || !table.line[0])
-		ft_exit(mini, NULL, NULL, EACCES);
+	{
+		ft_exit(mini, NULL, NULL, 0);
+		exit(1);
+	}
 	if (dup2(table.infd, 0) == -1)
 		ft_exit(mini, NULL, NULL, errno);
 	close (table.infd);
@@ -135,6 +127,5 @@ int	execute(t_mini *mini)
 	}
 	spawn_children(mini, &pipex);
 	wait_child(&pipex, mini);
-	// print_open_file_descriptors();
 	return (0);
 }

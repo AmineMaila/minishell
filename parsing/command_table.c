@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/20 19:31:24 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/20 23:28:30 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	open_out(t_list_parse	*redout, char *outfile)
 		outfd = open(outfile, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (outfd == -1)
 			outfd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (outfd == -1)
+			printf("minishell: %s: %s\n", outfile, strerror(errno));
 		return (outfd);
 	}
 	else
@@ -28,6 +30,8 @@ int	open_out(t_list_parse	*redout, char *outfile)
 		outfd = open(outfile, O_RDWR | O_CREAT | O_APPEND, 0644);
 		if (outfd == -1)
 			outfd = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (outfd == -1)
+			printf("minishell: %s: %s\n", outfile, strerror(errno));
 		return (outfd);
 	}
 }
@@ -35,25 +39,26 @@ int	open_out(t_list_parse	*redout, char *outfile)
 int	get_outfd(t_mini *mini, int pipe_line)
 {
 	t_list_parse	*current;
-	t_list_parse	*redout;
-	char			*outfile;
+	int				outfd;
 
-	redout = NULL;
+	outfd = -2;
 	current = get_pipe_line(mini->lst, pipe_line);
 	while (current && current->flag != PIPE)
 	{
 		if (current->flag == REDOUT || current->flag == APPEND)
-			redout = current;
+		{
+			close(outfd);
+			outfd = open_out(current, current->next->str);
+		}
 		current = current->next;
 	}
-	if (!redout)
+	if (outfd == -2)
 	{
 		if (pipe_line == mini->table_size - 1)
 			return (open("/dev/stdout", O_RDONLY));
 		return (-42);
 	}
-	outfile = redout->next->str;
-	return (open_out(redout, outfile));
+	return (outfd);
 }
 
 int	get_infd(t_mini *mini, int pipe_line)
@@ -97,8 +102,8 @@ void	fill_fds(t_mini *mini, int pipe_line)
 {
 	int	i;
 
-	mini->table[pipe_line].infd = get_infd(mini, pipe_line);
 	i = 0;
+	mini->table[pipe_line].infd = get_infd(mini, pipe_line);
 	if (mini->exit_status == 7)
 	{
 		while (i < mini->table_size)
@@ -134,7 +139,7 @@ int	fill_line(t_mini *mini, int pipe_line)
 int	command_table(t_mini *mini)
 {
 	int	i;
-
+	
 	mini->table_size = get_table_size(mini->lst);
 	mini->table = malloc(sizeof(t_table) * mini->table_size);
 	if (!mini->table)

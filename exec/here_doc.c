@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:17:42 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 16:18:15 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/20 23:42:40 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	is_lim(t_mini *mini, char **lim, int fd)
 				free(tmp);
 			free(*lim);
 			close(fd);
-			ft_exit(mini, NULL, NULL, 0);
 			exit(0);
 		}
 		count = envvar_count(tmp);
