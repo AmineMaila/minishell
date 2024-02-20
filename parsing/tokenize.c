@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/20 14:53:40 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/20 19:21:58 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	input_lexer(t_mini *mini)
 	spaces_count = count_needed_spaces(mini->input);
 	if (spaces_count == 0)
 	{
-		mini->cmd_line = split(mini->input, " \t");
+		mini->cmd_line = split(mini->input, " \t\n\v\r\f");
 		free(mini->input);
 		if (!mini->cmd_line)
 			ft_exit(mini, NULL, NULL, ENOMEM);
@@ -103,7 +103,7 @@ void	input_lexer(t_mini *mini)
 	mini->input = insert_spaces(&mini->input, spaces_count);
 	if (!mini->input)
 		ft_exit(mini, NULL, NULL, ENOMEM);
-	mini->cmd_line = split(mini->input, " \t");
+	mini->cmd_line = split(mini->input, " \t\n\v\r\f");
 	free(mini->input);
 	if (!mini->cmd_line)
 		ft_exit(mini, NULL, NULL, ENOMEM);

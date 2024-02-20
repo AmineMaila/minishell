@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 16:04:21 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/20 19:00:23 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,8 @@ int	main(int argc, char **argv, char **env)
 	// atexit(a);
 	(void)argc;
 	(void)argv;
-	(void)env;
 	if (!isatty(0))
-		return (ft_putstr_fd("minishell: input is not a terminal\n", 2), -1);
+		return (ft_putstr_fd("minishell: input is not a terminal\n", 2), 1);
 	mini_init(&mini, env);
 	while (1)
 	{

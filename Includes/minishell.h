@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/20 16:26:45 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/20 19:31:19 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_mini
 	int				sig;
 	int				*pids;
 	int				table_size;
-	int				pipeinfd;
 	int				exit_status;
 }	t_mini;
 

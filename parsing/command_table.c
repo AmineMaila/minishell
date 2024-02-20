@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/20 16:48:37 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/20 19:31:24 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ int	command_table(t_mini *mini)
 	mini->table = malloc(sizeof(t_table) * mini->table_size);
 	if (!mini->table)
 		return (0);
-	mini->pipeinfd = -2;
 	i = 0;
 	while (i < mini->table_size)
 	{
