@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/19 22:41:41 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/20 14:21:44 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void	parse(t_mini *mini)
 	if (sig == 7)
 	{
 		sig = 0;
+		mini->exit_status = 1;
+		// printf("\n\nhello\n\n");
 		ft_exit(mini, NULL, NULL, 0);
 		return ;
 	}
