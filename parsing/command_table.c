@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/19 23:14:44 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/20 15:25:36 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ int	get_infd(t_mini *mini, int pipe_line)
 		if (current->flag == REDIN || current->flag == HEREDOC)
 			redin = current;
 		if (current->flag == HEREDOC)
-			(close(heredoc_fd), heredoc_fd = here_doc(mini, current->next->str));
+		{
+			close(heredoc_fd);
+			heredoc_fd = here_doc(mini, current->next->str);
+		}
 		current = current->next;
 	}
 	if (!redin)
@@ -90,8 +93,20 @@ int	get_infd(t_mini *mini, int pipe_line)
 
 void	fill_fds(t_mini *mini, int pipe_line)
 {
+	int	i;
+
 	mini->table[pipe_line].infd = get_infd(mini, pipe_line);
 	mini->table[pipe_line].outfd = get_outfd(mini, pipe_line);
+	i = 0;
+	if (sig == 7)
+	{
+		while (i < mini->table_size)
+		{
+			close(mini->table[i].infd);
+			close(mini->table[i].outfd);
+			i++;
+		}
+	}
 }
 
 int	fill_line(t_mini *mini, int pipe_line)
@@ -134,6 +149,5 @@ int	command_table(t_mini *mini)
 		fill_fds(mini, i);
 		i++;
 	}
-	// close(mini->pipeinfd);
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 14:21:44 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/20 15:20:49 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	syntax(t_list_parse *lst)
 		{
 			if (lst->next == NULL)
 				return (print_error(NULL), -1);
-			else if (lst->next->flag == PIPE)
+			else if (lst->next->flag == PIPE || lst->next->flag == REDOUT
+				|| lst->next->flag == HEREDOC || lst->next->flag == APPEND)
 				return (print_error(lst->next->str), -1);
 		}
 		if ((lst->flag == PIPE && lst->next == NULL) || lst->flag == ERR
@@ -75,11 +76,9 @@ void	parse(t_mini *mini)
 	while (mini->cmd_line[i])
 		ft_lstadd_back(&mini->lst, mini->cmd_line[i++]);
 	flag(mini);
-	// print_parse(mini->lst);
 	if (!mini->lst || syntax(mini->lst) == -1)
 	{
 		mini->exit_status = 258;
-		ft_exit(mini, NULL, NULL, 0);
 		return ;
 	}
 	if (!command_table(mini))
@@ -88,13 +87,10 @@ void	parse(t_mini *mini)
 	{
 		sig = 0;
 		mini->exit_status = 1;
-		// printf("\n\nhello\n\n");
-		ft_exit(mini, NULL, NULL, 0);
 		return ;
 	}
 	signal(SIGQUIT, sig_quit);
 	execute(mini);
-	ft_exit(mini, NULL, NULL, 0);
 }
 
 void	print_parse(t_list_parse *xx)

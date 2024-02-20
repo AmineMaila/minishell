@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 13:52:02 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/20 15:13:51 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-// void	print_open_file_descriptors(void)
-// {
-//     int max_fd = getdtablesize(); // Get the maximum number of file descriptors
-//     printf("Open file descriptors:\n");
-//     for (int fd = 0; fd < max_fd; fd++) {
-//         if (fcntl(fd, F_GETFD) != -1 || errno != EBADF) { // Check if the file descriptor is valid
-//             printf("----[%d]----\n", fd);
-//         }
-//     }
-// }
+void	print_open_file_descriptors(void)
+{
+    int max_fd = getdtablesize(); // Get the maximum number of file descriptors
+    printf("Open file descriptors:\n");
+    for (int fd = 0; fd < max_fd; fd++) {
+        if (fcntl(fd, F_GETFD) != -1 || errno != EBADF) { // Check if the file descriptor is valid
+            printf("----[%d]----\n", fd);
+        }
+    }
+}
 
 void	exec_cmd(t_table table, t_mini *mini)
 {
@@ -135,5 +135,6 @@ int	execute(t_mini *mini)
 	}
 	spawn_children(mini, &pipex);
 	wait_child(&pipex, mini);
+	print_open_file_descriptors();
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/20 14:38:58 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/20 14:53:40 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	*insert_spaces(char **str, int n)
 	char	*result;
 	int		i;
 
-	printf("n = %d\n", n);
 	result = alloc_cpy(str, &result, n);
 	if (!result)
 		return (NULL);
@@ -37,9 +36,11 @@ char	*insert_spaces(char **str, int n)
 			i = get_quote_index(result, ++i);
 		if (is_operator(result[i]))
 		{
-			printf("i = %d\t [%c]\n", i, result[i]);
 			if (i > 0 && !is_space(result[i - 1]))
-				(shift_insert(result, i, i + 1, -1));
+			{
+				shift_insert(result, i, i + 1, -1);
+				i++;
+			}
 			if (result[i] != '|')
 				while (result[i + 1] == '>' || result[i + 1] == '<')
 					i++;
@@ -47,7 +48,6 @@ char	*insert_spaces(char **str, int n)
 				(shift_insert(result, i, i + 1, 1));
 		}
 		i++;
-		// printf("i = %d\n", i);
 	}
 	return (result);
 }
