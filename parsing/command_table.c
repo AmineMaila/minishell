@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/20 15:25:36 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/20 15:40:53 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	fill_fds(t_mini *mini, int pipe_line)
 	mini->table[pipe_line].infd = get_infd(mini, pipe_line);
 	mini->table[pipe_line].outfd = get_outfd(mini, pipe_line);
 	i = 0;
-	if (sig == 7)
+	if (mini->sig == 7)
 	{
 		while (i < mini->table_size)
 		{

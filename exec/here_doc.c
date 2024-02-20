@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:17:42 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 15:57:51 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/20 16:04:13 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,6 @@ int	here_doc(t_mini *mini, char *lim)
 	}
 	close(fd[1]);
 	waitpid(id, &status, 0);
-	sig = WEXITSTATUS(status);
+	mini->sig = WEXITSTATUS(status);
 	return (fd[0]);
 }

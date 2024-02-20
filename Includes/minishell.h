@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/20 15:54:43 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/20 16:04:28 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@
 # include <errno.h>
 # include <limits.h>
 
-int	sig;
-
 typedef struct s_flag
 {
 	int	is_arg;
@@ -67,22 +65,23 @@ typedef struct s_table
 
 typedef struct s_list_parse
 {
-	char				*str;
-	int					flag;
+	char			*str;
+	int				flag;
 	struct s_list_parse	*next;
 }				t_list_parse;
 
 typedef struct s_mini
 {
-	t_list_parse		*lst;
-	t_table				*table;
-	char				**cmd_line;
-	char				**env;
-	char				*input;
-	int					*pids;
-	int					table_size;
-	int					pipeinfd;
-	int					exit_status;
+	t_list_parse	*lst;
+	t_table			*table;
+	char			**cmd_line;
+	char			**env;
+	char			*input;
+	int				sig;
+	int				*pids;
+	int				table_size;
+	int				pipeinfd;
+	int				exit_status;
 }	t_mini;
 
 //	mini

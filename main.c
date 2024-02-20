@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 15:59:27 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/20 16:04:21 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	mini_init(t_mini *mini, char **env)
 {
 	mini->exit_status = 0;
+	mini->sig = 0;
 	mini->input = NULL;
 	mini->cmd_line = NULL;
 	mini->table = NULL;

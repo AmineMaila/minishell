@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 15:20:49 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/20 15:41:11 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ void	parse(t_mini *mini)
 	}
 	if (!command_table(mini))
 		ft_exit(mini, NULL, NULL, ENOMEM);
-	if (sig == 7)
+	if (mini->sig == 7)
 	{
-		sig = 0;
+		mini->sig = 0;
 		mini->exit_status = 1;
 		return ;
 	}
