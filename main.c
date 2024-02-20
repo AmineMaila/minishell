@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 15:23:13 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/20 15:39:31 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	mini_init(t_mini *mini, char **env)
 {
 	mini->exit_status = 0;
+	mini->sig = 0;
 	mini->input = NULL;
 	mini->cmd_line = NULL;
 	mini->table = NULL;

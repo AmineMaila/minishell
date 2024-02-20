@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 15:13:51 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/20 15:38:59 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,6 @@ int	execute(t_mini *mini)
 	}
 	spawn_children(mini, &pipex);
 	wait_child(&pipex, mini);
-	print_open_file_descriptors();
+	// print_open_file_descriptors();
 	return (0);
 }

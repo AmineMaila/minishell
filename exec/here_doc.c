@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:17:42 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 15:16:39 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/20 15:40:32 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,6 @@ int	here_doc(t_mini *mini, char *lim)
 	}
 	close(fd[1]);
 	waitpid(id, &status, 0);
-	sig = WEXITSTATUS(status);
+	mini->sig = WEXITSTATUS(status);
 	return (fd[0]);
 }
