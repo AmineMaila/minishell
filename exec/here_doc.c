@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:17:42 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 15:16:39 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/20 15:57:51 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	here_doc(t_mini *mini, char *lim)
 	int	id;
 	int	status;
 
+	signal(SIGINT, SIG_IGN);
 	if (pipe(fd) == -1)
 		ft_exit(mini, NULL, NULL, errno);
 	id = fork();

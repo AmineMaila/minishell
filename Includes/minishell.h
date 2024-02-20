@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/20 15:10:22 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/20 15:54:43 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_mini
 
 //	mini
 void			sigint_cmd(int signum);
+void			signals_handler(void);
 void			sig_int(int signum);
 void			sig_quit(int signum);
 void			input_lexer(t_mini *mini);
@@ -117,7 +118,6 @@ int				get_line_size(t_list_parse *lst, int pipe_line);
 t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
 int				open_redins(t_mini *mini, int pipe_line);
 void			cleanup(t_mini *mini, int exit_status);
-void			signals_handler(void);
 
 // flag
 void			flag(t_mini *mini);

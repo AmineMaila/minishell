@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 13:44:05 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/20 15:09:46 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/20 16:00:55 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	sig_int(int signum)
 void	sigint_cmd(int signum)
 {
 	(void)signum;
+	printf("\n");
 	exit(7);
 }
 
