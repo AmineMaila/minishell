@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 15:46:43 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/21 16:29:01 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,11 @@ void			redirections(t_list_parse *lst, int flag);
 int				quote_count(t_list_parse *curr);
 
 //	EXPANSION
+void			expand_var(t_mini *mini, char **str);
 int				envvar_count(char *str);
 int				var_end(char *str, int start);
 int				var_start(char *str);
 int				not_expandable(char c);
-int				expand_var(t_mini *mini, char **str);
 int				expansion(t_mini *mini, t_list_parse **curr);
 
 //	EXECUTION

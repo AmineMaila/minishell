@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/19 22:21:41 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 16:43:07 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*strrem(char **str, char *envvar, int start, int len)
 
 	result = malloc((ft_strlen(*str) - len - 1) + ft_strlen(envvar) + 1);
 	if (!result)
-		return (free(*str), NULL);
+		return (NULL);
 	j = 0;
 	i = 0;
 	while ((*str)[i])
@@ -80,7 +80,7 @@ void	expand_exit(t_mini *mini, char **str, int start)
 		ft_exit(mini, NULL, NULL, ENOMEM);
 }
 
-int	expand_var(t_mini *mini, char **str)
+void	expand_var(t_mini *mini, char **str)
 {
 	char	*varname;
 	char	*envvar;
@@ -89,24 +89,28 @@ int	expand_var(t_mini *mini, char **str)
 
 	start = var_start(*str);
 	if (!start || not_expandable((*str)[start]))
-		return (0);
+		return ;
 	if ((*str)[start] == '?')
-		return (expand_exit(mini, str, start), 1);
+	{
+		expand_exit(mini, str, start);
+		return ;
+	}
 	end = var_end(*str, start);
 	varname = ft_substr(*str, start, end - start);
+	if (!varname)
+		ft_exit(mini, NULL, NULL, ENOMEM);
 	envvar = get_env(mini->env, varname);
 	free(varname);
 	*str = strrem(str, envvar, start, end - start);
 	if (!(*str))
 		ft_exit(mini, NULL, NULL, ENOMEM);
-	return (1);
 }
 
 int	expansion(t_mini *mini, t_list_parse **curr)
 {
 	t_list_parse	*next;
-	int				i;
 	int				count;
+	int				i;
 
 	i = 0;
 	count = envvar_count((*curr)->str);
