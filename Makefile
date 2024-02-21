@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
+#    By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/21 12:43:14 by mmaila           ###   ########.fr        #
+#    Updated: 2024/02/21 12:53:47 by nazouz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS			= 		\
 						./parsing/flag.c \
 						./parsing/command_table.c \
 						./parsing/command_table_utils.c \
+						./parsing/command_table_utils_2.c \
 						./parsing/exit.c \
 						./parsing/parse.c \
 						./parsing/expand_utils.c \
