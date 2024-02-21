@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/20 23:28:30 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:15:47 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	open_out(t_list_parse	*redout, char *outfile)
 		if (outfd == -1)
 			outfd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (outfd == -1)
-			printf("minishell: %s: %s\n", outfile, strerror(errno));
+			print_error(outfile);
 		return (outfd);
 	}
 	else
@@ -31,7 +31,7 @@ int	open_out(t_list_parse	*redout, char *outfile)
 		if (outfd == -1)
 			outfd = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (outfd == -1)
-			printf("minishell: %s: %s\n", outfile, strerror(errno));
+			print_error(outfile);
 		return (outfd);
 	}
 }

@@ -6,11 +6,23 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 23:34:18 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:21:18 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
+
+void	print_error(char *var)
+{
+	ft_putstr_fd("minishell: ", 2);
+	if (var)
+	{
+		ft_putstr_fd(var, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	ft_putstr_fd(strerror(errno), 2);
+	ft_putstr_fd("\n", 2);
+}
 
 void	free_2d(char ***arr)
 {
@@ -80,7 +92,7 @@ void	ft_exit(t_mini *mini, char *cmd, char *str, int ext)
 		ft_putendl_fd(str, 2);
 	}
 	else if (ext)
-		perror("minishell");
+		print_error(NULL);
 	if (mini)
 		cleanup(mini, ext);
 	if (ext)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 16:18:29 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:22:49 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	split_line(t_list_parse *lst)
 	}
 }
 
-void	print_error(char *str)
+void	syntax_error(char *str)
 {
 	ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
 	ft_putstr_fd("`", 2);
@@ -43,7 +43,7 @@ int	syntax(t_list_parse *lst)
 
 	i = 0;
 	if (lst->flag == PIPE)
-		return (print_error(lst->str), -1);
+		return (syntax_error(lst->str), -1);
 	while (lst)
 	{
 		if (lst->flag == ERR2)
@@ -53,14 +53,14 @@ int	syntax(t_list_parse *lst)
 				|| lst->flag == HEREDOC || lst->flag == APPEND))
 		{
 			if (lst->next == NULL)
-				return (print_error(NULL), -1);
+				return (syntax_error(NULL), -1);
 			else if (lst->next->flag == PIPE || lst->next->flag == REDOUT
 				|| lst->next->flag == HEREDOC || lst->next->flag == APPEND)
-				return (print_error(lst->next->str), -1);
+				return (syntax_error(lst->next->str), -1);
 		}
 		if ((lst->flag == PIPE && lst->next == NULL) || lst->flag == ERR
 			|| (lst->flag == PIPE && lst->next->flag == PIPE))
-			return (print_error(lst->str), -1);
+			return (syntax_error(lst->str), -1);
 		lst = lst->next;
 	}
 	return (0);

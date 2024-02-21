@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 23:46:13 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:23:35 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,10 @@ void	read_cmd_line(t_mini *mini)
 	}
 }
 
-void a()
-{
-	system("leaks minishell");
-}
-
 int	main(int argc, char **argv, char **env)
 {
 	t_mini		mini;
 
-	atexit(a);
 	(void)argc;
 	(void)argv;
 	if (!isatty(0))
