@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 13:08:56 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 13:35:42 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int				mini_env(t_mini *mini, char **env);
 char			*get_env(char **env, char *str);
 
 //	LIBFT
-char			**ft_split(char const *s, char *charset);
 char			**split(char const *s, char *charset);
 t_list_parse	*ft_lstnew(char *str);
 void			ft_lstadd_back(t_list_parse **lst, char *str);
@@ -104,8 +103,6 @@ void			ft_lstclear(t_list_parse **lst);
 int				ft_strcmp(char *s1, char *s2);
 
 //	HELPERS
-void			ft_print_table(t_mini *mini);
-void			ft_print_matrix(char **matrix);
 void			ft_exit(t_mini *mini, char *cmd, char *str, int ext);
 int				is_operator(char c);
 int				is_space(char c);
@@ -118,7 +115,6 @@ int				open_redins(t_mini *mini, int pipe_line);
 int				open_out(t_list_parse	*redout, char *outfile);
 int				final_check(t_mini *mini,
 					t_list_parse *redin, int heredoc_fd, int pipe_line);
-void			cleanup(t_mini *mini, int exit_status);
 
 // flag
 void			flag(t_mini *mini);
@@ -129,10 +125,8 @@ int				quote_count(t_list_parse *curr);
 // expand
 
 int				envvar_count(char *str);
-void			delete_node(t_list_parse **lst, t_list_parse **node);
 int				var_end(char *str, int start);
 int				var_start(char *str);
-int				env_len(char *str);
 int				not_expandable(char c);
 int				expand_var(t_mini *mini, char **str);
 int				expansion(t_mini *mini, t_list_parse **curr);
@@ -148,7 +142,6 @@ int				is_cmd(t_mini *mini, char **token, char **env);
 int				here_doc(t_mini *mini, char *lim);
 void			free_2d(char ***arr);
 void			print_error(char *var, char *msg);
-
 char			*alloc_cpy(char **str, int n);
 
 // built ins
@@ -164,8 +157,5 @@ int				export(char **line, char ***env);
 int				cd(char *path, char ***env);
 int				exit_builtin(char **args, long long exit_code);
 int				pwd(char **env);
-
-void			print_parse(t_list_parse *lst);
-void			print_open_file_descriptors(void);
 
 #endif
