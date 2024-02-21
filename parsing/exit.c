@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/21 12:35:30 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:49:04 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_error(char *var, char *msg)
 		ft_putstr_fd(": ", 2);
 	}
 	if (msg)
-		ft_putendl_fd(msg, 2);
+		ft_putstr_fd(msg, 2);
 	else	
 		ft_putstr_fd(strerror(errno), 2);
 	ft_putstr_fd("\n", 2);

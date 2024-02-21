@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:40:57 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 12:34:30 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:40:06 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,13 @@ int	chdir_relative(char *path, char **oldpwd, char ***env)
 			return (free(*oldpwd), ENOMEM);
 	}
 	if ((ft_strlen(pwd) + ft_strlen(path) + 1) >= PATH_MAX)
-		return (free(pwd),
-			ft_putstr_fd("minishell: cd: path is too long\n", 2), 1);
+		return (free(pwd), print_error("cd", "path is too long"), 1);
 	if (chdir(path) != 0)
-		return (free(pwd), free(*oldpwd),
-			ft_exit(NULL, path, ": No such file or directory", 0), 1);
+	{
+		free(pwd);
+		free(*oldpwd);
+		return (print_error(path, "No such file or directory"), 1);
+	}
 	if (update_pwd(path, env) == ENOMEM
 		|| update_oldpwd(*oldpwd, env) == ENOMEM)
 		return (free(pwd), free(*oldpwd), ENOMEM);
@@ -104,13 +106,12 @@ int	cd(char *path, char ***env)
 			return (ENOMEM);
 	}
 	if (path && (ft_strlen(path) + 1 >= PATH_MAX))
-		return (free(oldpwd),
-			ft_putstr_fd("minishell: cd: path is too long\n", 2), 1);
+		return (free(oldpwd), print_error("cd", "path is too long"), 1);
 	if (path[0] != '/')
 		return (chdir_relative(path, &oldpwd, env));
 	if (chdir(path) != 0)
 		return (free(oldpwd),
-			ft_exit(NULL, path, ": No such file or directory", 0), 1);
+			print_error(path, "No such file or directory"), 1);
 	if (!update_pwd(path, env) || !update_oldpwd(oldpwd, env))
 		return (free(oldpwd), 1);
 	return (free(oldpwd), 0);

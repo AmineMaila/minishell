@@ -6,7 +6,7 @@
 #    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/20 23:46:41 by mmaila           ###   ########.fr        #
+#    Updated: 2024/02/21 12:43:14 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,6 @@ SRCS			= 		\
 						./builtins/export.c \
 						./builtins/cd.c \
 						./builtins/exit.c \
-						./helpers.c \
 						./env.c \
 						./signals.c \
 						./main.c

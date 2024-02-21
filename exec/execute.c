@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/21 12:30:22 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:48:35 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	exec_cmd(t_table table, t_mini *mini)
 		(ft_exit(mini, NULL, NULL, 0), exit(mini->exit_status));
 	is_cmd(mini, &table.line[0], mini->env);
 	if (access(table.line[0], F_OK))
-		ft_exit(mini, table.line[0], ": command not found", 127);
+		ft_exit(mini, table.line[0], "command not found", 127);
 	if (execve(table.line[0], table.line, mini->env) == -1)
 		ft_exit(mini, NULL, NULL, 126);
 }
