@@ -6,35 +6,11 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 12:35:21 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:43:17 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
-
-int	open_out(t_list_parse	*redout, char *outfile)
-{
-	int	outfd;
-
-	if (redout->flag == REDOUT)
-	{
-		outfd = open(outfile, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (outfd == -1)
-			outfd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (outfd == -1)
-			print_error(outfile, NULL);
-		return (outfd);
-	}
-	else
-	{
-		outfd = open(outfile, O_RDWR | O_CREAT | O_APPEND, 0644);
-		if (outfd == -1)
-			outfd = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (outfd == -1)
-			print_error(outfile, NULL);
-		return (outfd);
-	}
-}
 
 int	get_outfd(t_mini *mini, int pipe_line)
 {
@@ -83,19 +59,7 @@ int	get_infd(t_mini *mini, int pipe_line)
 		}
 		current = current->next;
 	}
-	if (!redin)
-	{
-		if (pipe_line == 0)
-			return (open("/dev/stdin", O_RDONLY));
-		return (-42);
-	}
-	if (redin->flag == HEREDOC)
-	{
-		if (open_redins(mini, pipe_line) == -1)
-			return (-1);
-		return (heredoc_fd);
-	}
-	return (close(heredoc_fd), open_redins(mini, pipe_line));
+	return (final_check(mini, redin, heredoc_fd, pipe_line));
 }
 
 void	fill_fds(t_mini *mini, int pipe_line)
