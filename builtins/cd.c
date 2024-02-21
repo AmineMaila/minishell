@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:40:57 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/18 18:53:55 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:34:30 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,15 @@ int	chdir_relative(char *path, char **oldpwd, char ***env)
 		pwd = ft_strdup(pwd);
 		if (!pwd)
 			return (free(*oldpwd), ENOMEM);
-		// update_oldpwd(oldpwd, env);
-		// update_pwd(path, env);
-		// return (update_oldpwd(oldpwd, env), update_pwd(path, env), -1);
 	}
 	if ((ft_strlen(pwd) + ft_strlen(path) + 1) >= PATH_MAX)
-		return (free(pwd), ft_putstr_fd("minishell: cd: path is too long\n", 2), 1);
+		return (free(pwd),
+			ft_putstr_fd("minishell: cd: path is too long\n", 2), 1);
 	if (chdir(path) != 0)
-		return (free(pwd), free(*oldpwd), ft_exit(NULL, path, ": No such file or directory", 0), 1);
-	if (update_pwd(path, env) == ENOMEM || update_oldpwd(*oldpwd, env) == ENOMEM)
+		return (free(pwd), free(*oldpwd),
+			ft_exit(NULL, path, ": No such file or directory", 0), 1);
+	if (update_pwd(path, env) == ENOMEM
+		|| update_oldpwd(*oldpwd, env) == ENOMEM)
 		return (free(pwd), free(*oldpwd), ENOMEM);
 	return (free(pwd), free(*oldpwd), 0);
 }
@@ -92,7 +92,7 @@ int	cd(char *path, char ***env)
 	char	*oldpwd;
 
 	if (!path)
-		return (0); // go to HOME
+		return (0);
 	oldpwd = getcwd(0, 0);
 	if (!oldpwd)
 	{
@@ -104,11 +104,13 @@ int	cd(char *path, char ***env)
 			return (ENOMEM);
 	}
 	if (path && (ft_strlen(path) + 1 >= PATH_MAX))
-		return (free(oldpwd), ft_putstr_fd("minishell: cd: path is too long\n", 2), 1);
-	if (path[0] != '/') // if path is relative
+		return (free(oldpwd),
+			ft_putstr_fd("minishell: cd: path is too long\n", 2), 1);
+	if (path[0] != '/')
 		return (chdir_relative(path, &oldpwd, env));
-	if (chdir(path) != 0) // absolute path
-		return (free(oldpwd), ft_exit(NULL, path, ": No such file or directory", 0), 1);
+	if (chdir(path) != 0)
+		return (free(oldpwd),
+			ft_exit(NULL, path, ": No such file or directory", 0), 1);
 	if (!update_pwd(path, env) || !update_oldpwd(oldpwd, env))
 		return (free(oldpwd), 1);
 	return (free(oldpwd), 0);

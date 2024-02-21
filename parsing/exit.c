@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/21 12:31:37 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:35:30 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,6 @@ void	free_table(t_mini *mini)
 	}
 	free(mini->table);
 }
-
-/*
-	mini->cmd_line is a 2D array created by split, needs to be freed
-	mini->table is an array of struct that contains a 2D array that contains strings from lst
-		so no need to free those strings, we only need to free char **
-	mini->input doesn't need to be freed, cuz input_lexer already did it
-*/
 
 void	cleanup(t_mini *mini, int exit_status)
 {
