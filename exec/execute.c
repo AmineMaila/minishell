@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 23:46:05 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:30:22 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,10 @@ int	execute(t_mini *mini)
 	mini->pids = malloc(mini->table_size * sizeof(int));
 	if (!mini->pids)
 		ft_exit(mini, NULL, NULL, ENOMEM);
-	if (mini->table[0].line[0] && mini->table_size == 1) // if there is something in 1st pipeline, and there is one pipeline => should be executed by parent process
+	if (mini->table[0].line[0] && mini->table_size == 1)
 	{
-		execp = exec_parent(mini, mini->table[0].line); // if execp = -1 means the command isn't a buitin so be kind and spawn a children for that command
-		if (execp != -1)	// if execp != -1 means the command is builtin so exec_parent executed it and returned its (builtin func) return value
+		execp = exec_parent(mini, mini->table[0].line);
+		if (execp != -1)
 			return (execp);
 	}
 	spawn_children(mini, &pipex);

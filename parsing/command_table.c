@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 12:15:47 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:32:14 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,8 @@ int	fill_line(t_mini *mini, int pipe_line)
 
 int	command_table(t_mini *mini)
 {
-	int	i;
-	
+	int		i;
+
 	mini->table_size = get_table_size(mini->lst);
 	mini->table = malloc(sizeof(t_table) * mini->table_size);
 	if (!mini->table)

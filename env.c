@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:15:21 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/19 14:44:24 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:28:02 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,14 @@ int	env_fill(t_mini *mini, char **env)
 				return (0);
 			mini->env[i] = ft_strjoin("SHLVL=", lvl);
 			free(lvl);
-			if (!mini->env[i])
+			if (!mini->env[i++])
 				return (0);
-			i++;
 		}
 		else
 		{
 			mini->env[i] = ft_strdup(env[i]);
-			if (!mini->env[i])
+			if (!mini->env[i++])
 				return (0);
-			i++;
 		}
 	}
 	mini->env[i] = NULL;
