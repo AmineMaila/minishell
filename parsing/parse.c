@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/21 22:28:30 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 23:09:53 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ int	syntax(t_list_parse *lst)
 	while (lst)
 	{
 		if (lst->flag == ERR2)
-			return (ft_putstr_fd("minishell: syntax error: unclosed quote\n",
-					2), -1);
+			return (print_error("syntax error", "unclosed quote"), -1);
 		if ((lst->flag == REDIN || lst->flag == REDOUT
 				|| lst->flag == HEREDOC || lst->flag == APPEND))
 		{
