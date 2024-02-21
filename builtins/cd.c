@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:40:57 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 12:40:06 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 13:10:11 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,8 @@ int	chdir_relative(char *path, char **oldpwd, char ***env)
 		return (free(pwd), print_error("cd", "path is too long"), 1);
 	if (chdir(path) != 0)
 	{
-		free(pwd);
 		free(*oldpwd);
-		return (print_error(path, "No such file or directory"), 1);
+		return (free(pwd), print_error(path, "No such file or directory"), 1);
 	}
 	if (update_pwd(path, env) == ENOMEM
 		|| update_oldpwd(*oldpwd, env) == ENOMEM)

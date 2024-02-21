@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/20 20:30:52 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/21 13:29:11 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ char	*insert_spaces(char **str, int n)
 		if (is_operator(result[i]))
 		{
 			if (i > 0 && !is_space(result[i - 1]))
-			{
-				shift_insert(result, i, i + 1, -1);
-				i++;
-			}
+				(shift_insert(result, i, i + 1, -1), i++);
 			if (result[i] != '|')
 				while (result[i + 1] == '>' || result[i + 1] == '<')
 					i++;
@@ -52,17 +49,15 @@ char	*insert_spaces(char **str, int n)
 	return (result);
 }
 
-int	count_needed_spaces(char *str)
+int	count_needed_spaces(char *str, int count, int was_space)
 {
 	int		i;
-	int		was_space;
-	int		count;
 
 	i = 0;
-	count = 0;
-	was_space = 0;
 	while (str[i])
 	{
+		if (is_quote(str[i]))
+			i = get_quote_index(str, i + 1);
 		if (is_operator(str[i]))
 		{
 			if (i > 0 && !is_space(str[i - 1]) && was_space == 0)
@@ -78,8 +73,6 @@ int	count_needed_spaces(char *str)
 		}
 		else
 			was_space = 0;
-		if (is_quote(str[i]))
-			i = get_quote_index(str, i + 1);
 		i++;
 	}
 	return (count);
@@ -89,9 +82,13 @@ void	input_lexer(t_mini *mini)
 {
 	int		i;
 	int		spaces_count;
+	int		was_space;
+	int		count;
 
 	i = 0;
-	spaces_count = count_needed_spaces(mini->input);
+	count = 0;
+	was_space = 0;
+	spaces_count = count_needed_spaces(mini->input, count, was_space);
 	if (spaces_count == 0)
 	{
 		mini->cmd_line = split(mini->input, " \t\n\v\r\f");

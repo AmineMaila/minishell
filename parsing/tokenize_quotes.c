@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:35:15 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/11 13:32:18 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 13:12:30 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,9 @@ static size_t	word_count(char const *s, char *charset)
 				quote = s[i++];
 				while (s[i] && s[i] != quote)
 					i++;
-				if (!s[i])
-					break ;
 			}
-			i++;
+			if (s[i])
+				i++;
 		}
 	}
 	return (count);

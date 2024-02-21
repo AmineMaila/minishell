@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 12:56:25 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/21 13:08:56 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 # define LIM 11
 
 # define BUFFER_SIZE 10
-# define MSH "\033[1;34mminishell\033[2;30m-\033[0m\033[1;36m4.81\033[1;32m × \033[0m"
+# define MSH "\033[1;34mminishell"
+# define MSG "\033[2;30m-\033[0m\033[1;36m4.81\033[1;32m × \033[0m"
 
 # include "../libft/libft.h"
 # include <stdio.h>
@@ -34,7 +35,6 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <string.h> 
 # include <fcntl.h>
 # include <signal.h>
 # include <errno.h>
@@ -65,8 +65,8 @@ typedef struct s_table
 
 typedef struct s_list_parse
 {
-	char			*str;
-	int				flag;
+	char				*str;
+	int					flag;
 	struct s_list_parse	*next;
 }				t_list_parse;
 
@@ -77,6 +77,7 @@ typedef struct s_mini
 	char			**cmd_line;
 	char			**env;
 	char			*input;
+	int				sig;
 	int				*pids;
 	int				table_size;
 	int				exit_status;
@@ -115,7 +116,8 @@ int				get_line_size(t_list_parse *lst, int pipe_line);
 t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
 int				open_redins(t_mini *mini, int pipe_line);
 int				open_out(t_list_parse	*redout, char *outfile);
-int				final_check(t_mini *mini, t_list_parse *redin, int heredoc_fd, int pipe_line);
+int				final_check(t_mini *mini,
+					t_list_parse *redin, int heredoc_fd, int pipe_line);
 void			cleanup(t_mini *mini, int exit_status);
 
 // flag
