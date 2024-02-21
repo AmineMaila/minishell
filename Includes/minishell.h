@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 12:15:23 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:32:38 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int				execute(t_mini *mini);
 int				is_cmd(t_mini *mini, char **token, char **env);
 int				here_doc(t_mini *mini, char *lim);
 void			free_2d(char ***arr);
-void			print_error(char *var);
+void			print_error(char *var, char *msg);
 
 char			*alloc_cpy(char **str, int n);
 

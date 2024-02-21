@@ -6,13 +6,13 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/21 12:26:11 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:31:37 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-void	print_error(char *var)
+void	print_error(char *var, char *msg)
 {
 	ft_putstr_fd("minishell: ", 2);
 	if (var)
@@ -20,7 +20,10 @@ void	print_error(char *var)
 		ft_putstr_fd(var, 2);
 		ft_putstr_fd(": ", 2);
 	}
-	ft_putstr_fd(strerror(errno), 2);
+	if (msg)
+		ft_putendl_fd(msg, 2);
+	else	
+		ft_putstr_fd(strerror(errno), 2);
 	ft_putstr_fd("\n", 2);
 }
 
@@ -84,15 +87,8 @@ void	ft_exit(t_mini *mini, char *cmd, char *str, int ext)
 {
 	if (ext == 12)
 		errno = ENOMEM;
-	if (str)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		if (cmd)
-			ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(str, 2);
-	}
-	else if (ext)
-		print_error(cmd);
+	if (str || ext)
+		print_error(cmd, str);
 	if (mini)
 		cleanup(mini, ext);
 	if (ext)

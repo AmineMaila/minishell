@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:35:24 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 12:16:22 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:32:46 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	open_redins(t_mini *mini, int pipe_line)
 			if (infd == -1)
 			{
 				mini->exit_status = 1;
-				print_error(current->next->str);
+				print_error(current->next->str, NULL);
 				return (-1);
 			}
 		}

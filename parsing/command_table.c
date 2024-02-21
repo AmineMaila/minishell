@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 12:15:47 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:32:27 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	open_out(t_list_parse	*redout, char *outfile)
 		if (outfd == -1)
 			outfd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (outfd == -1)
-			print_error(outfile);
+			print_error(outfile, NULL);
 		return (outfd);
 	}
 	else
@@ -31,7 +31,7 @@ int	open_out(t_list_parse	*redout, char *outfile)
 		if (outfd == -1)
 			outfd = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (outfd == -1)
-			print_error(outfile);
+			print_error(outfile, NULL);
 		return (outfd);
 	}
 }
