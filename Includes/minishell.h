@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 16:29:01 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 22:28:50 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_mini
 	int				*pids;
 	int				table_size;
 	int				exit_status;
+	int				syntax;
 }	t_mini;
 
 //	MINISHELL
@@ -152,6 +153,7 @@ int				is_quote(char c);
 int				get_quote_index(char *str, int i);
 int				get_table_size(t_list_parse *lst);
 int				get_line_size(t_list_parse *lst, int pipe_line);
+void			closefds(t_mini *mini);
 t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
 int				open_redins(t_mini *mini, int pipe_line);
 int				open_out(t_list_parse	*redout, char *outfile);

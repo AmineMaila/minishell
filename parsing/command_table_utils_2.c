@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   command_table_utils_2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:39:09 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 12:39:36 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/21 22:28:02 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
+
+void	closefds(t_mini *mini)
+{
+	int i;
+	
+	i = 0;
+	while (i < mini->table_size)
+		close(mini->table[i++].infd);
+}
 
 int	get_table_size(t_list_parse *lst)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/21 12:47:52 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/21 22:28:30 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,14 @@ int	parse(t_mini *mini)
 	while (mini->cmd_line[i])
 		ft_lstadd_back(&mini->lst, mini->cmd_line[i++]);
 	flag(mini);
-	if (!mini->lst || syntax(mini->lst) == -1)
-		return (mini->exit_status = 258, 1);
+	if (!mini->lst)
+		return (1);
+	if (syntax(mini->lst) == -1)
+		mini->syntax = 1;
 	if (!command_table(mini))
 		ft_exit(mini, NULL, NULL, ENOMEM);
+	if (mini->syntax)
+		return (closefds(mini), mini->syntax = 0, mini->exit_status = 258, 1);
 	if (mini->exit_status == 7)
 		return (mini->exit_status = 1, 1);
 	signal(SIGQUIT, sig_quit);

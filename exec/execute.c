@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/21 12:48:35 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 21:40:23 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,11 @@ int	wait_child(t_data *pipex, t_mini *mini)
 	if (WIFEXITED(status))
 		mini->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
+	{
+		if (status == 2)
+			write(1, "\n", 1);
 		mini->exit_status = status + 128;
+	}
 	return (1);
 }
 
