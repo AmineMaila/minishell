@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 12:44:14 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:56:25 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct s_mini
 	char			**cmd_line;
 	char			**env;
 	char			*input;
-	int				sig;
 	int				*pids;
 	int				table_size;
 	int				exit_status;
