@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/21 12:21:18 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:26:11 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	ft_exit(t_mini *mini, char *cmd, char *str, int ext)
 		ft_putendl_fd(str, 2);
 	}
 	else if (ext)
-		print_error(NULL);
+		print_error(cmd);
 	if (mini)
 		cleanup(mini, ext);
 	if (ext)
