@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/20 19:31:19 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/20 20:28:28 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int				is_cmd(t_mini *mini, char **token, char **env);
 int				here_doc(t_mini *mini, char *lim);
 void			free_2d(char ***arr);
 
-char			*alloc_cpy(char **str, char **result, int n);
+char			*alloc_cpy(char **str, int n);
 
 // built ins
 int				ft_add(char ***env, char *to_add);

@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:56:55 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/20 19:21:58 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/20 20:30:52 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,12 @@ char	*insert_spaces(char **str, int n)
 	char	*result;
 	int		i;
 
-	result = alloc_cpy(str, &result, n);
+	result = alloc_cpy(str, n);
 	if (!result)
 		return (NULL);
 	i = 0;
 	while (result[i])
 	{
-		if (is_quote(result[i]))
-			i = get_quote_index(result, ++i);
 		if (is_operator(result[i]))
 		{
 			if (i > 0 && !is_space(result[i - 1]))
@@ -45,8 +43,10 @@ char	*insert_spaces(char **str, int n)
 				while (result[i + 1] == '>' || result[i + 1] == '<')
 					i++;
 			if (!is_space(result[i + 1]) && result[i + 1] != '\0')
-				(shift_insert(result, i, i + 1, 1));
+				shift_insert(result, i, i + 1, 1);
 		}
+		if (is_quote(result[i]))
+			i = get_quote_index(result, i + 1);
 		i++;
 	}
 	return (result);
