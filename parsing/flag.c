@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:21:14 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/21 23:09:48 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 18:12:14 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	flag(t_mini *mini)
 	{
 		operator(&flags, curr);
 		if (!expansion(mini, &curr))
-			continue ;
+			continue ;//
 		count = quote_count(curr);
 		if (count)
 		{

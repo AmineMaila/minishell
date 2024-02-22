@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/22 13:54:41 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/22 19:00:12 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,37 @@ int	fill_line(t_mini *mini, int pipe_line)
 	i = 0;
 	while (i < line_size)
 	{
+		mini->table[pipe_line].infd = -2;
 		if (current->flag == COMMAND || current->flag == ARG)
 			mini->table[pipe_line].line[i++] = current->str;
+		if (current->flag == REDIN || current->flag == HEREDOC)
+			mini->table[pipe_line].redin = current;
+		else if (current->flag == REDOUT || current->flag == APPEND)
+			mini->table[pipe_line].redout = current;
 		current = current->next;
 	}
 	mini->table[pipe_line].line[i] = NULL;
 	return (1);
+}
+
+void	open_heredocs(t_mini *mini, t_table pipeline)
+{
+	t_list_parse	*curr;
+	int				heredocfd;
+
+	curr = mini->lst;
+	while (curr && curr->flag != PIPE)
+	{
+		if (curr->flag == HEREDOC)
+		{
+			heredocfd = here_doc(mini, curr->next);
+			if (curr = pipeline.redin)
+				pipeline.infd = heredocfd;
+			else
+				close(heredocfd);
+		}
+		curr = curr->next;
+	}
 }
 
 int	command_table(t_mini *mini)
@@ -107,10 +132,14 @@ int	command_table(t_mini *mini)
 	i = 0;
 	while (i < mini->table_size)
 	{
+		mini->table[i].redin = NULL;
+		mini->table[i].redout = NULL;
 		if (!fill_line(mini, i))
 			return (0);
-		fill_fds(mini, i);
+		open_herdocs(mini, mini->table[i]);
+		// fill_fds(mini, i);
 		i++;
 	}
+	
 	return (1);
 }
