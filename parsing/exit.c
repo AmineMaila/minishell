@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/21 13:10:30 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 15:34:57 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,15 @@ void	cleanup(t_mini *mini, int exit_status)
 
 void	ft_exit(t_mini *mini, char *cmd, char *str, int ext)
 {
+	struct stat	file;
+	
 	if (ext == 12)
 		errno = ENOMEM;
-	if (str || ext)
+	if (ext == 13)
+		ext = 126;
+	if (stat(cmd, &file) == 0 && S_ISDIR(file.st_mode))
+		print_error(cmd, "is a directory");
+	else if (str || ext)
 		print_error(cmd, str);
 	if (mini)
 		cleanup(mini, ext);

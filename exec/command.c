@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 15:44:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/21 12:53:17 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 15:26:42 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	is_cmd(t_mini *mini, char **token, char **env)
 	char	*tmp;
 	char	*cmd;
 
-	if (access(*token, F_OK | X_OK))
+	if (access(*token, F_OK) && (*token)[0])
 	{
 		tmp = ft_strjoin("/", *token);
 		if (!tmp)
