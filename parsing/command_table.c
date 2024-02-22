@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/22 19:28:02 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 19:53:43 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	fill_line(t_mini *mini, int pipe_line)
 	while (i < line_size)
 	{
 		mini->table[pipe_line].infd = -2;
+		mini->table[pipe_line].outfd = -2;
 		if (current->flag == COMMAND || current->flag == ARG)
 			mini->table[pipe_line].line[i++] = current->str;
 		if (current->flag == REDIN || current->flag == HEREDOC)
