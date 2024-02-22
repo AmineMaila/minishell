@@ -1,5 +1,8 @@
 {
 	"files.associations": {
-		"iterator": "c"
+		"iterator": "c",
+		"__locale": "c",
+		"locale": "c",
+		"ios": "c"
 	}
 }

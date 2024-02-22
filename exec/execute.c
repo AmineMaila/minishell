@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/22 15:30:29 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 23:33:09 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ int	execute(t_mini *mini)
 	int			execp;
 
 	pipex.id_count = 0;
-	pipex.heredoc = 0;
 	pipex.infd = mini->table[0].infd;
 	mini->pids = malloc(mini->table_size * sizeof(int));
 	if (!mini->pids)

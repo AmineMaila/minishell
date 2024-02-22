@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:15:15 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/22 20:04:16 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 23:31:05 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,19 @@ void	open_all_fds(t_mini *mini, int pipe_line)
 	while (current && current->flag != PIPE)
 	{
 		if (current->flag == REDIN)
+		{
+			if (mini->table[pipe_line].infd > 2)
+				close(mini->table[pipe_line].infd);
 			mini->table[pipe_line].infd
 				= open_infile(current, mini->table[pipe_line].redin);
+		}
 		else if (current->flag == REDOUT || current->flag == APPEND)
+		{
+			if (mini->table[pipe_line].outfd > 2)
+				close(mini->table[pipe_line].outfd);
 			mini->table[pipe_line].outfd
 				= open_outfile(current, mini->table[pipe_line].redout);
+		}
 		if (mini->table[pipe_line].infd == -1
 			|| mini->table[pipe_line].outfd == -1)
 			return ;

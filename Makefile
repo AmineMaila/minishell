@@ -6,7 +6,7 @@
 #    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/22 19:15:34 by mmaila           ###   ########.fr        #
+#    Updated: 2024/02/22 23:35:08 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ SRCS			= 		\
 						./parsing/flag.c \
 						./parsing/command_table.c \
 						./parsing/command_table_utils.c \
-						./parsing/command_table_utils_2.c \
 						./parsing/exit.c \
 						./parsing/parse.c \
 						./parsing/expand_utils.c \

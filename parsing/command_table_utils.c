@@ -3,101 +3,66 @@
 /*                                                        :::      ::::::::   */
 /*   command_table_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:35:24 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/22 12:26:32 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/22 23:35:01 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line)
+void	closefds(t_mini *mini)
+{
+	int			i;
+
+	i = 0;
+	while (i < mini->table_size)
+	{
+		if (mini->table[i].infd > 2)
+			close(mini->table[i].infd);
+		if (mini->table[i].outfd > 2)
+			close(mini->table[i].outfd);
+		i++;
+	}
+}
+
+int	get_table_size(t_list_parse *lst)
+{
+	int				pipe_lines;
+	t_list_parse	*current;
+
+	pipe_lines = 1;
+	current = lst;
+	while (current)
+	{
+		if (current->flag == PIPE)
+			pipe_lines++;
+		current = current->next;
+	}
+	return (pipe_lines);
+}
+
+int	get_line_size(t_mini *mini, int pipe_line)
 {
 	t_list_parse	*current;
 	int				i;
+	int				size;
 
 	i = 0;
-	current = lst;
-	if (pipe_line == 0)
-		return (current);
-	while (current && i != pipe_line)
-	{
-		if (current->flag == PIPE)
-			i++;
-		current = current->next;
-	}
-	return (current);
-}
-
-int	open_redins(t_mini *mini, int pipe_line)
-{
-	t_list_parse	*current;
-	int				infd;
-
-	infd = -42;
 	current = get_pipe_line(mini->lst, pipe_line);
+	size = 0;
 	while (current && current->flag != PIPE)
 	{
-		if (current->flag == REDIN)
-		{
-			close(infd);
-			infd = open(current->next->str, O_RDONLY);
-			if (infd == -1)
-			{
-				mini->exit_status = 1;
-				print_error(current->next->str, NULL);
-				return (-1);
-			}
-		}
+		mini->table[pipe_line].infd = -2;
+		mini->table[pipe_line].outfd = -2;
+		if (current->flag == COMMAND || current->flag == ARG)
+			size++;
+		if (current->flag == REDIN || current->flag == HEREDOC)
+			mini->table[pipe_line].redin = current;
+		else if (current->flag == REDOUT || current->flag == APPEND)
+			mini->table[pipe_line].redout = current;
 		current = current->next;
 	}
-	return (infd);
-}
-
-int	open_out(t_list_parse *redout)
-{
-	int			outfd;
-	char		*outfile;
-
-	if (!redout->next)
-		return (print_error(NULL, "ambiguous redirect"), -1);
-	outfile = redout->next->str;
-	if (redout->flag == REDOUT)
-	{
-		outfd = open(outfile, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (outfd == -1)
-			outfd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (outfd == -1)
-			print_error(outfile, NULL);
-		return (outfd);
-	}
-	else
-	{
-		outfd = open(outfile, O_RDWR | O_CREAT | O_APPEND, 0644);
-		if (outfd == -1)
-			outfd = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (outfd == -1)
-			print_error(outfile, NULL);
-		return (outfd);
-	}
-}
-
-int	final_check(t_mini *mini, t_list_parse *redin, int heredoc_fd, int pipe_l)
-{
-	if (!redin)
-	{
-		if (pipe_l == 0)
-			return (open("/dev/stdin", O_RDONLY));
-		return (-42);
-	}
-	if (!redin->next)
-		return (print_error(NULL, "ambiguous redirect"), -1);
-	if (redin->flag == HEREDOC)
-	{
-		if (open_redins(mini, pipe_l) == -1)
-			return (-1);
-		return (heredoc_fd);
-	}
-	return (close(heredoc_fd), open_redins(mini, pipe_l));
+	return (size);
 }

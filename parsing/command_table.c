@@ -6,11 +6,29 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/22 20:01:49 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 23:34:46 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
+
+t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line)
+{
+	t_list_parse	*current;
+	int				i;
+
+	i = 0;
+	current = lst;
+	if (pipe_line == 0)
+		return (current);
+	while (current && i != pipe_line)
+	{
+		if (current->flag == PIPE)
+			i++;
+		current = current->next;
+	}
+	return (current);
+}
 
 int	fill_line(t_mini *mini, int pipe_line)
 {
@@ -35,7 +53,7 @@ int	fill_line(t_mini *mini, int pipe_line)
 	return (1);
 }
 
-void	open_heredocs(t_mini *mini, int pipeline)
+int	open_heredocs(t_mini *mini, int pipeline)
 {
 	t_list_parse	*curr;
 	int				heredocfd;
@@ -46,6 +64,12 @@ void	open_heredocs(t_mini *mini, int pipeline)
 		if (curr->flag == HEREDOC)
 		{
 			heredocfd = here_doc(mini, curr->next);
+			if (mini->exit_status == 7)
+			{
+				close(heredocfd);
+				closefds(mini);
+				return (0);
+			}
 			if (curr == mini->table[pipeline].redin)
 				mini->table[pipeline].infd = heredocfd;
 			else
@@ -53,6 +77,7 @@ void	open_heredocs(t_mini *mini, int pipeline)
 		}
 		curr = curr->next;
 	}
+	return (1);
 }
 
 int	command_table(t_mini *mini)
@@ -70,7 +95,8 @@ int	command_table(t_mini *mini)
 		mini->table[i].redout = NULL;
 		if (!fill_line(mini, i))
 			return (0);
-		open_heredocs(mini, i);
+		if (!open_heredocs(mini, i))
+			return (1);
 		i++;
 	}
 	set_fds(mini);

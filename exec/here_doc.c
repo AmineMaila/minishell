@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:17:42 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/22 12:28:57 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/22 23:21:19 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	is_lim(t_mini *mini, char **lim, int fd)
 	char	*tmp;
 	int		count;
 
+	signal(SIGINT, sigint_cmd);
 	while (1)
 	{
 		ft_putstr_fd("> ", 0);
@@ -25,6 +26,8 @@ void	is_lim(t_mini *mini, char **lim, int fd)
 		{
 			if (tmp)
 				free(tmp);
+			else
+				printf("\n");
 			free(*lim);
 			close(fd);
 			exit(0);
@@ -57,7 +60,6 @@ int	here_doc(t_mini *mini, t_list_parse *next)
 		next->str = ft_strjoin(next->str, "\n");
 		if (!next->str)
 			ft_exit(mini, NULL, NULL, ENOMEM);
-		signal(SIGINT, sigint_cmd);
 		is_lim(mini, &next->str, fd[1]);
 	}
 	close(fd[1]);
