@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table_utils_2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:39:09 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 22:28:02 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 12:40:17 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	closefds(t_mini *mini)
 {
-	int i;
-	
+	int			i;
+
 	i = 0;
 	while (i < mini->table_size)
 		close(mini->table[i++].infd);

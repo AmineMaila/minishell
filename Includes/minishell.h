@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 23:10:18 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 12:29:22 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int				expansion(t_mini *mini, t_list_parse **curr);
 //	EXECUTION
 int				execute(t_mini *mini);
 int				is_cmd(t_mini *mini, char **token, char **env);
-int				here_doc(t_mini *mini, char *lim);
+int				here_doc(t_mini *mini, t_list_parse *next);
 void			free_2d(char ***arr);
 void			print_error(char *var, char *msg);
 char			*alloc_cpy(char **str, int n);
@@ -156,7 +156,7 @@ int				get_line_size(t_list_parse *lst, int pipe_line);
 void			closefds(t_mini *mini);
 t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
 int				open_redins(t_mini *mini, int pipe_line);
-int				open_out(t_list_parse	*redout, char *outfile);
+int				open_out(t_list_parse *redout);
 int				final_check(t_mini *mini,
 					t_list_parse *redin, int heredoc_fd, int pipe_line);
 

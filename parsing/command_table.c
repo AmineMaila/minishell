@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 22:28:18 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 12:40:42 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	get_outfd(t_mini *mini, int pipe_line)
 		if (current->flag == REDOUT || current->flag == APPEND)
 		{
 			close(outfd);
-			outfd = open_out(current, current->next->str);
+			outfd = open_out(current);
 		}
 		current = current->next;
 	}
@@ -53,7 +53,7 @@ int	get_infd(t_mini *mini, int pipe_line)
 		if (current->flag == HEREDOC)
 		{
 			close(heredoc_fd);
-			heredoc_fd = here_doc(mini, current->next->str);
+			heredoc_fd = here_doc(mini, current->next);
 			if (mini->exit_status == 7)
 				return (heredoc_fd);
 		}

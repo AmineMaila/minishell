@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:35:24 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/21 12:47:08 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/22 12:26:32 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,14 @@ int	open_redins(t_mini *mini, int pipe_line)
 	return (infd);
 }
 
-int	open_out(t_list_parse	*redout, char *outfile)
+int	open_out(t_list_parse *redout)
 {
-	int	outfd;
+	int			outfd;
+	char		*outfile;
 
+	if (!redout->next)
+		return (print_error(NULL, "ambiguous redirect"), -1);
+	outfile = redout->next->str;
 	if (redout->flag == REDOUT)
 	{
 		outfd = open(outfile, O_RDWR | O_CREAT | O_TRUNC, 0644);
@@ -87,6 +91,8 @@ int	final_check(t_mini *mini, t_list_parse *redin, int heredoc_fd, int pipe_l)
 			return (open("/dev/stdin", O_RDONLY));
 		return (-42);
 	}
+	if (!redin->next)
+		return (print_error(NULL, "ambiguous redirect"), -1);
 	if (redin->flag == HEREDOC)
 	{
 		if (open_redins(mini, pipe_l) == -1)

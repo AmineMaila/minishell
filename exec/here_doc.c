@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:17:42 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/20 23:42:40 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 12:28:57 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ void	is_lim(t_mini *mini, char **lim, int fd)
 	}
 }
 
-int	here_doc(t_mini *mini, char *lim)
+int	here_doc(t_mini *mini, t_list_parse *next)
 {
 	int	fd[2];
 	int	id;
 	int	status;
 
+	if (!next)
+		return (fd[0]);
 	signal(SIGINT, SIG_IGN);
 	if (pipe(fd) == -1)
 		ft_exit(mini, NULL, NULL, errno);
@@ -52,11 +54,11 @@ int	here_doc(t_mini *mini, char *lim)
 	if (!id)
 	{
 		close(fd[0]);
-		lim = ft_strjoin(lim, "\n");
-		if (!lim)
+		next->str = ft_strjoin(next->str, "\n");
+		if (!next->str)
 			ft_exit(mini, NULL, NULL, ENOMEM);
 		signal(SIGINT, sigint_cmd);
-		is_lim(mini, &lim, fd[1]);
+		is_lim(mini, &next->str, fd[1]);
 	}
 	close(fd[1]);
 	waitpid(id, &status, 0);
