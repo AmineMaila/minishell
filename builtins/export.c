@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:47:56 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/22 12:46:15 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/22 12:56:11 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ int	update(char *to_replace, char ***env)
 
 int	export(char **line, char ***env)
 {
-	int	i;
-	int	value;
+	int			i;
+	int			value;
+	int			failed;
 
 	i = 1;
 	if (!line[1])
@@ -94,10 +95,10 @@ int	export(char **line, char ***env)
 				return (ENOMEM);
 		}
 		else if (value == -1)
-			return (1);
+			failed = 1;
 		else if (value == ENOMEM)
 			return (ENOMEM);
 		i++;
 	}
-	return (0);
+	return (failed);
 }
