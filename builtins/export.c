@@ -6,7 +6,7 @@
 /*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:47:56 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/22 12:56:11 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/22 13:53:48 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	export(char **line, char ***env)
 	int			failed;
 
 	i = 1;
+	failed = 0;
 	if (!line[1])
 		return (environment(*env));
 	while (line[i])

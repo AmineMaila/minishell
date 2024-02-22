@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:48:06 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/18 21:55:32 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 13:53:55 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ int	ft_remove(char ***env, char *to_remove)
 
 int	unset(char **line, char ***env)
 {
-	int	i;
+	int			i;
+	int			failed;
 
+	failed = 0;
 	i = 1;
 	while (line[i])
 	{
@@ -53,7 +55,9 @@ int	unset(char **line, char ***env)
 			if (ft_remove(env, line[i]) == ENOMEM)
 				return (ENOMEM);
 		}
+		else
+			failed = 1;
 		i++;
 	}
-	return (0);
+	return (failed);
 }
