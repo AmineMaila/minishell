@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:47:56 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/21 12:46:20 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 12:46:15 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	update(char *to_replace, char ***env)
 
 	len = varlen(to_replace);
 	if (!len)
-		return (print_error(to_replace, "not a valid identifier"), 1);
+		return (print_error(to_replace, "not a valid identifier"), -1);
 	i = 0;
 	while ((*env)[i])
 	{
@@ -93,6 +93,8 @@ int	export(char **line, char ***env)
 			if (ft_add(env, line[i]) == ENOMEM)
 				return (ENOMEM);
 		}
+		else if (value == -1)
+			return (1);
 		else if (value == ENOMEM)
 			return (ENOMEM);
 		i++;
