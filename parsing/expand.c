@@ -6,38 +6,11 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/22 18:12:32 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 20:10:37 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
-
-void	delete_node(t_list_parse **lst, t_list_parse **node)
-{
-	t_list_parse	*prev;
-	t_list_parse	*tmp;
-
-	prev = *lst;
-	if (!ft_strcmp(prev->str, (*node)->str))
-	{
-		*lst = (*lst)->next;
-		*node = NULL;
-		ft_lstdelone(prev);
-		return ;
-	}
-	while (prev->next)
-	{
-		if (!ft_strcmp(prev->next->str, (*node)->str))
-		{
-			tmp = prev->next;
-			prev->next = prev->next->next;
-			*node = NULL;
-			ft_lstdelone(tmp);
-			return ;
-		}
-		prev = prev->next;
-	}
-}
 
 char	*strrem(char **str, char *envvar, int start, int len)
 {
@@ -106,9 +79,8 @@ void	expand_var(t_mini *mini, char **str)
 		ft_exit(mini, NULL, NULL, ENOMEM);
 }
 
-int	expansion(t_mini *mini, t_list_parse **curr)
+void	expansion(t_mini *mini, t_list_parse **curr)
 {
-	t_list_parse	*next;
 	int				count;
 	int				i;
 
@@ -118,13 +90,5 @@ int	expansion(t_mini *mini, t_list_parse **curr)
 	{
 		if ((*curr)->flag != LIM)
 			expand_var(mini, &(*curr)->str);
-		if (!(*curr)->str[0])
-		{
-			next = (*curr)->next;
-			delete_node(&mini->lst, curr);
-			if (!(*curr))
-				return (*curr = next, 0);
-		}
 	}
-	return (1);
 }

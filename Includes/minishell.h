@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/22 19:59:19 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 20:10:46 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int				envvar_count(char *str);
 int				var_end(char *str, int start);
 int				var_start(char *str);
 int				not_expandable(char c);
-int				expansion(t_mini *mini, t_list_parse **curr);
+void			expansion(t_mini *mini, t_list_parse **curr);
 
 //	EXECUTION
 int				execute(t_mini *mini);
