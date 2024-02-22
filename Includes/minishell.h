@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/22 19:16:59 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 19:59:19 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int				is_space(char c);
 int				is_quote(char c);
 int				get_quote_index(char *str, int i);
 int				get_table_size(t_list_parse *lst);
-int				get_line_size(t_list_parse *lst, int pipe_line);
+int				get_line_size(t_mini *mini, int pipe_line);
 void			closefds(t_mini *mini);
 t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
 int				open_redins(t_mini *mini, int pipe_line);

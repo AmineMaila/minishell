@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:02:40 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/22 19:32:24 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 20:02:01 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	cleanup(t_mini *mini, int exit_status)
 void	ft_exit(t_mini *mini, char *cmd, char *str, int ext)
 {
 	struct stat	file;
-	
+
 	if (ext == 12)
 		errno = ENOMEM;
 	if (ext == 13)
