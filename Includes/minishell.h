@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/22 15:28:19 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 17:17:19 by nazouz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,11 @@ typedef struct s_data
 //	COMMAND_TABLE (PIPELINE)
 typedef struct s_table
 {
-	char	**line;
-	int		infd;
-	int		outfd;
+	char			**line;
+	int				infd;
+	int				outfd;
+	t_list_parse	*redin;
+	t_list_parse	*redout;
 }				t_table;
 
 //	LINKED LIST
