@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_table.c                                    :+:      :+:    :+:   */
+/*   table.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/22 23:34:46 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/23 00:05:07 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,28 @@ int	open_heredocs(t_mini *mini, int pipeline)
 		{
 			heredocfd = here_doc(mini, curr->next);
 			if (mini->exit_status == 7)
-			{
-				close(heredocfd);
-				closefds(mini);
-				return (0);
-			}
+				return (close(heredocfd), closefds(mini), 0);
 			if (curr == mini->table[pipeline].redin)
 				mini->table[pipeline].infd = heredocfd;
 			else
 				close(heredocfd);
 		}
+		if (syntax(curr) == -1)
+		{
+			mini->exit_status = 258;
+			mini->syntax = 1;
+			return (closefds(mini), 0);
+		}
 		curr = curr->next;
+	}
+	if (curr)
+	{
+		if (syntax(curr) == -1)
+		{
+			mini->exit_status = 258;
+			mini->syntax = 1;
+			return (closefds(mini), 0);
+		}
 	}
 	return (1);
 }
@@ -84,6 +95,12 @@ int	command_table(t_mini *mini)
 {
 	int		i;
 
+	if (mini->lst->flag == PIPE)
+	{
+		mini->exit_status = 258;
+		mini->syntax = 1;
+		return (syntax_error(mini->lst->str), 1);
+	}
 	mini->table_size = get_table_size(mini->lst);
 	mini->table = malloc(sizeof(t_table) * mini->table_size);
 	if (!mini->table)

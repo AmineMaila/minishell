@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/22 23:34:22 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/23 00:05:30 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,21 @@ void	syntax_error(char *str)
 
 int	syntax(t_list_parse *lst)
 {
-	int			i;
-
-	i = 0;
-	if (lst->flag == PIPE)
-		return (syntax_error(lst->str), -1);
-	while (lst)
+	if (lst->flag == ERR2)
+		return (print_error("syntax error", "unclosed quote"), -1);
+	if ((lst->flag == REDIN || lst->flag == REDOUT
+			|| lst->flag == HEREDOC || lst->flag == APPEND))
 	{
-		if (lst->flag == ERR2)
-			return (print_error("syntax error", "unclosed quote"), -1);
-		if ((lst->flag == REDIN || lst->flag == REDOUT
-				|| lst->flag == HEREDOC || lst->flag == APPEND))
-		{
-			if (lst->next == NULL)
-				return (syntax_error(NULL), -1);
-			else if (lst->next->flag == PIPE || lst->next->flag == REDOUT
-				|| lst->next->flag == HEREDOC || lst->next->flag == APPEND)
-				return (syntax_error(lst->next->str), -1);
-		}
-		if ((lst->flag == PIPE && lst->next == NULL) || lst->flag == ERR
-			|| (lst->flag == PIPE && lst->next->flag == PIPE))
-			return (syntax_error(lst->str), -1);
-		lst = lst->next;
+		if (lst->next == NULL)
+			return (syntax_error(NULL), -1);
+		else if (lst->next->flag == PIPE || lst->next->flag == REDOUT
+			|| lst->next->flag == HEREDOC || lst->next->flag == APPEND)
+			return (syntax_error(lst->next->str), -1);
+	}
+	if ((lst->flag == PIPE && lst->next == NULL) || lst->flag == ERR
+		|| (lst->flag == PIPE && lst->next->flag == PIPE))
+	{
+		return (syntax_error(lst->str), -1);
 	}
 	return (0);
 }
@@ -77,12 +70,10 @@ int	parse(t_mini *mini)
 	flag(mini);
 	if (!mini->lst)
 		return (1);
-	if (syntax(mini->lst) == -1)
-		mini->syntax = 1;
 	if (!command_table(mini))
 		ft_exit(mini, NULL, NULL, ENOMEM);
 	if (mini->syntax)
-		return (closefds(mini), mini->syntax = 0, mini->exit_status = 258, 1);
+		return (mini->syntax = 0, ft_exit(mini, NULL, NULL, 0), 1);
 	if (mini->exit_status == 7)
 		return (mini->exit_status = 1, 1);
 	signal(SIGQUIT, sig_quit);
