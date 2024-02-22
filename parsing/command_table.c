@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/22 19:00:12 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 19:28:02 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,19 +101,31 @@ int	fill_line(t_mini *mini, int pipe_line)
 	return (1);
 }
 
-void	open_heredocs(t_mini *mini, t_table pipeline)
+void a(t_list_parse *lst)
+{
+	while (lst)
+	{
+		printf("{%s}", lst->str);
+		lst = lst->next;
+	}
+	printf("\n");
+}
+
+void	open_heredocs(t_mini *mini, int pipeline)
 {
 	t_list_parse	*curr;
 	int				heredocfd;
 
-	curr = mini->lst;
+	curr = get_pipe_line(mini->lst, pipeline);
 	while (curr && curr->flag != PIPE)
 	{
 		if (curr->flag == HEREDOC)
 		{
+			a(mini->lst);
+			printf("%s\n", curr->next->str);
 			heredocfd = here_doc(mini, curr->next);
-			if (curr = pipeline.redin)
-				pipeline.infd = heredocfd;
+			if (curr == mini->table[pipeline].redin)
+				mini->table[pipeline].infd = heredocfd;
 			else
 				close(heredocfd);
 		}
@@ -136,10 +148,10 @@ int	command_table(t_mini *mini)
 		mini->table[i].redout = NULL;
 		if (!fill_line(mini, i))
 			return (0);
-		open_herdocs(mini, mini->table[i]);
+		open_heredocs(mini, i);
 		// fill_fds(mini, i);
 		i++;
 	}
-	
+	set_fds(mini);
 	return (1);
 }

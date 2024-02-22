@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+         #
+#    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/21 15:51:15 by nazouz           ###   ########.fr        #
+#    Updated: 2024/02/22 19:15:34 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS			= 		\
 						./parsing/parse.c \
 						./parsing/expand_utils.c \
 						./parsing/expand.c \
+						./parsing/set_fds.c \
 						./utils/ft_lstadd_back.c \
 						./utils/ft_lstnew.c \
 						./utils/ft_lstclear.c \

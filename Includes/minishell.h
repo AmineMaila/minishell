@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/22 19:14:09 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 19:16:59 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,14 @@ typedef struct s_data
 	int		heredoc;
 }				t_data;
 
+//	LINKED LIST
+typedef struct s_list_parse
+{
+	char				*str;
+	int					flag;
+	struct s_list_parse	*next;
+}				t_list_parse;
+
 //	COMMAND_TABLE (PIPELINE)
 typedef struct s_table
 {
@@ -67,14 +75,6 @@ typedef struct s_table
 	t_list_parse	*redin;
 	t_list_parse	*redout;
 }				t_table;
-
-//	LINKED LIST
-typedef struct s_list_parse
-{
-	char				*str;
-	int					flag;
-	struct s_list_parse	*next;
-}				t_list_parse;
 
 //	MINISHELL
 typedef struct s_mini
@@ -162,6 +162,7 @@ int				open_redins(t_mini *mini, int pipe_line);
 int				open_out(t_list_parse *redout);
 int				final_check(t_mini *mini,
 					t_list_parse *redin, int heredoc_fd, int pipe_line);
+void			set_fds(t_mini *mini);
 
 //	GET_NEXT_LINE
 char			*get_next_line(int fd);

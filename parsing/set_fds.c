@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   set_fds.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:15:15 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/22 19:09:00 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/22 19:18:25 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-int	open_outfile(t_mini *mini, t_list_parse *out_op, t_list_parse *redout)
+int	open_outfile(t_list_parse *out_op, t_list_parse *redout)
 {
 	int		fd;
 
+	fd = -2;
 	if (out_op->flag == REDOUT)
 	{
 		fd = open(out_op->next->str, O_RDWR | O_CREAT | O_TRUNC, 0644);
@@ -35,7 +36,7 @@ int	open_outfile(t_mini *mini, t_list_parse *out_op, t_list_parse *redout)
 	return (close(fd), -2);
 }
 
-int	open_infile(t_mini *mini, t_list_parse *in_op, t_list_parse *redin)
+int	open_infile(t_list_parse *in_op, t_list_parse *redin)
 {
 	int		fd;
 
@@ -50,15 +51,14 @@ int	open_infile(t_mini *mini, t_list_parse *in_op, t_list_parse *redin)
 void	open_all_fds(t_mini *mini, int pipe_line)
 {
 	t_list_parse	*current;
-	int	x;
 
 	current = get_pipe_line(mini->lst, pipe_line);
 	while (current && current->flag != PIPE)
 	{
 		if (current->flag == REDIN)
-			mini->table[pipe_line].infd = open_infile(mini, current, mini->table[pipe_line].redin);
+			mini->table[pipe_line].infd = open_infile(current, mini->table[pipe_line].redin);
 		else if (current->flag == REDOUT || current->flag == APPEND)
-			mini->table[pipe_line].outfd = open_outfile(mini, current, mini->table[pipe_line].redout);
+			mini->table[pipe_line].outfd = open_outfile(current, mini->table[pipe_line].redout);
 		if (mini->table[pipe_line].infd == -1 || mini->table[pipe_line].outfd == -1)
 			return ;
 		current = current->next;

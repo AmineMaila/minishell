@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:46:25 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/21 23:11:10 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/22 19:32:41 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	read_cmd_line(t_mini *mini)
 		add_history(mini->input);
 	else
 	{
+		printf("ss\n");
 		printf("exit\n");
 		ft_exit(mini, NULL, NULL, 0);
 		exit(mini->exit_status);
