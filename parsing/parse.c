@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/23 15:57:27 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/23 17:12:41 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,55 +37,54 @@ void	print_syntax(char *str)
 	ft_putstr_fd("\n", 2);
 }
 
-// void	syntax_error(t_list_parse *lst)
-// {
-// 	int		i;
+void	syntax_error(t_list_parse *lst)
+{
+	int		i;
 
-// 	i = 0;
-// 	if (lst->flag == PIPE)
-// 		return (print_syntax(lst->str), -1);
-// 	while (lst)
-// 	{
-// 		if (lst->flag == ERR2)
-// 			return (print_error("syntax error", "unclosed quote"), -1);
-// 		if ((lst->flag == REDIN || lst->flag == REDOUT
-// 				|| lst->flag == HEREDOC || lst->flag == APPEND))
-// 		{
-// 			if (lst->next == NULL)
-// 				return (print_syntax(NULL), -1);
-// 			else if (lst->next->flag == REDIN || lst->next->flag == REDOUT
-// 				|| lst->next->flag == HEREDOC || lst->next->flag == APPEND
-// 				|| lst->next->flag == PIPE)
-// 				return (print_syntax(lst->next->str), -1);
-// 		}
-// 		if ((lst->flag == PIPE && lst->next == NULL) || lst->flag == ERR
-// 			|| (lst->flag == PIPE && lst->next->flag == PIPE))
-// 			return (print_syntax(lst->next->str), -1);
-// 		lst = lst->next;
-// 	}
-// 	return (0);
-// }
+	i = 0;
+	if (lst->flag == PIPE)
+		print_syntax(lst->str);
+	while (lst)
+	{
+		if (lst->flag == ERR2)
+			print_error("syntax error", "unclosed quote");
+		if ((lst->flag == REDIN || lst->flag == REDOUT
+				|| lst->flag == HEREDOC || lst->flag == APPEND))
+		{
+			if (lst->next == NULL)
+				print_syntax(NULL);
+			else if (lst->next->flag == REDIN || lst->next->flag == REDOUT
+				|| lst->next->flag == HEREDOC || lst->next->flag == APPEND
+				|| lst->next->flag == PIPE)
+				print_syntax(lst->next->str);
+		}
+		if ((lst->flag == PIPE && lst->next == NULL) || lst->flag == ERR
+			|| (lst->flag == PIPE && lst->next->flag == PIPE))
+			print_syntax(lst->str);
+		lst = lst->next;
+	}
+}
 
 int	syntax(t_list_parse *lst)
 {
 	if (!lst)
 		return (0);
 	if (lst->flag == ERR2)
-		return (print_error("syntax error", "unclosed quote"), -1);
+		return (-1);
 	if ((lst->flag == REDIN || lst->flag == REDOUT
 			|| lst->flag == HEREDOC || lst->flag == APPEND))
 	{
 		if (lst->next == NULL)
-			return (print_syntax(NULL), -1);
+			return (-1);
 		else if (lst->next->flag == REDIN || lst->next->flag == REDOUT
 			|| lst->next->flag == HEREDOC || lst->next->flag == APPEND
 			|| lst->next->flag == PIPE)
-			return (print_syntax(lst->next->str), -1);
+			return (-1);
 	}
 	if ((lst->flag == PIPE && lst->next == NULL) || lst->flag == ERR
 		|| (lst->flag == PIPE && lst->next->flag == PIPE))
 	{
-		return (print_syntax(lst->str), -1);
+		return (-1);
 	}
 	return (0);
 }
@@ -100,6 +99,7 @@ int	parse(t_mini *mini)
 	while (mini->cmd_line[i])
 		ft_lstadd_back(&mini->lst, mini->cmd_line[i++]);
 	flag(mini);
+	syntax_error(mini->lst);
 	if (!mini->lst)
 		return (1);
 	if (!command_table(mini))
