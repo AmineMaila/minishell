@@ -6,11 +6,29 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:19:58 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/18 21:56:04 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/23 16:58:36 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
+
+int	varlen(char *str)
+{
+	int	len;
+
+	len = 0;
+	while (str[len])
+	{
+		if (str[len] == '=')
+			return (len);
+		if (str[len] == '+' && str[len + 1] == '=')
+			return (len);
+		if (str[len] != '_' && !ft_isalpha(str[len]))
+			return (0);
+		len++;
+	}
+	return (0);
+}
 
 int	len_2d(char **arr)
 {

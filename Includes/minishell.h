@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/23 13:00:16 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/23 16:55:36 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,8 @@ void			ft_lstclear(t_list_parse **lst);
 int				ft_strcmp(char *s1, char *s2);
 
 //	UTILS
-void			syntax_error(char *str);
+void			print_syntax(char *str);
+int				varlen(char *str);
 int				syntax(t_list_parse *lst);
 void			ft_exit(t_mini *mini, char *cmd, char *str, int ext);
 int				is_operator(char c);

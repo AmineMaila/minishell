@@ -3,29 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nazouz <nazouz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:47:56 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/22 13:53:48 by nazouz           ###   ########.fr       */
+/*   Updated: 2024/02/23 17:02:31 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-int	varlen(char *str)
+char	*add_var(char *to_add)
 {
-	int	len;
+	char	*result;
+	int		j;
+	int		k;
 
-	len = 0;
-	while (str[len])
+	k = 0;
+	j = 0;
+	while (to_add[j])
 	{
-		if (str[len] == '=')
-			return (len);
-		if (str[len] != '_' && !ft_isalpha(str[len]))
-			return (0);
-		len++;
+		if (to_add[j] != '+')
+			k++;
+		j++;
 	}
-	return (0);
+	result = malloc (k + 1);
+	if (!result)
+		return (NULL);
+	j = 0;
+	k = 0;
+	while (to_add[j])
+	{
+		if (to_add[j] != '+')
+			result[k++] = to_add[j];
+		j++;
+	}
+	result[k] = '\0';
+	return (result);
 }
 
 int	ft_add(char ***env, char *to_add)
@@ -44,7 +57,7 @@ int	ft_add(char ***env, char *to_add)
 			return (free_2d(&result), ENOMEM);
 		i++;
 	}
-	result[i] = ft_strdup(to_add);
+	result[i] = add_var(to_add);
 	if (!result[i])
 		return (free_2d(&result), ENOMEM);
 	result[++i] = NULL;
@@ -53,10 +66,29 @@ int	ft_add(char ***env, char *to_add)
 	return (0);
 }
 
+int	ft_increment(char ***env, char *to_increment, int len, int index)
+{
+	char	*increment;
+	char	*result;
+
+	increment = ft_strjoin(((*env)[index] + len + 1), to_increment + len + 2);
+	if (!increment)
+		return (0);
+	result = ft_substr((*env)[index], 0, varlen((*env)[index]) + 1);
+	if (!result)
+		return (free(increment), 0);
+	free((*env)[index]);
+	(*env)[index] = ft_strjoin(result, increment);
+	(free(increment), free(result));
+	if (!(*env)[index])
+		return (0);
+	return (1);
+}
+
 int	update(char *to_replace, char ***env)
 {
-	int	len;
-	int	i;
+	int		len;
+	int		i;
 
 	len = varlen(to_replace);
 	if (!len)
@@ -66,8 +98,13 @@ int	update(char *to_replace, char ***env)
 	{
 		if (!ft_strncmp((*env)[i], to_replace, len) && (*env)[i][len] == '=')
 		{
-			free((*env)[i]);
-			(*env)[i] = ft_strdup(to_replace);
+			if (!ft_strncmp(to_replace + len, "+=", 2))
+			{
+				if (!ft_increment(env, to_replace, len, i))
+					return (ENOMEM);
+				return (0);
+			}
+			(free((*env)[i]), (*env)[i] = ft_strdup(to_replace));
 			if (!(*env)[i])
 				return (ENOMEM);
 			return (0);

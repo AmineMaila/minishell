@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/23 12:44:05 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/23 15:57:36 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	command_table(t_mini *mini)
 	{
 		mini->exit_status = 258;
 		mini->syntax = 1;
-		return (syntax_error(mini->lst->str), 1);
+		return (print_syntax(mini->lst->str), 1);
 	}
 	mini->table_size = get_table_size(mini->lst);
 	mini->table = malloc(sizeof(t_table) * mini->table_size);
