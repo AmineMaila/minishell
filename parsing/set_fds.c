@@ -6,13 +6,13 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:15:15 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/22 23:31:05 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/23 12:58:46 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-int	open_outfile(t_list_parse *out_op, t_list_parse *redout)
+int	open_out(t_list_parse *out_op, t_list_parse *redout)
 {
 	int		fd;
 
@@ -36,10 +36,12 @@ int	open_outfile(t_list_parse *out_op, t_list_parse *redout)
 	return (close(fd), -2);
 }
 
-int	open_infile(t_list_parse *in_op, t_list_parse *redin)
+int	open_in(t_list_parse *in_op, t_list_parse *redin)
 {
 	int		fd;
 
+	if (!in_op->next->str[0])
+		return (print_error(NULL, "ambiguous redirect"), -1);
 	fd = open(in_op->next->str, O_RDONLY);
 	if (fd == -1)
 		return (print_error(in_op->next->str, NULL), -1);
@@ -48,31 +50,31 @@ int	open_infile(t_list_parse *in_op, t_list_parse *redin)
 	return (close(fd), -2);
 }
 
-void	open_all_fds(t_mini *mini, int pipe_line)
+void	open_all_fds(t_mini *mini, int pipe)
 {
-	t_list_parse	*current;
+	t_list_parse	*curr;
 
-	current = get_pipe_line(mini->lst, pipe_line);
-	while (current && current->flag != PIPE)
+	curr = get_pipe_line(mini->lst, pipe);
+	while (curr && curr->flag != PIPE)
 	{
-		if (current->flag == REDIN)
+		if (curr->flag == REDIN)
 		{
-			if (mini->table[pipe_line].infd > 2)
-				close(mini->table[pipe_line].infd);
-			mini->table[pipe_line].infd
-				= open_infile(current, mini->table[pipe_line].redin);
+			if (mini->table[pipe].infd > 2)
+				close(mini->table[pipe].infd);
+			mini->table[pipe].infd = open_in(curr, mini->table[pipe].redin);
 		}
-		else if (current->flag == REDOUT || current->flag == APPEND)
+		else if (curr->flag == REDOUT || curr->flag == APPEND)
 		{
-			if (mini->table[pipe_line].outfd > 2)
-				close(mini->table[pipe_line].outfd);
-			mini->table[pipe_line].outfd
-				= open_outfile(current, mini->table[pipe_line].redout);
+			if (mini->table[pipe].outfd > 2)
+				close(mini->table[pipe].outfd);
+			mini->table[pipe].outfd = open_out(curr, mini->table[pipe].redout);
 		}
-		if (mini->table[pipe_line].infd == -1
-			|| mini->table[pipe_line].outfd == -1)
+		if (mini->table[pipe].infd == -1 || mini->table[pipe].outfd == -1)
+		{
+			mini->exit_status = 1;
 			return ;
-		current = current->next;
+		}
+		curr = curr->next;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/22 23:56:01 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/23 13:00:16 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,6 @@ int				get_table_size(t_list_parse *lst);
 int				get_line_size(t_mini *mini, int pipe_line);
 void			closefds(t_mini *mini);
 t_list_parse	*get_pipe_line(t_list_parse *lst, int pipe_line);
-int				open_redins(t_mini *mini, int pipe_line);
-int				open_out(t_list_parse *redout);
-int				final_check(t_mini *mini,
-					t_list_parse *redin, int heredoc_fd, int pipe_line);
 void			set_fds(t_mini *mini);
 
 //	GET_NEXT_LINE

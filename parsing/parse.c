@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:05:44 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/23 00:05:30 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/23 12:43:42 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	syntax_error(char *str)
 
 int	syntax(t_list_parse *lst)
 {
+	if (!lst)
+		return (0);
 	if (lst->flag == ERR2)
 		return (print_error("syntax error", "unclosed quote"), -1);
 	if ((lst->flag == REDIN || lst->flag == REDOUT
@@ -46,8 +48,9 @@ int	syntax(t_list_parse *lst)
 	{
 		if (lst->next == NULL)
 			return (syntax_error(NULL), -1);
-		else if (lst->next->flag == PIPE || lst->next->flag == REDOUT
-			|| lst->next->flag == HEREDOC || lst->next->flag == APPEND)
+		else if (lst->next->flag == REDIN || lst->next->flag == REDOUT
+			|| lst->next->flag == HEREDOC || lst->next->flag == APPEND
+			|| lst->next->flag == PIPE)
 			return (syntax_error(lst->next->str), -1);
 	}
 	if ((lst->flag == PIPE && lst->next == NULL) || lst->flag == ERR

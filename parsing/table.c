@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/23 00:05:07 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/23 12:44:05 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,22 +71,13 @@ int	open_heredocs(t_mini *mini, int pipeline)
 			else
 				close(heredocfd);
 		}
-		if (syntax(curr) == -1)
+		if (syntax(curr) == -1 || syntax(curr->next) == -1)
 		{
 			mini->exit_status = 258;
 			mini->syntax = 1;
 			return (closefds(mini), 0);
 		}
 		curr = curr->next;
-	}
-	if (curr)
-	{
-		if (syntax(curr) == -1)
-		{
-			mini->exit_status = 258;
-			mini->syntax = 1;
-			return (closefds(mini), 0);
-		}
 	}
 	return (1);
 }

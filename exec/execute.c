@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:24:17 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/22 23:33:09 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/23 13:11:30 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ int	wait_child(t_data *pipex, t_mini *mini)
 		if (waitpid(mini->pids[i++], &status, 0) == -1)
 			ft_exit(mini, NULL, NULL, errno);
 	}
-	if (WIFEXITED(status))
+	if (WIFEXITED(status) && pipex->id_count != 0)
 		mini->exit_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
+	else if (WIFSIGNALED(status) && pipex->id_count != 0)
 	{
 		if (status == 2)
 			write(1, "\n", 1);
