@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:59:56 by nazouz            #+#    #+#             */
-/*   Updated: 2024/02/23 17:07:51 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/02/24 15:05:03 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	open_heredocs(t_mini *mini, int pipeline)
 			else
 				close(heredocfd);
 		}
-		if (syntax(curr) == -1 || syntax(curr->next) == -1)
+		if (curr->flag == ERR)
 		{
 			mini->exit_status = 258;
 			mini->syntax = 1;
@@ -82,20 +82,24 @@ int	open_heredocs(t_mini *mini, int pipeline)
 	return (1);
 }
 
+void	init_table(t_mini *mini)
+{
+	int	i;
+
+	i = 0;
+	while (i < mini->table_size)
+		mini->table[i++].line = NULL;
+}
+
 int	command_table(t_mini *mini)
 {
 	int		i;
 
-	if (mini->lst->flag == PIPE)
-	{
-		mini->exit_status = 258;
-		mini->syntax = 1;
-		return (1);
-	}
 	mini->table_size = get_table_size(mini->lst);
 	mini->table = malloc(sizeof(t_table) * mini->table_size);
 	if (!mini->table)
 		return (0);
+	init_table(mini);
 	i = 0;
 	while (i < mini->table_size)
 	{
