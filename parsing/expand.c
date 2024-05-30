@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:42:03 by mmaila            #+#    #+#             */
-/*   Updated: 2024/02/22 20:10:37 by mmaila           ###   ########.fr       */
+/*   Updated: 2024/03/09 21:47:14 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ void	expansion(t_mini *mini, t_list_parse **curr)
 	i = 0;
 	count = envvar_count((*curr)->str);
 	while (count--)
-	{
 		if ((*curr)->flag != LIM)
 			expand_var(mini, &(*curr)->str);
-	}
 }
